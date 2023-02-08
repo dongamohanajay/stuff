@@ -1,0 +1,276 @@
+EKS SETUP with wordpress & ALB:
+
+Step 1: Create IAM role for EKS Cluster.
+	
+>Go to IAM and create a new role as 
+>select the EKS service 
+>In the "Select your use case" select "EKS-Cluster".
+>"AmazonEKSClusterPolicy" will be defaultly taken and then click next.
+>Finally give the role name:
+and then click on create role.
+-------------------------------------------------------------------
+Step 2: Create a Dedicated VPC for the EKS Cluster.
+
+>Create Public and Private Subnet using CloudFormation:https://amazon-eks.s3.us-west-2.amazonaws.com/cloudformation/2020-07-23/amazon-eks-vpc-private-subnets.yaml
+(or)
+>Create a VPC with 2-Public & 2-Private subnets ceate route tables and add the routes.
+>vpc cidr:192.168.0.0/16
+>PublicSubnet01:192.168.0.0/18
+>PublicSubnet02:192.168.64.0/18
+>PrivateSubnet01:192.168.128.0/18
+>PrivateSubnet02:192.168.192.0/18
+>Create route tables and add the routes.
+-----------------------------------------------------------------------
+Step 3: Create EKS Cluster
+
+>In the AWS services go to "EKS" Service and click on the "Create Cluster"
+> In the "Cluster configuration" give the following as 
+>Name:eks-cluster.
+>Cluster Service Role:eksclusterrole and click on the "Next"
+>In "Networking" .
+>VPC:eks-vpc-stack.
+>Subnets: "By default it selects all the subnets"
+>Security group: eks-vpc-stack-security group
+>In Cluster endpoint access
+>select the option: "Public and Private". and go to "Next"
+>In the Control Plane Logging keep them to default and go to "Next"
+>Finally review and create the Cluster.
+--------------------------------------------------------------------------
+Step 4: step 4: Install & Setup IAM Authenticator and Kubectl Utility.
+
+>Now Create a new ubuntu server and login in to that and install "aws cli".
+AWS configure:
+$aws iam list-users
+$aws sts get-caller-identity
+$kubectl
+kubectl: command not found
+$aws-iam-authenticator
+aws-iam-authenticator: command not found
+>Now install IAM authenticator using the link "docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html"
+
+$ curl -o aws-iam-authenticator https://s3.us-west-2.amazonaws.com/amazon-eks/1.21.2/2021-07-05/bin/linux/amd64/aws-iam-authenticator
+
+$ chmod +x ./aws-iam-authenticator
+
+$ mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
+
+$ aws-iam-authenticator help
+
+>Now install Kubectl EKS  using the link "docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html"
+
+$ curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.17.12/2020-11-02/bin/linux/amd64/kubectl
+
+$ chmod +x ./kubectl
+
+$ mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+
+$ kubectl version --short --client
+Client Version:v1.16.8-eks-e16311
+
+$ kubectl get  svc
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+
+$ aws eks --region ap-south-1 update-kubeconfig --name eks-cluster
+Added new context arn:aws:eks:us-east-1:554643864971:cluster/eks-cluster to /home/ubuntu/.kube/config
+
+$ more /home/ubuntu/.kube/config (/root/.kube/config)
+
+$ export KUBECONFIG=~/.kube/config
+
+$ kubectl get svc
+
+$ kubectl get nodes
+No resources found in defualt namespace.
+
+$ kubectl get ns
+NAME                               STATUS                    AGE
+default                                Active                        20m
+kube-node-lease                  Active                        20m
+kube-public                        Active                        20m
+kube-system                       Active                        20m
+
+>Now install eksctl
+
+$ curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+
+$ sudo mv /tmp/eksctl /usr/local/bin
+
+$ eksctl version
+
+-----------------------------------------------------------------------------------------------
+Step 5: Create IAM Role for EKS Worker Nodes.
+
+>Now create a new IAM role as follows
+>Go to IAM and select "Roles" and click on "Create role"
+>Now select type of trusted entity: AWS service
+>In "Choose a use case" select "EC2" and go to next
+>Now select the 3 policies "AmazonEKS_CNI_Policy,AmazonEKSWorkerNodePolicy,AmazonEC2ContainerRegistryReadOnly"
+>Rolename: eksworkernoderole then finally click on the "create role".
+
+> Now go to the EKS service and select the created "eks-cluster" and in that select "compute" then click on "Add node group"
+>In the Configure Node Group give the following as 
+>Name: eks-worker-node-group
+>Node IAM Role Name:eksworkernoderole	
+>Subnets: subnets are selected default
+>Enable the "Allow remote access to nodes"
+>SSH key pair: Select the pem file.
+>Allow remote access from : "Selected security groups"
+>Security groups: default now go to next
+
+>In the Node compute configuration select the following as 
+> AMI type: Select the instance (linux/ubuntu/rhel/windows)
+>Instance type: t3.medium
+>Disk size"20GB" and go to next
+
+>In the Group size select the following as
+>Minimum size: 2
+>Maximum size: 2
+>Desired size: 2 and go to next
+
+>Finally review and click on the create.
+
+>Now go to the EC2 console check whether the instances created are not
+
+>Now go to the PUTTY and check the status as
+
+$ kubectl get nodes --watch
+
+$ kubectl get svc
+
+Setup IAM for ServiceAccount
+1.Create IAM OIDC provider
+--
+eksctl utils associate-iam-oidc-provider \
+    --region ap-south-1 \
+    --cluster eks-cluster \
+    --approve
+
+2.Create an IAM policy.
+
+a.>Download an IAM policy for the AWS Load Balancer Controller that allows it to make calls to AWS APIs on your behalf.
+
+$ curl -o iam_policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.2/docs/install/iam_policy.json
+
+b.Create an IAM policy using the policy downloaded in the previous step. If you downloaded iam_policy_us-gov.json, change iam_policy.json to iam_policy_us-gov.json before running the command.
+
+aws iam create-policy \
+    --policy-name AWSLoadBalancerControllerIAMPolicy \
+    --policy-document file://iam_policy.json
+
+You can use eksctl or the AWS CLI and kubectl to create the IAM role and Kubernetes service account.
+
+a.View your cluster's OIDC provider URL.
+
+$ aws eks describe-cluster --name my-cluster --query "cluster.identity.oidc.issuer" --output text
+
+The example output is as follows.
+
+oidc.eks.region-code.amazonaws.com/id/EXAMPLED539D4633E53DE1B71EXAMPLE
+
+b.Copy the following contents to a file named load-balancer-role-trust-policy.json
+
+$ {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::111122223333:oidc-provider/oidc.eks.region-code.amazonaws.com/id/EXAMPLED539D4633E53DE1B71EXAMPLE"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "oidc.eks.region-code.amazonaws.com/id/EXAMPLED539D4633E53DE1B71EXAMPLE:aud": "sts.amazonaws.com",
+                    "oidc.eks.region-code.amazonaws.com/id/EXAMPLED539D4633E53DE1B71EXAMPLE:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
+                }
+            }
+        }
+    ]
+}
+
+c.Create the IAM role.
+
+aws iam create-role \
+  --role-name AmazonEKSLoadBalancerControllerRole \
+  --assume-role-policy-document file://"load-balancer-role-trust-policy.json"
+
+d.Attach the required Amazon EKS managed IAM policy to the IAM role. Replace 111122223333 with your account ID.
+
+aws iam attach-role-policy \
+  --policy-arn arn:aws:iam::111122223333:policy/AWSLoadBalancerControllerIAMPolicy \
+  --role-name AmazonEKSLoadBalancerControllerRole
+
+e.Save the following contents to a file that's named aws-load-balancer-controller-service-account.yaml
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: aws-load-balancer-controller
+  name: aws-load-balancer-controller
+  namespace: kube-system
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::111122223333:role/AmazonEKSLoadBalancerControllerRole
+
+f.Create the Kubernetes service account on your cluster. The Kubernetes service account named aws-load-balancer-controller is annotated with the IAM role that you created named AmazonEKSLoadBalancerControllerRole
+
+kubectl apply -f aws-load-balancer-controller-service-account.yaml
+
+g.Install cert-manager using one of the following methods to inject certificate configuration into the webhooks.
+
+kubectl apply \
+    --validate=false \
+    -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+
+h.Install the controller.
+
+Download the controller specification. For more information about the controller, see the documentation on GitHub.
+
+$ curl -Lo v2_4_2_full.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.2/v2_4_2_full.yaml
+
+i.Replace your-cluster-name in the Deployment spec section of the file with the name of your cluster by replacing my-cluster with the name of your cluster.
+
+$ sed -i.bak -e 's|your-cluster-name|my-cluster|' ./v2_4_2_full.yaml
+
+j.Open the file in an editor and remove the following lines
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: aws-load-balancer-controller
+  name: aws-load-balancer-controller
+  namespace: kube-system
+---
+
+Apply the file.
+
+kubectl apply -f v2_4_2_full.yaml
+
+k.Verify that the controller is installed.
+
+$ kubectl get deployment -n kube-system aws-load-balancer-controller
+
+The example output is as follows.
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+aws-load-balancer-controller   2/2     2            2           84s
+
+> git clone https://github.com/sairam48/mysql.git
+
+give link of git repositories files
+
+ls
+cd mysql/
+ls
+kubectl apply -f mysql\ \(3\).yaml
+kubectl apply -f wordpress.yaml
+kubectl get pods
+
+https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html
+
+
+
+

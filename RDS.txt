@@ -1,0 +1,68 @@
+1  cd mysql/
+    2  kubectl get pods
+    3  cd
+    4  kubectl get pods
+    5  kubectl
+    6  curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.17.12/2020-11-02/bin/linux/amd64/kubectl
+    7  kubectl
+    8  chmod +x ./kubectl
+    9  mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+   10  kubectl
+   11  kubectl get pods
+   
+   13  sudo apt install apt-transport-https ca-certificates curl software-properties-common
+   14  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+   15  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+   16  apt-cache policy docker-ce
+   17  sudo apt install docker-ce
+   18  sudo systemctl status docker
+   19  docker search wordpress
+   20  docker pull wordpress
+   21  docker images
+   22  docker container ps
+   23  docker container ps -a
+   24  docker run -d -p 80:80 wordpress
+   25  docker container ps
+   26  mkdir ~/Workspace/Docker/Wordpress
+   27  mkdir /Workspace/Docker/Wordpress
+   28  mkdir wordpress
+   29  touch wordpress/Dockerfile
+   30  vi wordpresscd 
+   31  docker images
+   32  docker build  -t wordpressrds:latest .
+
+   35  apt-get install mysql-client
+   36  mysql -h database-1.cgwhaf88eqlo.ap-south-1.rds.amazonaws.com -u admin -p
+   37  vi Docker
+   38  docker build  -t wordpressrds:latest .
+   39  ls
+   40  mv Docker Dockerfile
+   41  docker build  -t wordpressrds:latest .
+   42  docker images
+   43  aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 922663044871.dkr.ecr.ap-south-1.amazonaws.com
+   44  docker tag wordpressrds:latest 922663044871.dkr.ecr.ap-south-1.amazonaws.com/ravi:latestrds
+   45  docker push 922663044871.dkr.ecr.ap-south-1.amazonaws.com/ravi:latestrds
+   46  vi wordpressrds.yaml
+   47  kubectl apply -f wordpressrds.yaml
+   48  kubectl apply -f wordpressrds.yaml apiVersion: v1
+   49  kind: Service
+   50  metadata:
+   51  spec:
+   52  ---
+   53  apiVersion: networking.k8s.io/v1
+   54  kind: Ingress
+   55  metadata:
+   56  spec:
+   57  ---
+   58  apiVersion: v1
+   59  kind: PersistentVolumeClaim
+   60  metadata:
+   61  spec:
+   62*
+   63  apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
+   64  kind: Deployment
+   65  metadata:
+   66  spec:
+   67  ls
+   68  history
+
