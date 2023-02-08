@@ -1,0 +1,27 @@
+LAMP STACCK
+
+https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-20-04
+
+putty
+
+https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+
+WINSCP
+
+https://winscp.net/download/WinSCP-5.19.5-Setup.exe
+
+
+cmd
+
+sudo passwd root
+[enter new password]
+su -
+sudo apt-get update
+sudo apt-get upgrade
+y
+curl -O https://raw.githubusercontent.com/angristan/openvpn-install/master/openvpn-install.sh
+chmod +x openvpn-install.sh
+./openvpn-install.sh
+cp sampleconfig.ovpn /home/ubuntu/
+
+

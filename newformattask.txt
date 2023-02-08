@@ -1,0 +1,99 @@
+Ticket/Task/Issue Metrics on :22/04/20222
+
+Tickets Assigned: 4
+
+Tickets Closed: 4
+
+Tickets in progress: 0
+
+Tickets Re-opened & in progress: 0
+
+Tickets Re-opened & Closed: 0
+
+
+
+Task/Issue Details:
+
+Issue: 1
+
+Client name: NRY
+
+Channel of Communication: Email
+
+Issue/Task: Add the server to the lifecycle backup.
+
+AWS Division: Client Service.
+Service Category: EC2.
+
+Issues Description: Clientr requested to add the following listed server below in the lifecycle manager for daily increments and monthly increments.
+Server Details:
+Name of the server: Word-Press
+Private IP Address: 10.0.4.189
+Instance ID: i-0f89f3ed36802f04a
+
+Proposed Solution: In the EC2 management console>Lifecycle manager>NRY_LIFECYCLE_DATA_POLICY
+>modify it by adding the above server.
+
+Ticket Status: Closed.
+
+Issue: 2
+
+Client name: EOFFICE
+
+Channel of Communication: On Phone.
+
+Issue/Task: Start the servers.
+
+AWS Division: Client Service.
+Service Category: EC2.
+
+Issues Description: Requested to start the two servers listed below.
+	>NRY_SERVER-01 and
+	>NRY_SERVER-02.
+
+Proposed Solution: In the EC2 management console select the two servers in the >Instance State>start instance.
+Ticket Status: Closed.
+
+Issue: 3
+
+Client name: OBS
+
+Channel of Communication: On Phone.
+
+Issue/Task: Allocate Elastic IP,Storage Information and Stop the server.
+
+AWS Division: Client Service.
+Service Category: EC2 and EIP.
+
+Issues Description: 
+	Requested to stop the server listed below.
+	>test-server.
+	Allocate the EIP to the server listed below and provide the storage information for the server.
+	>DLPAuthoringserver_05_jan_2022.
+
+Proposed Solution: 
+>In the EC2 management console select the server in the >Instance State>stop instance.
+>open EIP and allocate EIP>Associate to the server "DLPAuthoringserver_05_jan_2022"
+>And also provide the screenshot for the storage information by loging in to the putty with the public IP.
+Ticket Status: Closed.
+
+Issue: 4
+
+Client name: DE
+
+Channel of Communication: Internal
+
+Issue/Task: Launch 4 servers and terminate by EOD.
+
+AWS Division: Service Testing (Zabbix Testing)
+Service Category: EC2.
+
+Issues Description: Requested to launch the 4 servers(2-Windows & 2-Ubuntu) listed below in the old-eoffice account and help-desk account for testing Zabbix.
+	>Zabbix-demo-ubuntu3
+	>Zabbix-demo-windows4
+	>Zabbix-demo-ubuntu5
+	>Zabbix-demo-windows6
+
+Proposed Solution: In the EC2 management console launch the 4 servers with the above following specifications.
+Ticket Status: Closed.
+

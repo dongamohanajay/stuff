@@ -1,0 +1,76 @@
+SYSTEM
+username:mohan@dataevolve.in
+password:Mohan12!
+
+
+OUTLOOK
+username:mohan@dataevolve.in
+password:9848646472@Mad
+
+
+AWS CREDENTIALS
+
+Account name:dataevolve-test
+username:Mohan
+password:9848646472@Mad
+
+Account name:bcci-pf
+username:mohan@dataevolve.in
+password:9848646472@Mad
+
+Account name:office-storage
+Username:sridhar/mohan
+Password:Dataevolve@1234
+
+REdHAT
+Username:dataevolve
+Password:Dataevolve@1234
+
+RDP FOR NARAYANA 
+Username:nspira.local
+Password:Lightspeed@2021
+
+Narayana Servers Cred inside RDP
+Username:administrator
+Password:D@taev0lve12!
+
+Username:admin
+Password:D@taev0lve12!
+
+rdp for other windows instance
+username:nspira\admin
+Password:D@taev0lve12!
+
+EOFFICE CREDENTIALS
+Account name:eofficetelangana	
+Username:dataevolve
+Password:Dataevolve@1234
+
+
+OPEN VPN
+username:mohanajay
+password:D@taev0lve12!
+
+
+narayana vpn details
+username:user id
+password:P@ssw0rd1!
+
+
+NARAYANA DOMAIN ADMIN CREDEENTIALS
+username:administrator
+password:D@taev0lve12!
+
+username:nspira.local
+password:D@taev0lve12!
+
+
+
+
+
+
+
+
+
+
+

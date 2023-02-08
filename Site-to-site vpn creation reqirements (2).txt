@@ -1,0 +1,16 @@
+Site-to-site vpn configurations.
+
+The below are the requirements required from client side to setup site-to-site vpn.
+---------------------------------------------------
+Required data:
+A.To create site-to-site VPN:
+       1.Name
+       2.Customer gateway id
+       3.Static IP
+       4.Customer LAN
+
+B.To download firewall configurations:
+       1.vendor:
+       2.platform:
+       3.software:
+       4.IKE version:

@@ -1,0 +1,3 @@
+ nspira-in-ses-smtp-user
+Access key ID:AKIAXEJQD25Q6RSJEP5D
+Secret access key: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

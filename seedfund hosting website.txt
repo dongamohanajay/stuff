@@ -1,0 +1,1209 @@
+Firstly we have to add the listen port number in the path
+
+/etc/httpd/conf
+
+
+Create a new vhosts.conf file with the existing .conf file configurations
+
+
+
+[root@ip-10-150-0-8 conf]# history
+   48  php81 --modules
+   49  php -v
+   50  php81 -v
+   51  amazon-linux-extras | grep php
+   52  amazon-linux-extras disable php7.4
+   53  amazon-linux-extras | grep php
+   54   amazon-linux-extras enable php8.1
+   55  amazon-linux-extras | grep php
+   56  php -v
+   57  yum clean metadata
+   58   yum info php
+   59  php -v
+   60  php -v
+   61  amazon-linux-extras | grep php
+   62  yum -y remove php-json-7.4.32-1.amzn2.x86_64
+   63  amazon-linux-extras | grep php
+   64  yum -y remove php-json-7.4.32.amzn2.x86_64
+   65  amazon-linux-extras | grep php
+   66  yum -y remove php-json-7.4.amzn2.x86_64
+   67  amazon-linux-extras | grep php
+   68  php status
+   69  systemctl restart php-fpm.service
+   70  systemctl status php-fpm.service
+   71  sudo apt-get purge php7.*
+   72  sudo yum purge php7.*
+   73  sudo yum update
+   74  sudo amazon-linux-extras enable php8.1
+   75  sudo yum clean metadata
+   76   sudo yum install php-cli php-pdo php-fpm php-json php-mysqlnd php-gd
+   77  php -v
+   78  cd /var
+   79  cd www
+   80  cd html
+   81  cd seedfund_api/
+   82  ls -a
+   83  vim .env
+   84  vim .gitignore
+   85  php artisan config:clear
+   86  php artisan cache:clear
+   87  php artisan config:clear
+   88  php artisan cache:clear
+   89  cd /
+   90  systemctl restart httpd.service
+   91  systemctl status httpd.service
+   92  php -v
+   93  php artisan config:clear
+   94  cd /var
+   95  cd www
+   96  cd html
+   97  cd seedfund_api/
+   98  ls -a
+   99  vim .env
+  100  ls -a
+  101  ls -a
+  102  vim .env
+  103  php artisan config:clear
+  104  php artisan cache:clear
+  105  cd /
+  106  cd /etc/httpd/conf.d/
+  107  ll
+  108  cat vhost.conf
+  109  cat vhost2.conf
+  110  ll
+  111  cd /var/www/html/
+  112  ll
+  113  cd seedfund_api/
+  114  ls
+  115  ls -lrt
+  116  cd vendor/
+  117  ll
+  118  cd ..
+  119  ls
+  120  cd storage/
+  121  ll
+  122  ls -lrt
+  123  cd logs/
+  124  ll
+  125  chmod -R 2775 *
+  126  ll
+  127  cd ...
+  128  cd ..
+  129  cd ..
+  130  ls
+  131  cd bootstrap/
+  132  ll
+  133  chown -R $USER:www-data cache/
+  134  chmod -R 775 cache/
+  135  cd ..
+  136  group
+  137  groups
+  138  ps aux | egrep '(apache|httpd)'
+  139  chown -R $USER:apache cache/
+  140  chown -R $USER:apache bootstrap/cache/
+  141  chown -R $USER:apache storage/
+  142  ls -lrt
+  143  cd ..
+  144  chown -R $USER:apache seedfund_api/
+  145  ll
+  146  cd seedfund_api/
+  147  ll
+  148  ls -
+  149  LS -A
+  150  ls -a
+  151  vim .env
+  152  vim .env
+  153  vim .env
+  154  cd /
+  155  ls
+  156  cd /home
+  157  ls
+  158  ll
+  159  ls
+  160  cd ec2-user/
+  161  ll
+  162  ls -al
+  163  cd .ssh/
+  164  ll
+  165  nano authorized_keys
+  166  cd ..
+  167  cd /root/
+  168  ll
+  169  ls -al
+  170  cd .ssh/
+  171  ll
+  172  cat authorized_keys
+  173  cd /home/ec2-user/.ssh/
+  174  cat authorized_keys
+  175  cd /
+  176  cd /etc/ssh
+  177  ls
+  178  vi sshd_config
+  179  systemctl restart sshd
+  180  passwd ec2-user
+  181  cd /var
+  182  cd www
+  183  cd html
+  184  cd seedfund_api/
+  185  ls -a
+  186  vim .env
+  187  vim .env
+  188  php artisan config:clear
+  189  php artisan cache:clear
+  190  cd /var
+  191  cd www
+  192  cd ..
+  193  cd /var/xxx/html
+  194  cd /var
+  195  dir
+  196  cd www
+  197  cd html
+  198  cd seedfund
+  199  cd..
+  200  .
+  201  ./
+  202  CD..
+  203  cd..
+  204  ..
+  205  cd..
+  206  cd..
+  207  pwd
+  208  cd .
+  209  cd
+  210  pwd
+  211  sudo su
+  212  cd /var
+  213  cd www
+  214  cd html
+  215  cd seedfund_api/
+  216  cd storage/
+  217  chmod -R 777
+  218  chmod -R 777/
+  219  chmod -R 777/
+  220  chmod -R 777
+  221  cd ..
+  222  ll
+  223  cd storage/
+  224  chmod -R 777
+  225  chmod -R 777 *
+  226  ll
+  227  cd ..
+  228  chmod -R 777 storage/
+  229  cd var
+  230  cd /var
+  231  cd www
+  232  cd html
+  233  cd seedfund_api/
+  234  ls -a
+  235  vim .env
+  236  vim .env
+  237  php artisan config:clear
+  238  php artisan cache:clear
+  239  vim .env
+  240  php artisan cache:clear
+  241  php artisan config:clear
+  242  php artisan cache:clear
+  243  ls
+  244  cd seedfund_node/
+  245  ls
+  246  vim app.js
+  247  node app.js
+  248  npm i jsonwebtoken
+  249  node app.js
+  250  npm i bcryptjs
+  251  node app.js
+  252  ll
+  253  vim package.json
+  254  node app.js
+  255  npm start
+  256  npm start
+  257  npm install jsonwebtoken
+  258  cd..
+  259  exit
+  260  ls
+  261  ls
+  262  cd seedfund_node/
+  263  cd..
+  264  cd ..
+  265  cd seedfund_node/
+  266  npm install jsonwebtoken
+  267  pm2 restart 0
+  268  pm2 logs 0
+  269  npm i bcryptjs
+  270  pm2 restart 0
+  271  pm2 logs 0
+  272  pm2 restart 0
+  273  pm2 logs 0
+  274  pm2 restart 0
+  275  pm2 logs 0
+  276  cd ls
+  277  ls
+  278  cd seedfund_node/
+  279  ls
+  280  ls -a
+  281  ls -a
+  282  pm2 restart 0
+  283  pm2 logs 0
+  284  mysql -u DE_seedfund_dev -p
+  285  pm2 logs 0
+  286  mysql -u root -p
+  287  mysql -u root -p
+  288  mysql -u root -p
+  289  pm2 restart 0
+  290  pm2 logs 0
+  291  pm2 restart 0
+  292  pm2 logs 0
+  293  pm2 restart 0
+  294  pm2 logs 0
+  295  pm2 restart 0
+  296  pm2 logs 0
+  297  ls -a
+  298  vim .env
+  299  cd seedfund_node/
+  300  ls -a
+  301  vim .env
+  302  pm2 restart 0
+  303  pm2 logs 0
+  304  pm2 restart 0
+  305  pm2 logs 0
+  306  pm2 restart 0
+  307  pm2 logs 0
+  308  pm2 restart 0
+  309  pm2 logs 0
+  310  pm2 restart 0
+  311  pm2 logs 0
+  312  pm2 restart 0
+  313  pm2 logs 0
+  314  pm2 restart 0
+  315  pm2 logs 0
+  316  pm2 restart 0
+  317  pm2 logs 0
+  318  pm2 restart 0
+  319  pm2 logs 0
+  320  mysql -u root -p
+  321  cd ..
+  322  pm2 restart 2
+  323  pm2 restart 0
+  324  pm2 logs 0
+  325  cd /var
+  326  cd www
+  327  cd html
+  328  cd seedfund_api/
+  329  ls -a
+  330  vim .env
+  331  pwd
+  332  vim .env
+  333  pm2 restart 2
+  334  pm2 restart 0
+  335  pm2 logs 0
+  336  pm2 restart 0
+  337  pm2 logs 0
+  338  pm2 restart 0
+  339  pm2 logs 0
+  340  pm2 restart 0
+  341  pm2 logs 0
+  342  pm2 restart 0
+  343  pm2 logs 0
+  344  pm2 restart 0
+  345  pm2 logs 0
+  346  pm2 restart 0
+  347  pm2 logs 0
+  348  ls
+  349  cd seedfund_api_de/
+  350  ls -a
+  351  vim .env
+  352  ls -a
+  353  vim .env
+  354  pm2 restart 0
+  355  ls -a
+  356  vim .env
+  357  cd seedfund_api_de/
+  358  ls -a
+  359  vim .env
+  360  rm .env
+  361  ls -a
+  362  ls -a
+  363  pm2 restart 0
+  364  ls -a
+  365  pm2 restart 0
+  366  cd ..
+  367  cd seedfund_node/
+  368  pm2 restart 0
+  369  ls -a
+  370  vim .env
+  371  pm2 logs 0
+  372  pm2 restart 0
+  373  pm2 logs 0
+  374  npm i express-validation@1.0.2
+  375  npm i joi@14.3.1
+  376  pm2 restart 0
+  377  pm2 logs 0
+  378  pm2 restart 0
+  379  pm2 logs 0
+  380  pm2 restart 0
+  381  pm2 logs 0
+  382  mysql -u root -p
+  383  cd seedfund_node/
+  384  pm2 restart 0
+  385  pm2 logs 0
+  386  pm2 restart 0
+  387  pm2 logs 0
+  388  pm2 restart 0
+  389  pm2 logs 0
+  390  df -Th
+  391  npm uninstall pm2 -g
+  392  pm2
+  393  cd /home/ec2-user/
+  394  ls
+  395  r -rf node_modules
+  396  rm -rf node_modules
+  397  npm install pm2 -g
+  398  pm2
+  399  cd seedfund_node/
+  400  ls
+  401  pm2 start --name app_api app.js
+  402  pm2 list
+  403  pm2 logs 0
+  404  df -Th
+  405  pm2 logs 0
+  406  cd ..
+  407  ls
+  408  rm -rf build
+  409  df -Th
+  410  pm2 logs 0
+  411  cd /
+  412  df -hT
+  413  lsblk
+  414  sudo growpart /dev/nvme0n1 1
+  415  sudo xfs_growfs -d /
+  416  lsblk
+  417  df -hT
+  418  exit
+  419  df -Th
+  420  pm2 logs 0
+  421  df -Th
+  422  df -hT
+  423  pm2 restart 0
+  424  pm2 logs 0
+  425  npm i jsonwebtoken
+  426  pm2 logs 0
+  427  pm2 logs 0
+  428  pm2 restart 0
+  429  pm2 logs 0
+  430  npm i bcryptjs
+  431  pm2 restart 0
+  432  pm2 logs 0
+  433  npm i multer
+  434  pm2 restart 0
+  435  pm2 logs 0
+  436  pm2 restart 0
+  437  pm2 logs 0
+  438  pm2 restart 0
+  439  pm2 logs 0
+  440  pm2 restart 0
+  441  pm2 logs 0
+  442  pm2 restart 0
+  443  pm2 logs 0
+  444  pm2 restart 0
+  445  pm2 logs 0
+  446  pm2 logs 0
+  447  pm2 logs 0
+  448  pm2 logs 0
+  449  pm2 logs 0
+  450  pm2 restart 0
+  451  pm2 logs 0
+  452  pm2 logs 0
+  453  pm2 restart 0
+  454  pm2 logs 0
+  455  pm2 logs 0
+  456  pm2 restart 0
+  457  pm2 logs 0
+  458  pm2 restart 0
+  459  pm2 logs 0
+  460  pm2 logs 0
+  461  pm2 logs 0
+  462  pm2 restart 0
+  463  pm2 logs 0
+  464  pm2 restart 0
+  465  pm2 restart 0
+  466  pm2 restart 0
+  467  pm2 logs 0
+  468  pm2 restart 0
+  469  pm2 logs 0
+  470  pm2 restart 0
+  471  pm2 logs 0
+  472  pm2 restart 0
+  473  pm2 logs 0
+  474  pm2 logs 0
+  475  pm2 restart 0
+  476  pm2 logs 0
+  477  pm2 restart 0
+  478  pm2 logs 0
+  479  pm2 restart 0
+  480  pm2 logs 0
+  481  cd seedfund_node/
+  482  vim .env
+  483  pm2 restart 0
+  484  vim .env
+  485  pm2 restart 0
+  486  pm2 restart 0
+  487  pm2 logs 0
+  488  pm2 logs 0
+  489  pm2 restart 0
+  490  pm2 logs 0
+  491  dir
+  492  cd home
+  493  dir
+  494  cd ec2-user/
+  495  cd seedfund_node/
+  496  pm2 restart 0
+  497  pm2 logs 0
+  498  pm2 restart 0
+  499  pm2 logs 0
+  500  pm2 restart 0
+  501  pm2 logs 0
+  502  pm2 restart 0
+  503  pm2 logs 0
+  504  pm2 restart 0
+  505  pm2 logs 0
+  506  pm2 restart 0
+  507  pm2 logs 0
+  508  node -v
+  509  ./var
+  510  cd ./var
+  511  cd var
+  512  cd var
+  513  cd..
+  514  cd
+  515  cd ..
+  516  cd var
+  517  cd www
+  518  cd html/seedfund_api/
+  519  vim .env
+  520  vim .env
+  521  php artisan serve
+  522  pm2 restart 0
+  523  pm2 logs 0
+  524  pm2 restart 0
+  525  pm2 logs 0
+  526  pm2 restart 0
+  527  pm2 logs 0
+  528  pm2 restart 0
+  529  pm2 logs 0
+  530  pm2 logs 0
+  531  exit
+  532  pm2 restart 0
+  533  pm2 logs 0
+  534  pm2 logs 0
+  535  pm2 logs 0
+  536  pm2 restart 0
+  537  pm2 logs 0
+  538  pm2 logs 0
+  539  pm2 restart 0
+  540  pm2 logs 0
+  541  pm2 restart 0
+  542  pm2 logs 0
+  543  pm2 restart 0
+  544  pm2 logs 0
+  545  cd seedfund_node/
+  546  vim .env
+  547  pm2 logs 0
+  548  vim .env
+  549  pm2 restart 0
+  550  pm2 logs 0
+  551  pm2 restart 0
+  552  pm2 logs 0
+  553  pm2 logs 0
+  554  pm2 restart 0
+  555  pm2 logs 0
+  556  pm2 restart 0
+  557  pm2 logs 0
+  558  pm2 restart 0
+  559  pm2 logs 0
+  560  pm2 restart 0
+  561  pm2 logs 0
+  562  pm2 restart 0
+  563  pm2 logs 0
+  564  pm2 restart 0
+  565  pm2 logs 0
+  566  logout
+  567  exit
+  568  pm2 restart 0
+  569  pm2 logs 0
+  570  pm2 restart 0
+  571  pm2 logs 0
+  572  pm2 restart 0
+  573  pm2 logs 0
+  574  pm2 restart 0
+  575  pm2 logs 0
+  576  pm2 restart 0
+  577  pm2 logs 0
+  578  pm2 restart 0
+  579  pm2 logs 0
+  580  pm2 restart 0
+  581  pm2 logs 0
+  582  exit
+  583  pm2 restart 0
+  584  pm2 logs 0
+  585  pm2 restart 0
+  586  pm2 logs 0
+  587  pm2 restart 0
+  588  pm2 logs 0
+  589  pm2 restart 0
+  590  pm2 logs 0
+  591  pm2 restart 0
+  592  pm2 logs 0
+  593  pm2 logs 0
+  594  pm2 restart 0
+  595  pm2 logs 0
+  596  pm2 restart 0
+  597  pm2 logs 0
+  598  pm2 logs 0
+  599  pm2 restart 0
+  600  pm2 logs 0
+  601  pm2 restart 0
+  602  pm2 logs 0
+  603  pm2 restart 0
+  604  pm2 logs 0
+  605  pm2 restart 0
+  606  pm2 logs 0
+  607  pm2 restart 0
+  608  pm2 logs 0
+  609  pm2 logs 0
+  610  pm2 restart 0
+  611  pm2 logs 0
+  612  pm2 restart 0
+  613  pm2 logs 0
+  614  pm2 restart 0
+  615  pm2 logs 0
+  616  pm2 restart 0
+  617  pm2 logs 0
+  618  pm2 restart 0
+  619  pm2 logs 0
+  620   select incubator_reapply_applications_new.incubator_application_no,; 0|app_api  |     iastatus.label as application_status, states.name as state, districts.name as city, aentity.attribute_value as legal_entity
+  621  0|app_api  |     from incubator_reapply_applications_new
+  622  0|app_api  |     from incubator_reapply_applications_new as new
+  623  0|app_api  |     left join incubator_applications as ia on ia.user_id=new.user_id
+  624  0|app_api  |     left join incubator_application_status as iastatus on iastatus.id = new.status_id
+  625  0|app_api  |     left join states on states.id = ia.address_state_id
+  626  0|app_api  |     left join districts on districts.id = ia.address_city_id
+  627  0|app_api  |     left join application_attributes as aentity on aentity.id = ia.type_legal_entity_id
+  628  0|app_api  |     where new.is_active = 1
+  629  0|app_api  |     and new.id = 2
+  630  0|app_api  |     and new.status_id >= 2;
+  631  0|app_api  |     and new.status_id >= 2;
+  632  pm2 restart 0
+  633  pm2 logs 0
+  634  pm2 restart 0
+  635  pm2 logs 0
+  636  pm2 restart 0
+  637  pm2 logs 0
+  638  pm2 restart 0
+  639  pm2 logs 0
+  640  pm2 restart 0
+  641  pm2 logs 0
+  642  pm2 restart 0
+  643  pm2 logs 0
+  644  pm2 restart 0
+  645  pm2 logs 0
+  646  pm2 restart 0
+  647  pm2 logs 0
+  648  pm2 restart 0
+  649  pm2 logs 0
+  650  pm2 restart 0
+  651  pm2 logs 0
+  652  pm2 logs 0
+  653  pm2 restart 0
+  654  pm2 logs 0
+  655  pm2 restart 0
+  656  pm2 logs 0
+  657  npm joi -v
+  658  pm2 restart 0
+  659  npm joi -v
+  660  pm2 logs 0
+  661  cd seedfund_node/
+  662  vim .env
+  663  pm2 logs 0
+  664  pm2 restart 0
+  665  pm2 logs 0
+  666  pm2 restart 0
+  667  pm2 logs 0
+  668  pm2 restart 0
+  669  pm2 logs 0
+  670  pm2 restart 0
+  671  pm2 logs 0
+  672  pm2 restart 0
+  673  pm2 logs 0
+  674  dir
+  675  cd home
+  676  dir
+  677  cd ec2-user/
+  678  cd seedfund_node/
+  679  nodemon app.js
+  680  pm2 logs 0
+  681  pm2 logs 0
+  682  pm2 restart 0
+  683  pm2 logs 0
+  684  pm2 restart 0
+  685  pm2 logs 0
+  686  pm2 logs 0
+  687  pm2 logs 0
+  688  pm2 restart 0
+  689  pm2 logs 0
+  690  pm2 restart 0
+  691  pm2 logs 0
+  692  pm2 restart 0
+  693  pm2 logs 0
+  694  pm2 restart 0
+  695  pm2 logs 0
+  696  pm2 restart 0
+  697  pm2 logs 0
+  698  pm2 restart 0
+  699  pm2 logs 0
+  700  pm2 restart 0
+  701  pm2 logs 0
+  702  pm2 restart 0
+  703  pm2 logs 0
+  704  pm2 restart 0
+  705  pm2 logs 0
+  706  pm2 restart 0
+  707  pm2 logs 0
+  708  cd..
+  709  cd ..
+  710  pm2 logs 0
+  711  pm2 logs 0
+  712  pm2 restart 0
+  713  pm2 logs 0
+  714  pm2 restart 0
+  715  pm2 logs 0
+  716  pm2 restart 0
+  717  pm2 logs 0
+  718  pm2 restart 0
+  719  pm2 logs 0
+  720  pm2 restart 0
+  721  pm2 logs 0
+  722  pm2 restart 0
+  723  pm2 logs 0
+  724  pm2 restart 0
+  725  pm2 logs 0
+  726  pm2 logs 0
+  727  pm2 restart 0
+  728  pm2 logs 0
+  729  pm2 logs 0
+  730  pm2 restart 0
+  731  pm2 logs 0
+  732  pm2 restart 0
+  733  pm2 logs 0
+  734  pm2 restart 0
+  735  pm2 logs 0
+  736  pm2 restart 0
+  737  pm2 logs 0
+  738  pm2 restart 0
+  739  pm2 logs 0
+  740  pm2 restart 0
+  741  pm2 logs 0
+  742  pm2 restart 0
+  743  pm2 logs 0
+  744  pm2 restart 0
+  745  pm2 logs 0
+  746  pm2 restart 0
+  747  pm2 logs 0
+  748  pm2 restart 0
+  749  pm2 logs 0
+  750  pm2 restart 0
+  751  pm2 logs 0
+  752  pm2 restart 0
+  753  pm2 logs 0
+  754  pm2 restart 0
+  755  pm2 logs 0
+  756  pm2 restart 0
+  757  pm2 logs 0
+  758  pm2 restart 0
+  759  pm2 logs 0
+  760  pm2 logs 0
+  761  pm2 restart 0
+  762  pm2 logs 0
+  763  cd seedfund_node/
+  764  vim .env
+  765  sudo su
+  766  dir
+  767  cd home
+  768  cd ..
+  769  cd /var/www/html/seedfund_api/
+  770  php artisan config:clear
+  771  php artisan cache:clear
+  772  vim .env
+  773  cd ..
+  774  cd ..
+  775  cd ..
+  776  sudo su
+  777  pm2 restart 0
+  778  pm2 logs 0
+  779  pm2 restart 0
+  780  pm2 logs 0
+  781  pm2 restart 0
+  782  pm2 logs 0
+  783  pm2 restart 0
+  784  pm2 logs 0
+  785  pm2 restart 0
+  786  pm2 logs 0
+  787  pm2 restart 0
+  788  pm2 logs 0
+  789  pm2 restart 0
+  790  pm2 logs 0
+  791  pm2 restart 0
+  792  pm2 logs 0
+  793  pm2 restart 0
+  794  pm2 logs 0
+  795  pm2 restart 0
+  796  pm2 logs 0
+  797  pm2 restart 0
+  798  pm2 logs 0
+  799  pm2 restart 0
+  800  pm2 logs 0
+  801  pm2 restart 0
+  802  pm2 logs 0
+  803  pm2 restart 0
+  804  pm2 logs 0
+  805  pm2 logs 0
+  806  pm2 logs 0
+  807  pm2 logs 0
+  808  pm2 logs 0
+  809  pm2 restart 0
+  810  pm2 logs 0
+  811  pm2 restart 0
+  812  pm2 logs 0
+  813  pm2 restart 0
+  814  pm2 logs 0
+  815  pm2 restart 0
+  816  pm2 logs 0
+  817  pm2 restart 0
+  818  pm2 logs 0
+  819  pm2 restart 0
+  820  pm2 logs 0
+  821  pm2 restart 0
+  822  pm2 logs 0
+  823  pm2 logs 0
+  824  pm2 logs 0
+  825  pm2 logs 0
+  826  pm2 restart 0
+  827  pm2 logs 0
+  828  pm2 restart 0
+  829  pm2 logs 0
+  830  pm2 restart 0
+  831  pm2 logs 0
+  832  pm2 restart 0
+  833  pm2 logs 0
+  834  pm2 restart 0
+  835  pm2 logs 0
+  836  pm2 logs 0
+  837  pm2 logs 0
+  838  pm2 restart 0
+  839  pm2 logs 0
+  840  pm2 restart 0
+  841  pm2 logs 0
+  842  pm2 restart 0
+  843  pm2 logs 0
+  844  pm2 restart 0
+  845  pm2 logs 0
+  846  pm2 restart 0
+  847  pm2 logs 0
+  848  pm2 restart 0
+  849  pm2 logs 0
+  850  pm2 restart 0
+  851  pm2 logs 0
+  852  pm2 restart 0
+  853  pm2 logs 0
+  854  pm2 restart 0
+  855  pm2 logs 0
+  856  pm2 logs 0
+  857  pm2 restart 0
+  858  pm2 logs 0
+  859  pm2 restart 0
+  860  pm2 logs 0
+  861  pm2 logs 0
+  862  pm2 restart 0
+  863  pm2 logs 0
+  864  pm2 restart 0
+  865  pm2 logs 0
+  866  pm2 restart 0
+  867  pm2 logs 0
+  868  pm2 restart 0
+  869  pm2 logs 0
+  870  pm2 logs 0
+  871  pm2 restart 0
+  872  pm2 logs 0
+  873  pm2 restart 0
+  874  pm2 logs 0
+  875  pm2 restart 0
+  876  pm2 logs 0
+  877  pm2 logs 0
+  878  pm2 restart 0
+  879  pm2 logs 0
+  880  pm2 restart 0
+  881  pm2 logs 0
+  882  pm2 restart 0
+  883  pm2 logs 0
+  884  pm2 restart 0
+  885  pm2 logs 0
+  886  pm2 restart 0
+  887  pm2 logs 0
+  888  pm2 restart 0
+  889  pm2 logs 0
+  890  pm2 restart 0
+  891  pm2 logs 0
+  892  pm2 restart 0
+  893  pm2 logs 0
+  894  pm2 restart 0
+  895  pm2 logs 0
+  896  pm2 restart 0
+  897  pm2 logs 0
+  898  pm2 restart 0
+  899  pm2 logs 0
+  900  pm2 restart 0
+  901  pm2 logs 0
+  902  pm2 restart 0
+  903  pm2 logs 0
+  904  pm2 restart 0
+  905  pm2 logs 0
+  906  pm2 restart 0
+  907  pm2 logs 0
+  908  pm2 restart 0
+  909  pm2 logs 0
+  910  pm2 logs 0
+  911  pm2 restart 0
+  912  pm2 logs 0
+  913  pm2 logs 0
+  914  pm2 logs 0
+  915  pm2 logs 0
+  916  pm2 restart 0
+  917  pm2 logs 0
+  918  pm2 restart 0
+  919  pm2 logs 0
+  920  pm2 restart 0
+  921  pm2 logs 0
+  922  pm2 restart 0
+  923  pm2 logs 0
+  924  pm2 restart 0
+  925  pm2 logs 0
+  926  pm2 restart 0
+  927  pm2 logs 0
+  928  pm2 restart 0
+  929  pm2 logs 0
+  930  pm2 restart 0
+  931  pm2 logs 0
+  932  pm2 restart 0
+  933  pm2 logs 0
+  934  cd ..
+  935  cd /
+  936  cd var/
+  937  cd www/html/seedfund_api/
+  938  php artisan cache:clear
+  939  php artisan config:clear
+  940  vim .env
+  941  php artisan serve
+  942  php artisan serve
+  943  pm2 restart 0
+  944  pm2 logs 0
+  945  pm2 restart 0
+  946  pm2 logs 0
+  947  pm2 restart 0
+  948  pm2 logs 0
+  949  pm2 restart 0
+  950  pm2 logs 0
+  951  pm2 restart 0
+  952  pm2 logs 0
+  953  pm2 restart 0
+  954  pm2 logs 0
+  955  pm2 restart 0
+  956  pm2 logs 0
+  957  pm2 restart 0
+  958  pm2 logs 0
+  959  pm2 restart 0
+  960  pm2 logs 0
+  961  pm2 restart 0
+  962  pm2 logs 0
+  963  pm2 restart 0
+  964  pm2 logs 0
+  965  pm2 restart 0
+  966  pm2 logs 0
+  967  pm2 restart 0
+  968  pm2 logs 0
+  969  pm2 restart 0
+  970  pm2 logs 0
+  971  pm2 restart 0
+  972  pm2 logs 0
+  973  pm2 restart 0
+  974  pm2 logs 0
+  975  pm2 restart 0
+  976  pm2 logs 0
+  977  pm2 restart 0
+  978  pm2 logs 0
+  979  pm2 restart 0
+  980  pm2 logs 0
+  981  pm2 restart 0
+  982  pm2 logs 0
+  983  pm2 restart 0
+  984  pm2 logs 0
+  985  pm2 logs 0
+  986  pm2 logs 0
+  987  pm2 restart 0
+  988  pm2 logs 0
+  989  pm2 restart 0
+  990  pm2 logs 0
+  991  pm2 logs 0
+  992  pm2 logs 0
+  993  pm2 restart 0
+  994  pm2 logs 0
+  995  pm2 restart 0
+  996  pm2 logs 0
+  997  ls
+  998  cd seedfund_node/
+  999  pm2 restart 0
+ 1000  pm2 logs 0
+ 1001  cd /
+ 1002  ls
+ 1003  cd var/www/html/
+ 1004  ll
+ 1005  pwd
+ 1006  cd /
+ 1007  cd etc/
+ 1008  ls
+ 1009  cd httpd/
+ 1010  ls
+ 1011  ll
+ 1012  cd conf
+ 1013  ll
+ 1014  cat httpd.conf
+ 1015  vi httpd.conf
+ 1016  pwd
+ 1017  cd /
+ 1018  cd var/www/html/
+ 1019  ll
+ 1020  mkdir seedfund_api_tmp
+ 1021  ll
+ 1022  cd seedfund_api
+ 1023  ll
+ 1024  cd ..
+ 1025  ll
+ 1026  cp -r seedfund_api/* seedfund_api_tmp/
+ 1027  ll
+ 1028  cd seedfund_api_tmp/
+ 1029  ll
+ 1030  cd ..
+ 1031  cd seedfund_api
+ 1032  ll
+ 1033  cd ..
+ 1034  ll
+ 1035  chmod 777 seedfund_api_tmp/
+ 1036  ll
+ 1037  cd seedfund_api_tmp/
+ 1038  ll
+ 1039  chmod 777 *
+ 1040  ll
+ 1041  cd ..
+ 1042  ll
+ 1043  cd /
+ 1044  cd etc/httpd/conf/
+ 1045  ll
+ 1046  vi httpd.conf
+ 1047  history
+---------------------------------------------------------
+30/01/2023
+
+ 1043  cd ..
+ 1044  cd conf.d/
+ 1045  ls
+ 1046  vi vhost.conf
+ 1047  vi welcome.conf
+ 1048  vi ssl.conf
+ 1049  vi php.conf
+ 1050  vi autoindex.conf
+ 1051  vi vhost-temp.conf
+ 1052  cd /var/www/html/
+ 1053  ls
+ 1054  ls -al
+ 1055  cd seedfund_api
+ 1056  ls -al
+ 1057  cd ..
+ 1058  cd seedfund_api_tmp/
+ 1059  ls -al
+ 1060  php artisan serve --host=0.0.0.0 --port=8080
+ 1061  php artisan serve --host=0.0.0.0 --port=8086
+ 1062  vi /etc/httpd/conf.d/vhost-temp.conf
+ 1063  systemctl restart httpd
+ 1064  php artisan serve --host=0.0.0.0 --port=8086
+ 1065  systemctl status httpd
+ 1066  vi /etc/httpd/conf.d/vhost-temp.conf
+ 1067  systemctl restart httpd
+ 1068  systemctl status httpd
+ 1069  php artisan serve --host=0.0.0.0 --port=8087
+ 1070  netstat -nal | grep 8087
+ 1071  netstat -nal | grep 8086
+ 1072  netstat -nal | grep 8080
+ 1073  systemctl stop httpd
+ 1074  systemctl start httpd
+ 1075  vi /etc/httpd/conf.d/vhost-temp.conf
+ 1076  cd public/
+ 1077  ls -la
+ 1078  cd storage/
+ 1079  ls
+ 1080  cd ..
+ 1081  cd /var
+ 1082  ls
+ 1083  cd log/
+ 1084  ls
+ 1085  cd httpd/
+ 1086  ls
+ 1087  ls -al
+ 1088  tail -f access_log
+ 1089  tail -f error_log
+ 1090  cd /var/www/html/
+ 1091  ls
+ 1092  cd seedfund_api_tmp/
+ 1093  ls
+ 1094  php
+ 1095  netstat -nal | grep 8080
+ 1096  netstat -nal | grep 8087
+ 1097  netstat -nal | grep 8086
+ 1098  php artisan serve --host=0.0.0.0 --port=8087
+ 1099  cd ..
+ 1100  chmod -R 755 seedfund_api_tmp/
+ 1101  chmod -R o+w seedfund_api_tmp/public/storage/
+ 1102  cd seedfund_api_tmp/
+ 1103  ls
+ 1104  vi /etc/httpd/conf.d/vhost-temp.conf
+ 1105  php artisan cache:clear
+ 1106  php artisan config:clear
+ 1107  ls
+ 1108  cd public/
+ 1109  ls
+ 1110  cd ..
+ 1111  cd ..
+ 1112  cd seedfund_api
+ 1113  ls
+ 1114  ls -al
+ 1115  cd ..
+ 1116  cd seedfund_api_tmp/
+ 1117  ls -al
+ 1118  vi /var/www/html/seedfund_api/.env
+ 1119  winscp
+ 1120  php artisan dump-autoload
+ 1121  composer dump-autoload
+ 1122  cd ..
+ 1123  ll
+ 1124  rm -rf seedfund_api_tmp/
+ 1125  ls
+ 1126  mkdir seedfund_api_tmp
+ 1127  ll
+ 1128  sudo cp  -r seedfund_api/* seedfund_api_tmp/
+ 1129  ll
+ 1130  cd seedfund_api_tmp/
+ 1131  ll
+ 1132  cd ..
+ 1133  cd seedfund_api
+ 1134  ll
+ 1135  ls -al
+ 1136  cd ..
+ 1137  cd seedfund_api_tmp/
+ 1138  ls -al
+ 1139  cd ..
+ 1140  cd seedfund_api
+ 1141  ll
+ 1142  ls -al
+ 1143  cd ..
+ 1144  cp -r seedfund_api/.enc /seefund_api_tmp/
+ 1145  cp -r seedfund_api/.enc seefund_api_tmp/
+ 1146  cp seedfund_api/.env /
+ 1147  cd /
+ 1148  ll
+ 1149  ls -al
+ 1150  cd var/www/html/
+ 1151  ll
+ 1152  cd seedfund_api
+ 1153  ll
+ 1154  ls -al
+ 1155  cp .enc /
+ 1156  cp .env.swo
+ 1157  cp .env.swo /
+ 1158  cd //
+ 1159  ll
+ 1160  ls -al
+ 1161  mv .enc /var/www/html/seedfund_api_tmp/
+ 1162  mv .env /var/www/html/seedfund_api_tmp/
+ 1163  mv .env.swo /var/www/html/seedfund_api_tmp/
+ 1164  ll
+ 1165  ls -al
+ 1166  cd var/www/html/seedfund_api_tmp/
+ 1167  ll
+ 1168  ls a-l
+ 1169  ls -al
+ 1170  cd ..
+ 1171  ll
+ 1172  chmod 777 seedfund_api_tmp/*
+ 1173  ll
+ 1174  cd seedfund_api_tmp/
+ 1175  ll
+ 1176  cd ..
+ 1177  ll
+ 1178  chmod 777 seedfund_api_tmp/
+ 1179  ll
+ 1180  cd /
+ 1181  cd var/www/html/
+ 1182  ll
+ 1183  cd seedfund_api_tmp/
+ 1184  ll
+ 1185  cd storage/
+ 1186  ll
+ 1187  chmod 777 *
+ 1188  ll
+ 1189  ccd logs/
+ 1190  cd logs/
+ 1191  ls
+ 1192  ll
+ 1193  chmod 777 *
+ 1194  ll
+ 1195  cd ..
+ 1196  ll
+ 1197  cd ..
+ 1198  ll
+ 1199  cd storage/
+ 1200  ll
+ 1201  cd framework/
+ 1202  ll
+ 1203  chmod 777 *
+ 1204  ls
+ 1205  ll
+ 1206  cd cache/
+ 1207  ll
+ 1208  chmod 777 *
+ 1209  ll
+ 1210  cd data/
+ 1211  ll
+ 1212  chmod 777 a8
+ 1213  ll
+ 1214  cd a8/
+ 1215  ll
+ 1216  cd ..
+ 1217  chmod 777 *
+ 1218  ll
+ 1219  cd a8/
+ 1220  ls
+ 1221  chmod 777 *
+ 1222  ls
+ 1223  cd 5e/
+ 1224  ll
+ 1225  chmod 777 *
+ 1226  ll
+ 1227  cd ..
+ 1228  ls
+ 1229  cd ..
+ 1230  ll
+ 1231  chmod -R 777 .
+ 1232  cd bb/
+ 1233  ls
+ 1234  cd 65/
+ 1235  ll
+ 1236  history
+[root@ip-10-150-0-8 65]#
+

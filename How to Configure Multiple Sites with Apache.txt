@@ -1,0 +1,98 @@
+How to Configure Multiple Sites with Apache
+
+Step 1: Make a Directory for Each Site
+sudo mkdir -p /var/www/domain.com
+sudo mkdir -p /var/www/domain2.com
+---
+
+Step 2: Set Folder Permissions
+sudo chmod -R 755 /var/www
+---
+
+Step 3: Set up an Index Page
+sudo nano /var/www/domain.com/index.html
+
+Write this in the file:
+<h1> Testing for domain.com</h1>
+
+Repeat for 2nd domain:
+<h1> Testing for domain2.com</h1>
+---
+
+Step 4: Copy the Config File for Each Site
+Copy the default configuration file for each site, this will also ensure that you always have a default copy for future site creation:
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/domain.com.conf
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/domain2.com.conf
+---
+
+Step 5: Edit the Config File for Each site & subdomain
+sudo nano /etc/apache2/sites-available/domain.com.conf
+
+### domain.com
+<VirtualHost *:80>
+ServerAdmin admin@domain.com
+ServerName domain.com
+ServerAlias www.domain.com
+DocumentRoot /var/www/domain.com/
+
+#This enables .htaccess file, which is needed for WordPress Permalink to work. 
+        <Directory "/var/www/domain.com/">
+             AllowOverride All
+        </Directory>
+
+ErrorLog ${APACHE_LOG_DIR}/domain.com.error.log
+CustomLog ${APACHE_LOG_DIR}/domain.com.access.log combined
+RewriteEngine on
+RewriteCond %{SERVER_NAME} =domain.com [OR]
+RewriteCond %{SERVER_NAME} =www.domain.com
+RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+</VirtualHost>
+
+Make sure the DocumentRoot is the same as the directory you created in step 1
+Repeat for the second domain.
+
+Step 5.1: Also create/edit the SSL version of the conf file:
+sudo nano /etc/apache2/sites-available/domain.com-le-ssl.conf
+
+### main domain.com domain
+<IfModule mod_ssl.c>
+SSLStaplingCache shmcb:/var/run/apache2/stapling_cache(128000)
+<VirtualHost *:443>
+ServerAdmin admin@domain.com
+ServerName domain.com
+#ServerAlias www.domain.com
+DocumentRoot /var/www/domain.com/
+
+#This enables .htaccess file, which is needed for WordPress Permalink to work. 
+        <Directory "/var/www/domain.com/">
+             AllowOverride All
+        </Directory>
+
+ErrorLog ${APACHE_LOG_DIR}/error.log
+CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+SSLCertificateFile /etc/letsencrypt/live/domain.com/fullchain.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/domain.com/privkey.pem
+Include /etc/letsencrypt/options-ssl-apache.conf
+Header always set Strict-Transport-Security "max-age=31536000"
+SSLUseStapling on
+Header always set Content-Security-Policy upgrade-insecure-requests
+</VirtualHost>
+</IfModule>
+---
+
+Step 6: Enable Your Config File
+Disable the default file and enable the new ones you just created:
+Disable the all default conf files with this command:
+sudo a2dissite 000-default.conf 000-default-le-ssl.conf default-ssl.conf
+
+Enable both files with this command:
+sudo a2ensite domain.com.conf
+sudo a2ensite domain2.com.conf
+sudo a2ensite domain.com-le-ssl.conf
+sudo a2ensite domain2.com-le-ssl.conf
+
+Restart Apache for changes to take effect:
+sudo systemctl restart apache2
+
+Step 7: Make sure to set up subdomains on your domain registrar or Route 53

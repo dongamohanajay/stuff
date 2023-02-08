@@ -1,0 +1,32 @@
+Youtube video - https://www.youtube.com/watch?v=jkn459MBNpo
+
+#LAMBDA Stop instance index.js
+
+const AWS = require('aws-sdk');
+
+exports.handler = (event, context, callback) => {
+    const ec2 = new AWS.EC2({ region: event.instanceRegion });
+    
+    ec2.stopInstances({ InstanceIds: [event.instanceId] }).promise()
+        .then(() => callback(null, `Successfully stopped ${event.instanceId}`))
+        .catch(err => callback(err));
+};
+
+# LAMBDA Start instance index.js
+
+const AWS = require('aws-sdk');
+
+exports.handler = (event, context, callback) => {
+    const ec2 = new AWS.EC2({ region: event.instanceRegion });
+    
+    ec2.startInstances({ InstanceIds: [event.instanceId] }).promise()
+        .then(() => callback(null, `Successfully started ${event.instanceId}`))
+        .catch(err => callback(err));
+};
+
+
+#test / JSON script for schedule
+{
+    "instanceRegion": "us-east-1",
+    "instanceId":   "i-06c8946147bf2f235"
+}

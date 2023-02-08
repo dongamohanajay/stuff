@@ -1,0 +1,20 @@
+Prowler is a tool for AWS security assessment and hardening. It can be used to check for a variety of security-related best practices, such as ensuring that all security groups have proper ingress and egress rules, that multi-factor authentication is enabled for all IAM users, and that encryption is enabled for all S3 buckets.
+
+To use Prowler, you will first need to have the AWS CLI installed and configured on your machine. You will also need to have the AWS credentials for the account you want to assess.
+
+Once you have the AWS CLI installed and configured, you can install Prowler by running the following command:
+
+Copy code
+git clone https://github.com/toniblyx/prowler.git
+After installing Prowler, you can run it by navigating to the Prowler directory and running the following command:
+
+Copy code
+./prowler
+This will run Prowler and output the results of the security assessment to the terminal. You can also specify specific checks to run by using the -t option and the name of the check.
+
+Copy code
+./prowler -t check_name
+You can also generate a detailed report of the security assessment by using the -M option.
+
+Copy code
+./prowler -M report

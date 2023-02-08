@@ -1,0 +1,66 @@
+
+Priyanka
+
+1.Import the SSl certificates in the ACM.
+2.Manually create a single,two and three-tier vpc's.
+3.Create Client VPN(with and without AD) connections.
+4.Create Site-to-Site VPN connections.
+5.Create VPC flow logs,security hub,guard duty,config,cloud trail and WAF.
+6.Configure cloudwatch for servers along with SNS,create alarms and dashboard.
+7.Create a support ticket.
+8.How to request to increase service quotas.
+
+------------------------
+
+Lakshmi
+
+1.Create a start/stop rules for RDS.
+2.Create a start/stop rules for EC2.
+3.Launch a static website on Amazon S3.
+4.Create Billing Alarms for the Daily/Monthly billing.
+5.How to configure various types of  load balancers[CLB/ALB/NLB/GWLB].
+6.How to restore the servers/volumes from the Backups/AMI's/Snapshots.
+7.Install Wordpress with Apache on EC2.
+8.Install LAMP on EC2.
+----------------------------------
+Chakri
+1.Create an IAM users,usergroups,roles,policies and enable MFA.
+2.Setup sftp server.
+3.Setup SAMBA server.
+4.create storage gateway for transfer the data from server to s3 bucket.
+5.Create two tier application with load balancer , cloud front and WAF.
+6.Do patch update to the linux EC2 instance using patch manager.
+7.Build wordpress docker image and deploy in docker container.
+8.Build WordPress image with external database and deploy in docker containers.
+----------------------------------
+Lakshman
+1.Attach the new EBS volume and mount to the server.
+2.Create an efs and attach it to the server.
+3.Create mongodb sharded cluster by 3/10 servers.
+4.Create switch roles for switching from one aws to another aws accounts.
+5.Copy files between S3 and EC2.
+6.Install LEMP on EC2.
+7.Design the architecture diagrams for the AWS infrastructure.
+8.Import AMI's from on premises to AWS cloud.
+---------------------------------------------------
+Aravind
+1.Using cloud formation create single,two and three-tier vpc's.
+2.Setup cron jobs for the deletion of the Log Files in windows/Linux servers.
+3.Setup controll tower.
+4.Integration of AWS active directory service with single sign on.
+5.Setup Cloud Watch for ASG EC2's.
+6.Configure Amazon Route 53 to route traffic to a load balancer.
+7.How to use Prowler tool in aws for generating the security assessments.
+8.How to restrict access using ports in Security Groups/NACL.
+-----------------------------------------------------
+Raviteja
+1.Setup Life-cycle policies/Backups for the AMI's and Volumes.
+2.Deploy wordPress application with load balancer in EKS cluster.
+3.Create sample application in elastic beanstalk.
+4.Install Wordpress with Nginx on EC2.
+5.Migrating Your Existing Applications to the AWS Cloud.
+6.Create customized docker file to build apache webserver image and deploy it on EC2.
+7.Create customized docker file to build nginx webserver image and deploy it on EC2.
+8.Monitor, store, and access your log files from  Elastic Compute Cloud ( EC2) instances, AWS CloudTrail, Route 53, and other sources
+
+

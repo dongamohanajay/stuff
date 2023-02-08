@@ -1,0 +1,19 @@
+1. Host a static website using Amazon S3 and enable  Cloudfront and WAF.
+
+2. Create a HA wordpress with ALB,Cloudfront and enable WAF.
+
+3. Setup Cloud Watch,create alarms and dashboard.
+
+4. Create two-tier VPC using cloudformation.
+
+5. Setup client VPN.
+
+6. Install Wordpress with Apache on EC2.
+
+7. Install Wordpress with Nginx on EC2.
+
+8. Create VPC flow logs,security hub,guard duty,config,cloud trail and WAF.
+
+9. Make an Amazon EBS volume available for use on Linux.
+
+10. Mount the file system on the EC2 instance and test.

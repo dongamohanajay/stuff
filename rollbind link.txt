@@ -1,0 +1,18 @@
+https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html
+
+
+https://aws.amazon.com/premiumsupport/knowledge-center/eks-kubernetes-object-access-error/
+
+--------------------------------------
+in the below script change the group name in the subjects as mentioned below
+----
+subjects:
+- kind: Group
+  name: eks-console-dashboard-full-access-group[change to your group name]
+----
+example
+----
+subjects:
+- kind: Group
+  name: Admin-Group
+-----

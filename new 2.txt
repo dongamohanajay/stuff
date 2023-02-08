@@ -1,0 +1,12 @@
+codepipelinE
+
+AWS APP MESH
+
+What is difference between proxy and VPN?
+Proxy and VPN defined. A VPN and a proxy are online services that hide your IP address by rerouting your internet traffic through a remote server. 
+But a proxy works only with a single app or service, while a VPN secures all your internet traffic and encrypts it for extra security and privacy.
+
+https://aws.amazon.com/blogs/containers/getting-started-with-app-mesh-and-eks/
+
+https://blog.knoldus.com/how-to-setup-aws-app-mesh-with-eks/
+

@@ -1,0 +1,6 @@
+Setting the logs for the SES service.
+
+https://aws.amazon.com/blogs/messaging-and-targeting/how-to-log-amazon-ses-details-using-amazon-cloudwatch/
+
+
+

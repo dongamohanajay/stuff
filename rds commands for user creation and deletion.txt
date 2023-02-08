@@ -1,0 +1,50 @@
+Step 1 – Steps for removing a MySQL/MariaDB user. ...
+Step 2 – List all mysql users. ...
+Step 3 – List grants for a mysql user. ...
+Step 4 – Revoke all grants for a mysql user. ...
+Step 5 – Remove/Delete the user from the user table. ...
+Step 6 – Delete the database.
+
+
+-----------
+DROP USER 'smithj'@'localhost', 'andersonk'@'localhost';
+-----------------
+MySQL > Create User 'UserName'@'Server' IDENTIFIED BY 'YourPassword';
+
+MySQL > Create user 'Aamir'@'localhost' Identified by ' Aamir$Password';
+
+MySQL > Create user 'Aamir'@'10.0.0.5' Identified by ' Aamir$Password';     
+
+MySQL > Select host, user  from mysql.user; 
+
+MySQL > Drop User 'UserName'@'HostName';
+
+MySQL > Drop user 'Aamir'@'Localhost'; 
+
+DROP USER 'smithj'@'localhost', 'andersonk'@'localhost';
+
+Syntax:
+MySQL > Create User 'UserName'@'localhost';
+
+To provide all permission including with GRANT , below syntax can be use
+
+
+MySQL > GRANT ALL ON *.* To 'UserName'@'HostName'  With GRANT OPTION;
+
+Example:
+Let's say that you would like to create user Aamir and provide him all the permissions.
+
+
+MySQL > Create user 'Aamir'@'localhost' Identified by 'Password'; 
+
+ MySQL > GRANT ALL ON *.* to 'Aamir'@'localhost' With Grant Option;
+
+Grant full permissions on TechBrothers Databases to user account TB.
+
+MySQL > GRANT ALL ON TechBrothers.* TO 'TB'@'localhost' With GRANT OPTION; 
+
+
+
+MySQL > REVOKE PermissionType ON Object To 'UserName'@'Host';
+
+MySQL > REVOKE DELETE ON TechBrothers.* FROM 'TB'@'localhost';

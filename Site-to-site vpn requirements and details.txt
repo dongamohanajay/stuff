@@ -1,0 +1,39 @@
+Site to Site VPN REQUIREMENTS
+
+Network Details:
+•	Customer End Gateway IP:
+•	Customer LAN:
+•	Subnet IP:
+ 
+Firewall Configuration Details:               
+•	Vendor:
+•	Platform:    
+•	Software:
+•	IKE version:
+
+
+CLIENT PROVIDED DETAILS
+
+Network Details:
+ 
+Customer End Gateway IP: 103.59.0.18
+Customer LAN:192.168.53.0
+Subnet IP:255.255.255.0
+Firewall Configuration Details:               
+ 
+Vendor: MIKROTIK
+Platform:v6.47.10    
+Software: NA
+IKE version: MAIN MODE, IKE VERSION 1
+PRE-SHARED KEY - 123456789
+ 
+Phase 1 
+Encryption- AES256
+Authentication - SHA256
+Diffie-Hellman Group - 14
+ 
+Phase 2
+Encryption- AES256
+Authentication - SHA256
+Diffie-Hellman Group - 14
+

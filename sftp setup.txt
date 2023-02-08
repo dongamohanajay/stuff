@@ -1,0 +1,9 @@
+sftp
+
+https://phoenixnap.com/kb/ssh-permission-denied-publickey
+
+https://linuxhint.com/setup-sftp-server-ubuntu/
+
+https://phoenixnap.com/kb/install-ftp-server-on-ubuntu-vsftpd#ftoc-heading-7
+
+https://www.tecmint.com/install-ftp-server-in-centos-7/

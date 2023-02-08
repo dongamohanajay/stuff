@@ -1,0 +1,43 @@
+https://medium.com/analytics-vidhya/wordpress-on-aws-with-high-availability-35ec5732f1f6
+
+
+database-1
+
+Master username
+admin
+
+Master password
+jrz2t8ScXZ7XwhfAJIic
+
+
+database-1.cjk4eoqduy3a.ap-south-1.rds.amazonaws.com
+
+
+wordpress
+
+
+
+admin
+1DDK*1*cVjY^QRyo!l
+
+------------------------------------
+https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/client-authentication.html#mutual
+
+
+
+mkdir C:\cvpn2412023
+copy pki\ca.crt C:\cvpn2412023
+copy pki\issued\server.crt C:\cvpn2412023
+copy pki\private\server.key C:\cvpn2412023
+copy pki\issued\client1.domain.tld.crt C:\cvpn2412023
+copy pki\private\client1.domain.tld.key C:\cvpn2412023
+cd C:\cvpn2412023
+
+----------------------------------
+
+mohan.cjk4eoqduy3a.ap-south-1.rds.amazonaws.com
+
+--------------------------------
+3-tier-vpc-----------------------172.31.0.0/24
+
+project-vpc---------------------10.0.0.0/16

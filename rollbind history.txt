@@ -1,0 +1,199 @@
+root@ip-192-168-20-82:/# history
+    1  cd /
+    2  apt update -y
+    3  apt upgarde -y
+    4  apt upgrade -y
+    5  aws configure
+    6  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    7  unzip awscliv2.zip
+    8  apt install unzip
+    9  unzip awscliv2.zip
+   10  sudo ./aws/install
+   11  aws --v
+   12  curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.23.13/2022-10-31/bin/linux/amd64/kubectl
+   13  openssl sha1 -sha256 kubectl
+   14  chmod +x ./kubectl
+   15  mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+   16  echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+   17  kubectl version --short --client
+   18  eksctl version
+   19  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+   20  sudo mv /tmp/eksctl /usr/local/bin
+   21  eksctl version
+   22  curl -Lo aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.5.9/aws-iam-authenticator_0.5.9_linux_amd64
+   23  chmod +x ./aws-iam-authenticator
+   24  mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
+   25  echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+   26  aws-iam-authenticator help
+   27  aws configure
+   28  aws iam users-list
+   29  aws iam users
+   30  aws iam list-users
+   31  aws s3 ls
+   32  aws sts get-caller-identity
+   33  kubectl --v
+   34  kubectl
+   35  aws --v
+   36  aws --version
+   37  kubectl get svc
+   38  aws eks --region ap-south-1 update-kubeconfig --name test-eks
+   39  kubectl get svc
+   40  kubectl get nodes
+   41  kubectl get pods
+   42  kubectl get ns
+   43  kubectl create -n lakshman
+   44  kubectl get nodes
+   45  kubectl get pods
+   46  kubectl get deploy
+   47  git clone https://github.com/learntguide/kubernetes-knote.git
+   48  git clone https://github.com/learnitguide/kubernetes-knote.git
+   49  ls
+   50  cd kubernetes-knote/
+   51  ls
+   52  ll
+   53  vim knote.yaml
+   54  vim mongo.yaml
+   55  vim knote.yaml
+   56  kubectl apply -f mongo.yaml
+   57  kubectl apply -f knote.yaml
+   58  kubectl get svc
+   59  kubectl get pods
+   60  kubectl get pods -o wide
+   61  kubectl get svc
+   62  nslookup
+   63  ls
+   64  ll
+   65  kubectl get nodes
+   66  kubectl get pods
+   67  cd ..
+   68  ls
+   69  cat ~/.kube/config
+   70  kubectl describe -n kube-system configmap/aws-auth
+   71  kubectl get roles -A
+   72  kubectl get clusterroles
+   73  kubectl get roles -A
+   74  kubectl describe role eks:authenticator -n kube-system
+   75  kubectl get clusterroles
+   76  kubectl describe clusterrole aws-node
+   77  kubectl get rolebindings -A
+   78  kubectl get clusterrolebindings
+   79  kubectl edit -n kube-system configmap/aws-auth
+   80  kubectl describe configmap -n kube-system aws-auth
+   81  eksctl get iamidentitymapping --cluster test-eks --region=ap-south-1
+   82  kubectl describe configmap -n kube-system aws-auth
+   83  kubectl edit -n kube-system configmap/aws-auth
+   84  eksctl get iamidentitymapping --cluster test-eks --region=ap-south-1
+   85  eksctl create iamidentitymapping     --cluster test-eks     --region=ap-south-1     --arn arn:aws:iam::179447066687:role/eksworkernoderole     --group eks-console-dashboard-full-access-group     --no-duplicate-arns
+   86  eksctl create iamidentitymapping     --cluster test-eks     --region=ap-south-1     --arn arn:aws:iam::179447066687:role/eksworkernoderole     --group eks:authenticator     --no-duplicate-arns
+   87  kubectl edit -n kube-system configmap/aws-auth
+   88  kubectl describe configmap -n kube-system aws-auth
+   89  eksctl create iamidentitymapping     --cluster test-eks     --region=ap-south-1     --arn arn:aws:iam::179447066687:role/eksworkernoderole     --group Admin-Group     --no-duplicate-arns
+   90  eksctl create iamidentitymapping     --cluster test-cluster     --region=ap-south-1     --arn arn:aws:iam::179447066687:user/test-user     --group Admin-Group     --no-duplicate-arns
+   91  eksctl create iamidentitymapping     --cluster test-eks     --region=ap-south-1     --arn arn:aws:iam::179447066687:user/test-user     --group Admin-Group     --no-duplicate-arns
+   92  kubectl describe configmap -n kube-system aws-auth
+   93  curl -o aws-auth-cm.yaml https://s3.us-west-2.amazonaws.com/amazon-eks/cloudformation/2020-10-29/aws-auth-cm.yaml
+   94  nano aws-auth-cm.yaml
+   95  kubectl apply -f aws-auth-cm.yaml
+   96  nano eks-console-dashboard-full-access-group
+   97  kubectl apply -f  eks-console-dashboard-full-access-group
+   98  kubectl describe configmap -n kube-system aws-auth
+   99  exit
+  100  cd /
+  101  ls
+  102  aws configure
+  103  aws iam list-users
+  104  kubectl get svc
+  105  kubectl get nodes
+  106  aws eks --region ap-south-1 update-kubeconfig --name eks-cluster1
+  107  kubectl get nodes
+  108  kubectl get svc
+  109  kubectl get pods
+  110  curl -o iam_policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.4/docs/install/iam_policy.json
+  111  aws iam create-policy     --policy-name AWSLoadBalancerControllerIAMPolicy     --policy-document file://iam_policy.json
+  112  aws eks describe-cluster --name eks-cluster1 --query "cluster.identity.oidc.issuer" --output text
+  113  nano load-balancer-role-trust-policy.json
+  114  cat >load-balancer-role-trust-policy.json <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::179447066687:oidc-provider/oidc.eks.ap-south-1.amazonaws.com/id/564F882BC5CC3FB62C331F438E2DC947"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "oidc.eks.ap-south-1.amazonaws.com/id/564F882BC5CC3FB62C331F438E2DC947:aud": "sts.amazonaws.com",
+                    "oidc.eks.ap-south-1.amazonaws.com/id/564F882BC5CC3FB62C331F438E2DC947:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
+                }
+            }
+        }
+    ]
+}
+EOF
+
+  115  ls
+  116  aws iam create-role   --role-name AmazonEKSLoadBalancerControllerRole   --assume-role-policy-document file://"load-balancer-role-trust-policy.json"
+  117  aws iam attach-role-policy   --policy-arn arn:aws:iam::179447066687:policy/AWSLoadBalancerControllerIAMPolicy   --role-name AmazonEKSLoadBalancerControllerRole
+  118  cat >aws-load-balancer-controller-service-account.yaml <<EOF
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: aws-load-balancer-controller
+  name: aws-load-balancer-controller
+  namespace: kube-system
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::179447066687:role/AmazonEKSLoadBalancerControllerRole
+EOF
+
+  119  kubectl apply -f aws-load-balancer-controller-service-account.yaml
+  120  kubectl apply     --validate=false     -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+  121  curl -Lo cert-manager.yaml https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+  122  kubectl apply     --validate=false     -f ./cert-manager.yaml
+  123  curl -Lo v2_4_4_full.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.4/v2_4_4_full.yaml
+  124  sed -i.bak -e '480,488d' ./v2_4_4_full.yaml
+  125  ls
+  126  nano v2_4_4_full.yaml
+  127  sed -i.bak -e 's|your-cluster-name|eks-cluster1|' ./v2_4_4_full.yaml
+  128  kubectl apply -f v2_4_4_full.yaml
+  129  curl -Lo v2_4_4_ingclass.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.4/v2_4_4_ingclass.yaml
+  130  kubectl apply -f v2_4_4_ingclass.yaml
+  131  kubectl get deployment -n kube-system aws-load-balancer-controller
+  132  mkdir wordpress
+  133  cd wordpress/
+  134  ls
+  135  nano wp-mysql.yaml
+  136  nano wp.yaml
+  137  ls
+  138  kubectl apply -f wp-mysql.yaml
+  139  kubectl apply -f wp.yaml
+  140  kubectl get pods
+  141  kubectl get svc
+  142  kubectl get nodes
+  143  kubectl get pods
+  144  kubectl get deployments
+  145  kubectl get nodes
+  146  kubectl get pods
+  147  kubectl get pods -o wide
+  148  cd /
+  149  cat ~/.kube/config
+  150  kubectl describe -n kube-system configmap/aws-auth
+  151  eksctl get iamidentitymapping --cluster eks-cluster1 --region=ap-south-1
+  152  eksctl create iamidentitymapping     --cluster eks-cluster1     --region=ap-south-1     --arn arn:aws:iam::179447066687:role/my-role     --group Admin-Group     --no-duplicate-arns
+  153  eksctl create iamidentitymapping     --cluster eks-cluster1     --region=ap-south-1     --arn arn:aws:iam::179447066687:user/laxman     --group Admin-Group     --no-duplicate-arns
+  154  eksctl get iamidentitymapping --cluster eks-cluster1 --region=ap-south-1
+  155  kubectl describe configmap -n kube-system aws-auth
+  156  curl -o aws-auth-cm.yaml https://s3.us-west-2.amazonaws.com/amazon-eks/cloudformation/2020-10-29/aws-auth-cm.yaml
+  157  ls
+  158  nano aws-auth-cm.yaml
+  159  kubectl apply -f aws-auth-cm.yaml
+  160  kubectl get nodes --watch
+  161  nano eks-console-dashboard-full-access-group
+  162  nano eks-console-full-access.yaml
+  163  kubectl apply -f eks-console-full-access.yaml
+  164  kubectl edit configmap aws-auth -n kube-system
+  165  ls
+  166  history

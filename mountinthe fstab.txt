@@ -1,0 +1,40 @@
+lsblk
+df -kh
+cat /etc/fstab
+nano /etc/fstab
+172.17.3.221:/eoffice-database-backups/ /pgsql-bkp efs iam,tls,_netdev
+mount -a
+cd /pgsql-bkp/
+
+Avinash Sir
+--------------
+  134  mount -t nfs -o nolock,hard 172.17.3.221:/eoffice-database-backups /pgsql-bkp
+  135  ls
+  136  su - postgres
+  137  df -hT
+  138  cd  /
+  139  nano /etc/fstab
+  140  mount -a
+  141  cd /
+  142  cat /etc/fstab
+  143  df -kh
+  144  cd /pgsql-bkp
+  145  ls
+  146  cd VKB/
+  147  ls
+  148  cd BackupDB/
+  149  ls
+  150  cd Daily/
+  151  ls
+  152  cd Monday/
+  153  ls
+  154  ls -ltrah
+  155  du -sh *
+  156  cd postgres.backup.Monday.0100HRS/
+  157  ls
+  158  cd /
+  159  history
+[root@ip-172-17-6-119 /]#
+
+
+

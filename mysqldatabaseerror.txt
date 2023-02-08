@@ -1,0 +1,264 @@
+login as: ec2-user
+Authenticating with public key "imported-openssh-key"
+Last login: Thu May  5 08:28:16 2022 from 10.0.6.219
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+[ec2-user@ec2amaz-glxsnv ~]$ sudo mysql --host helpdesk-narayana.cluster-cnnrkrg                                                                             gtx6l.ap-south-1.rds.amazonaws.com -u admin -p narayanaminiapp <dbexport.sql                                                                                 Enter password:
+ERROR 1227 (42000) at line 18: Access denied; you need (at least one of) the SUP                                                                             ER privilege(s) for this operation
+[ec2-user@ec2amaz-glxsnv ~]$ sudo mysql --host helpdesk-narayana.cluster-cnnrkrggtx6l.ap-south-1.rds.amazonaws.com -u admin -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 70
+Server version: 5.7.12 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> q
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'q' at line 1
+MySQL [(none)]> exit
+Bye
+[ec2-user@ec2amaz-glxsnv ~]$ ls
+dbexport.sql  narayanaGroupPortal
+[ec2-user@ec2amaz-glxsnv ~]$ pwd
+/home/ec2-user
+[ec2-user@ec2amaz-glxsnv ~]$ sudo mysql --host helpdesk-narayana.cluster-cnnrkrggtx6l.ap-south-1.rds.amazonaws.com -u admin -p narayanaminiapp < /home/ec2-user/dbexport.sql
+Enter password:
+ERROR 1227 (42000) at line 18: Access denied; you need (at least one of) the SUPER privilege(s) for this operation
+[ec2-user@ec2amaz-glxsnv ~]$ sudo mysql --host helpdesk-narayana.cluster-cnnrkrggtx6l.ap-south-1.rds.amazonaws.com -u admin -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 72
+Server version: 5.7.12 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> SET GLOBAL log_bin_trust_function_creators = 1;
+ERROR 1227 (42000): Access denied; you need (at least one of) the SUPER privilege(s) for this operation
+MySQL [(none)]> exit
+Bye
+[ec2-user@ec2amaz-glxsnv ~]$ sudo mysql --host helpdesk-narayana-instance-1.cnnrkrggtx6l.ap-south-1.rds.amazonaws.com -u admin -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 73
+Server version: 5.7.12 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> exit
+Bye
+[ec2-user@ec2amaz-glxsnv ~]$ sudo mysql --host helpdesk-narayana-instance-1.cnnrkrggtx6l.ap-south-1.rds.amazonaws.com -u admin -p narayanaminiapp < /home/ec2-user/dbexport.sql
+Enter password:
+ERROR 1227 (42000) at line 18: Access denied; you need (at least one of) the SUPER privilege(s) for this operation
+[ec2-user@ec2amaz-glxsnv ~]$ sudo mysql --host helpdesk-narayana-instance-1.cnnrkrggtx6l.ap-south-1.rds.amazonaws.com -u admin -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 75
+Server version: 5.7.12 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> GRANT SUPER ON *.* TO admin@'localhost' IDENTIFIED BY '6xXsqlx9ACngk7rJ4pH0';
+ERROR 1045 (28000): Access denied for user 'admin'@'%' (using password: YES)
+MySQL [(none)]> exit
+Bye
+[ec2-user@ec2amaz-glxsnv ~]$ sudo su
+[root@ec2amaz-glxsnv ec2-user]# mysql --host helpdesk-narayana.cluster-cnnrkrggtx6l.ap-south-1.rds.amazonaws.com -u admin -p narayanaminiapp
+Enter password:
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 76
+Server version: 5.7.12 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [narayanaminiapp]> exit
+Bye
+[root@ec2amaz-glxsnv ec2-user]# mysql --host helpdesk-narayana.cluster-cnnrkrggtx6l.ap-south-1.rds.amazonaws.com -u admin -p narayanaminiapp < /home/ec2-user/dbexport.sql
+Enter password:
+ERROR 1227 (42000) at line 18: Access denied; you need (at least one of) the SUPER privilege(s) for this operation
+[root@ec2amaz-glxsnv ec2-user]# mysql --host helpdesk-narayana.cluster-cnnrkrggtx6l.ap-south-1.rds.amazonaws.com -u admin -p narayanaminiapp
+Enter password:
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 78
+Server version: 5.7.12 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [narayanaminiapp]> grant all privileges on narayanaminiapp.* to admin@'%' with grant option;
+Query OK, 0 rows affected (0.01 sec)
+
+MySQL [narayanaminiapp]> desc mysql.user
+    -> ;
++------------------------+-----------------------------------+------+-----+-----------------------+-------+
+| Field                  | Type                              | Null | Key | Default               | Extra |
++------------------------+-----------------------------------+------+-----+-----------------------+-------+
+| Host                   | char(60)                          | NO   | PRI |                       |       |
+| User                   | char(32)                          | NO   | PRI |                       |       |
+| Select_priv            | enum('N','Y')                     | NO   |     | N                     |       |
+| Insert_priv            | enum('N','Y')                     | NO   |     | N                     |       |
+| Update_priv            | enum('N','Y')                     | NO   |     | N                     |       |
+| Delete_priv            | enum('N','Y')                     | NO   |     | N                     |       |
+| Create_priv            | enum('N','Y')                     | NO   |     | N                     |       |
+| Drop_priv              | enum('N','Y')                     | NO   |     | N                     |       |
+| Reload_priv            | enum('N','Y')                     | NO   |     | N                     |       |
+| Shutdown_priv          | enum('N','Y')                     | NO   |     | N                     |       |
+| Process_priv           | enum('N','Y')                     | NO   |     | N                     |       |
+| File_priv              | enum('N','Y')                     | NO   |     | N                     |       |
+| Grant_priv             | enum('N','Y')                     | NO   |     | N                     |       |
+| References_priv        | enum('N','Y')                     | NO   |     | N                     |       |
+| Index_priv             | enum('N','Y')                     | NO   |     | N                     |       |
+| Alter_priv             | enum('N','Y')                     | NO   |     | N                     |       |
+| Show_db_priv           | enum('N','Y')                     | NO   |     | N                     |       |
+| Super_priv             | enum('N','Y')                     | NO   |     | N                     |       |
+| Create_tmp_table_priv  | enum('N','Y')                     | NO   |     | N                     |       |
+| Lock_tables_priv       | enum('N','Y')                     | NO   |     | N                     |       |
+| Execute_priv           | enum('N','Y')                     | NO   |     | N                     |       |
+| Repl_slave_priv        | enum('N','Y')                     | NO   |     | N                     |       |
+| Repl_client_priv       | enum('N','Y')                     | NO   |     | N                     |       |
+| Create_view_priv       | enum('N','Y')                     | NO   |     | N                     |       |
+| Show_view_priv         | enum('N','Y')                     | NO   |     | N                     |       |
+| Create_routine_priv    | enum('N','Y')                     | NO   |     | N                     |       |
+| Alter_routine_priv     | enum('N','Y')                     | NO   |     | N                     |       |
+| Create_user_priv       | enum('N','Y')                     | NO   |     | N                     |       |
+| Event_priv             | enum('N','Y')                     | NO   |     | N                     |       |
+| Trigger_priv           | enum('N','Y')                     | NO   |     | N                     |       |
+| Create_tablespace_priv | enum('N','Y')                     | NO   |     | N                     |       |
+| ssl_type               | enum('','ANY','X509','SPECIFIED') | NO   |     |                       |       |
+| ssl_cipher             | blob                              | NO   |     | NULL                  |       |
+| x509_issuer            | blob                              | NO   |     | NULL                  |       |
+| x509_subject           | blob                              | NO   |     | NULL                  |       |
+| max_questions          | int(11) unsigned                  | NO   |     | 0                     |       |
+| max_updates            | int(11) unsigned                  | NO   |     | 0                     |       |
+| max_connections        | int(11) unsigned                  | NO   |     | 0                     |       |
+| max_user_connections   | int(11) unsigned                  | NO   |     | 0                     |       |
+| plugin                 | char(64)                          | NO   |     | mysql_native_password |       |
+| authentication_string  | text                              | YES  |     | NULL                  |       |
+| password_expired       | enum('N','Y')                     | NO   |     | N                     |       |
+| password_last_changed  | timestamp                         | YES  |     | NULL                  |       |
+| password_lifetime      | smallint(5) unsigned              | YES  |     | NULL                  |       |
+| account_locked         | enum('N','Y')                     | NO   |     | N                     |       |
+| Load_from_S3_priv      | enum('N','Y')                     | NO   |     | N                     |       |
+| Select_into_S3_priv    | enum('N','Y')                     | NO   |     | N                     |       |
+| Invoke_lambda_priv     | enum('N','Y')                     | NO   |     | N                     |       |
+| Invoke_sagemaker_priv  | enum('N','Y')                     | NO   |     | N                     |       |
+| Invoke_comprehend_priv | enum('N','Y')                     | NO   |     | N                     |       |
++------------------------+-----------------------------------+------+-----+-----------------------+-------+
+50 rows in set (0.00 sec)
+
+MySQL [narayanaminiapp]> desc myqsl.db;
+ERROR 1146 (42S02): Table 'myqsl.db' doesn't exist
+MySQL [narayanaminiapp]> desc mysql.db;
++-----------------------+---------------+------+-----+---------+-------+
+| Field                 | Type          | Null | Key | Default | Extra |
++-----------------------+---------------+------+-----+---------+-------+
+| Host                  | char(60)      | NO   | PRI |         |       |
+| Db                    | char(64)      | NO   | PRI |         |       |
+| User                  | char(32)      | NO   | PRI |         |       |
+| Select_priv           | enum('N','Y') | NO   |     | N       |       |
+| Insert_priv           | enum('N','Y') | NO   |     | N       |       |
+| Update_priv           | enum('N','Y') | NO   |     | N       |       |
+| Delete_priv           | enum('N','Y') | NO   |     | N       |       |
+| Create_priv           | enum('N','Y') | NO   |     | N       |       |
+| Drop_priv             | enum('N','Y') | NO   |     | N       |       |
+| Grant_priv            | enum('N','Y') | NO   |     | N       |       |
+| References_priv       | enum('N','Y') | NO   |     | N       |       |
+| Index_priv            | enum('N','Y') | NO   |     | N       |       |
+| Alter_priv            | enum('N','Y') | NO   |     | N       |       |
+| Create_tmp_table_priv | enum('N','Y') | NO   |     | N       |       |
+| Lock_tables_priv      | enum('N','Y') | NO   |     | N       |       |
+| Create_view_priv      | enum('N','Y') | NO   |     | N       |       |
+| Show_view_priv        | enum('N','Y') | NO   |     | N       |       |
+| Create_routine_priv   | enum('N','Y') | NO   |     | N       |       |
+| Alter_routine_priv    | enum('N','Y') | NO   |     | N       |       |
+| Execute_priv          | enum('N','Y') | NO   |     | N       |       |
+| Event_priv            | enum('N','Y') | NO   |     | N       |       |
+| Trigger_priv          | enum('N','Y') | NO   |     | N       |       |
++-----------------------+---------------+------+-----+---------+-------+
+22 rows in set (0.00 sec)
+
+MySQL [narayanaminiapp]> show grants;
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Grants for admin@%                                                                                                                                                                                                                                                                                                                                                                                                |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, PROCESS, REFERENCES, INDEX, ALTER, SHOW DATABASES, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, LOAD FROM S3, SELECT INTO S3, INVOKE LAMBDA, INVOKE SAGEMAKER, INVOKE COMPREHEND ON *.* TO 'admin'@'%' WITH GRANT OPTION |
+| GRANT ALL PRIVILEGES ON `narayanaminiapp`.* TO 'admin'@'%' WITH GRANT OPTION                                                                                                                                                                                                                                                                                                                                      |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+MySQL [narayanaminiapp]> update mysql.user set Super_Priv='Y' WHERE user='admin' AND host='%';
+ERROR 1054 (42S22): Unknown column 'ERROR (RDS): SUPER PRIVILEGE CANNOT BE GRANTED OR MAINTAINED' in 'field list'
+MySQL [narayanaminiapp]> exit
+Bye
+[root@ec2amaz-glxsnv ec2-user]# mysqldump
+Usage: mysqldump [OPTIONS] database [tables]
+OR     mysqldump [OPTIONS] --databases [OPTIONS] DB1 [DB2 DB3...]
+OR     mysqldump [OPTIONS] --all-databases [OPTIONS]
+For more options, use mysqldump --help
+[root@ec2amaz-glxsnv ec2-user]# mysqldump --host helpdesk-narayana.cluster-cnnrkrggtx6l.ap-south-1.rds.amazonaws.com -u admin -p narayanaminiapp > /home/ec2-user/dbexport.sql
+Enter password:
+[root@ec2amaz-glxsnv ec2-user]# mysql --host helpdesk-narayana.cluster-cnnrkrggtx6l.ap-south-1.rds.amazonaws.com -u admin -p narayanaminiapp
+Enter password:
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 80
+Server version: 5.7.12 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [narayanaminiapp]> select database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+MySQL [narayanaminiapp]> show tables;
++---------------------------------+
+| Tables_in_narayanaminiapp       |
++---------------------------------+
+| administrativeescalations       |
+| agent_dept_Mappings             |
+| collegeescalations              |
+| core_tenant_settings            |
+| departments                     |
+| emailjobs                       |
+| emailtemplates                  |
+| escalatedtickets                |
+| files                           |
+| helptopics                      |
+| nspira_userSettings             |
+| nspiradepartments               |
+| schoolescalations               |
+| teamLead_agnt_dept_associations |
+| teamLead_associations           |
+| teams                           |
+| tickethistories                 |
+| ticketreplies                   |
+| tickets                         |
+| ticketsources                   |
+| users                           |
++---------------------------------+
+21 rows in set (0.00 sec)
+
+MySQL [narayanaminiapp]>

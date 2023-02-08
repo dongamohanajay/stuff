@@ -1,0 +1,45 @@
+
+
+httpd---amazon linux2
+---------------
+<VirtualHost *:80>
+
+  # The name your website should respond to
+  ServerName seedfund
+
+  # Tell Apache where your document root is
+  DocumentRoot /var/www/html/seedfund
+
+  # Add this line if you are allowing .htaccess overrides.
+  <Directory /var/www/html/seedfund>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+  </Directory>
+
+</VirtualHost>
+---------------------------
+
+apache2-----ubuntu
+
+----------------------------
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName xactitude.kristujayanti.edu.in
+    ServerAlias www.xactitude.kristujayanti.edu.in
+    DocumentRoot /var/www/html/xactitude.kristujayanti.edu.in/public_html
+    <Directory /var/www/html/xactitude.kristujayanti.edu.in/public_html>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+    <IfModule mod_dir.c>
+        DirectoryIndex index.php index.pl index.cgi index.html index.xhtml index.htm
+    </IfModule>
+</VirtualHost>
+------------------------------
+https://thewebhacker.com/setting-up-apache-vhosts-on-aws-linux/
+
+https://www.arubacloud.com/tutorial/how-to-configure-apache-virtual-hosts-on-ubuntu-20-04.aspx

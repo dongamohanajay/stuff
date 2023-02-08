@@ -1,0 +1,2 @@
+https://aws.amazon.com/premiumsupport/knowledge-center/install-ssm-agent-ec2-linux/
+

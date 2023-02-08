@@ -1,0 +1,16 @@
+1.efs unmount 
+
+2.nfs mount
+
+
+
+1.NFS & RedisServer-----i-041781c79fc656714----10.0.4.194
+
+2.MOHAN-LMS-NEW-1a-DO-NOT-DELETE----i-06c81a6bd48ad4f26----10.0.4.38
+
+
+https://linuxize.com/post/how-to-mount-an-nfs-share-in-linux/
+
+
+
+ 

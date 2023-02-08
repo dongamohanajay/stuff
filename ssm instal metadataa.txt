@@ -1,0 +1,21 @@
+#!/bin/bash
+cd /tmp
+sudo dnf install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+sudo systemctl enable amazon-ssm-agent
+sudo systemctl start amazon-ssm-agent
+sudo dnf install -y https://s3.amazonaws.com/amazoncloudwatch-agent/redhat/amd64/latest/amazon-cloudwatch-agent.rpm
+sudo systemctl enable amazon-cloudwatch-agent
+sudo systemctl start amazon-cloudwatch-agent
+
+
+------------------------------------------------------
+- Configuration file successfully saved at: /var/awslogs/etc/awslogs.conf
+- You can begin accessing new log events after a few moments at https://console.aws.amazon.com/cloudwatch/home?region=ap-south-1#logs:
+- You can use 'sudo service awslogs start|stop|status|restart' to control the daemon.
+- To see diagnostic information for the CloudWatch Logs Agent, see /var/log/awslogs.log
+- You can rerun interactive setup using 'sudo python ./awslogs-agent-setup.py --region ap-south-1 --only-generate-config'
+
+
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s
+
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a status

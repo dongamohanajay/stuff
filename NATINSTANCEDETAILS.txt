@@ -1,0 +1,28 @@
+
+
+NAT INSTANCE
+
+
+ ami-0d2c3fd049e018606
+
+
+amzn-ami-vpc-nat-2018.03.0.20211201.0-x86_64-ebs
+
+
+amazon/amzn-ami-vpc-nat-2018.03.0.20211201.0-x86_64-ebs
+
+
+Nat instance Sg
+
+inbound ---ALL Traffic
+outbound--ALL Traffic
+
+
+Allocate EIP to the SERVER and add the Elastic network interface in every private route tables
+
+or
+
+Add the route in all Private route tables using the NAT Instance ID
+
+
+

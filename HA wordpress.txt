@@ -1,0 +1,33 @@
+https://medium.com/analytics-vidhya/wordpress-on-aws-with-high-availability-35ec5732f1f6
+
+https://computingforgeeks.com/mount-aws-efs-file-system-on-ec2/
+--------------------------------------
+Database name
+wp-database-1
+
+Master username
+admin
+
+Master password
+
+6AmtExW4vCaOOmiPysN2
+
+
+Endpoint
+
+wp-database-1.cpy7syti9eze.ap-south-1.rds.amazonaws.com
+
+Wordpress@123
+
+user:wordpress-user
+database name: wordpress-db
+password:Wordpress@123
+
+
+aws links
+------------------
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hosting-wordpress.html
+
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-lamp-amazon-linux-2.html
+
+https://medium.com/analytics-vidhya/wordpress-on-aws-with-high-availability-35ec5732f1f6

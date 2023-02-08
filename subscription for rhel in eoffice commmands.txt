@@ -1,0 +1,7 @@
+ df -hT
+   86  subcription-manager register
+   87  subscription-manager register
+   88  subscription-manager attach --pool=8a85f9997d484aeb017d56b2a29d101a
+   89  subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms
+   90  subscription-manager repos --enable=rhel-8-for-x86_64-appstream-rpms
+   91  yum update -y

@@ -1,0 +1,19 @@
+
+
+172.17.3.158--430GB to 530GB------done
+
+172.17.3.78---330GB to 430GB------done.
+
+Administrator
+JnftR%a6NIs2cpLbH)mT&S@DcDAU9WgN
+
+
+lvm
+
+vgs
+
+
+1.TeachersPortalServer
+2.DLPDemoServer
+3.Dev-TeachersPortal
+
