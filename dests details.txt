@@ -1,0 +1,27 @@
+Server Details:
+Name of the server : jump-box
+Public IP                    : 13.126.91.131                
+Pemkey                     : new_dests_key_pair.pem
+ 
+Name of the server : dests_server
+Private IP                  : 10.0.2.29
+Pemkey                     : new_dests_key_pair.pem
+Data Lifecycle Manager
+Backup(Instance)       : 7  days.
+Backup(D-Drive)       : 7 days.
+ 
+RDS:
+Engine               : PostgreSQL
+Endpoint            : destspgsql.ckmuksakrpvt.ap-south-1.rds.amazonaws.com
+Master username: postgres
+AZ                    : Single AZ
+Automated backups: Enabled (7 Days)
+ 
+Load Balancer:
+Name               : new-dests-loadbalancer
+Type                : application
+DNS name       : new-dests-loadbalancer-497066254.ap-south-1.elb.amazonaws.com
+
+WAF: 
+Name               : webacl
+ID                    : 479dbe2f-cf01-494a-b138-a02edfb98d3b

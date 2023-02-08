@@ -1,0 +1,39 @@
+AWS ELASTIC CACHE
+
+Cache:
+	In computing, a cache is a hardware or software component that stores data so that future requests for that data can be served faster; the data stored in a cache might be the result of an earlier computation or a copy of data stored elsewhere.
+
+Pros and cons:
+	The main advantage, and also the goal, of caching is speeding up loading and minimizing system resources needed to load a page. The main disadvantage is how it's implemented by the developers, and then maintaining proper caching system for the website, making it properly manageable by the Admin.
+
+Elastic Cache:
+	Amazon ElastiCache improves the performance of web applications by allowing you to retrieve information from a fast, managed, in-memory system, instead of relying entirely on slower disk-based databases.
+			or
+	You can use ElastiCache for caching, which accelerates application and database performance, or as a primary data store for use cases that don't require durability like session stores, gaming leaderboards, streaming, and analytics. ElastiCache is compatible with Redis and Memcached.
+
+Difference between REDIS and MEMCACHED
+
+Parameter				REDIS						MEMCACHED
+Initial Release		It was released in 2009.				It was released in 2003.
+Developer			It was developed by Salvatore Sanfilippo.			It was developed by Danga Interactive.
+Cores Used		It uses single cores.					It uses multiple cores.
+Length of a key		In Redis, maximum key length is 2GB.			In Memcached, maximum key length is 250 bytes.
+Installation		It is simple and easier to install as compared to Memcached.	It may be difficult to install.
+Data Structure		It uses list, string, hashes, sorted sets and bitmaps as 
+			data structure.					It uses only string and integers as data structure.
+Speed			It reads and writes speed is slower than Memcached.		It reads and writes speed is higher than Redis.
+Replication		It supports Master-Slave Replication and Multi-Master 
+			Replication methods.					It does not support any replication method.
+Durability			It is more durable than Memcached.			It is less durable than Redis.
+Secondary database model	It has Document Store, Graph DBMS, Search Engine, and
+			Time Series DBMS as secondary database models.		It has no secondary database models.
+Persistence		It uses persistent data.				It does not use persistent data.
+Partitioning method		It supports Sharding.					It does not support any partitioning method.
+
+
+
+
+
+
+
+

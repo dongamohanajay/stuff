@@ -1,0 +1,42 @@
+https://www.google.com/search?q=install+wordpress+in+eks+cluster+step+by+step+in+aws&oq=install+wordpress+in+eks+cluster+step+by+step+&aqs=chrome.3.69i57j33i160l4.16928j0j7&sourceid=chrome&ie=UTF-8
+
+
+
+
+
+------------------------
+https://aws.amazon.com/blogs/storage/running-wordpress-on-amazon-eks-with-amazon-efs-intelligent-tiering/
+-----------------------------------
+https://www.eksworkshop.com/intermediate/250_cloudwatch_container_insights/installwordpress/
+------------------------------
+https://avikkundu.medium.com/deploying-wordpress-with-mysql-on-top-of-amazon-eks-27bb99fb088b
+------------------------------------------
+
+---------------------------------------------
+
+https://blog.coderise.io/install-wordpress-on-eks/
+-----------------
+
+eksctl create cluster \ 
+--name=wp-eks \
+--node-type t3.medium \ 
+--nodes=2 \
+--region=ap-south-1 \
+--version 1.22 
+
+-------------------------------------------------------------------------
+28-06-2022
+--------------------------------------------------------------------------
+eksctl create iamserviceaccount \
+      --cluster=robin-personal-cluster \
+      --namespace=kube-system \
+      --name=aws-load-balancer-controller \
+      --attach-policy-arn=arn:aws:iam::953129327946:policy/AWSLoadBalancerControllerIAMPolicy \
+      --override-existing-serviceaccounts \
+      --approve
+--------------------------------------------------------------------
+https://sandny.com/2019/08/15/aws-ingress-alb-eks/
+
+
+https://qiita-com.translate.goog/mksamba/items/c0e41a2a63e62a50aea3?_x_tr_sl=ja&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=sc
+

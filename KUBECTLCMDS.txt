@@ -1,0 +1,24 @@
+aws eks update-kubeconfig  --name cluster1
+
+We can check the connectivity with the command: kubectl cluster-info
+
+For finding the number of nodes: kubectl get nodes
+
+For finding the number of pods: kubectl get pods
+
+To get detailed information of the instances on which the pods are running: kubectl get pods -o wide
+
+Before we work, we need to create a namespace for our application in the K8s.
+
+For that we use the following command: kubectl create namespace wp-msql
+
+Now we have to set it to be the default Namespace:kubectl config set-context --current --namespace=wp-msql
+
+
+https://rtfm.co.ua/en/istio-external-aws-application-loadbalancer-and-istio-ingress-gateway/
+
+
+BillingCenter
+
+Project
+

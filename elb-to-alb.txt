@@ -1,0 +1,137 @@
+--------------------------------------------------------------------------------------------------------------------------------------
+https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html
+
+https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html
+
+--------------------------------------------------------------------------------------------------------------------------------------
+Firstly check the tags for the security group, private and public subnets as per the above links which are assinged to the cluster.
+
+
+
+
+AWS Load Balancer controller Helm chart for Kubernetes
+-------------------
+#helm repo add eks https://aws.github.io/eks-charts
+-------------------
+#### If using IAM Roles for service account install as follows -  NOTE: you need to specify both of the chart values `serviceAccount.create=false` and `serviceAccount.name=aws-load-balancer-controller`
+-------------------
+#helm install aws-load-balancer-controller eks/aws-load-balancer-controller --set clusterName=my-cluster -n kube-system --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
+-------------------
+#### If not using IAM Roles for service account
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller --set clusterName=my-cluster -n kube-system
+
+
+Setup IAM for ServiceAccount
+1.Create IAM OIDC provider
+--
+#eksctl utils associate-iam-oidc-provider \
+    --region us-east-2 \
+    --cluster wp-cluster \
+    --approve
+--
+2.Download IAM policy for the AWS Load Balancer Controller
+--
+#curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json
+--
+3.Create an IAM policy called AWSLoadBalancerControllerIAMPolicy
+--
+#aws iam create-policy \
+    --policy-name AWSLoadBalancerControllerIAMPolicy \
+    --policy-document file://iam-policy.json
+--
+
+Take note of the policy ARN that is returned
+-- 
+"Arn": "arn:aws:iam::953129327946:policy/AWS-Load-Balancer-ControllerIAMPolicy",
+--
+4.Create a IAM role and ServiceAccount for the Load Balancer controller, use the ARN from the step above
+--
+#eksctl create iamserviceaccount \
+--cluster=wp-cluster \
+--namespace=kube-system \
+--name=aws-load-balancer-controller \
+--attach-policy-arn=arn:aws:iam::953129327946:policy/AWSLoadBalancerControllerIAMPolicy \
+--approve
+--
+
+-------------------
+#helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=wp-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
+-------------------
+
+Upgrading from AWS Load Balancer controller v2.1.3 and earlier
+Additional IAM permissions required, ensure you have granted the required IAM permissions.
+CRDs need to be updated as follows
+
+-------------------
+#kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master"
+-------------------
+
+Installing cert-manager
+-------------------
+#kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.2/cert-manager.crds.yaml
+-------------------
+
+Installing the Prometheus Operator
+-------------------
+#helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+-------------------
+#helm repo update
+-------------------
+
+Installing the Chart
+-------------------
+#helm repo add eks https://aws.github.io/eks-charts
+-------------------
+
+Install the TargetGroupBinding CRDs:
+-------------------
+#kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master"
+-------------------
+Install the AWS Load Balancer controller, if using iamserviceaccount
+
+##### NOTE: The clusterName value must be set either via the values.yaml or the Helm command line. The <k8s-cluster-name> in the command
+##### below should be replaced with name of your k8s cluster before running it.
+-------------------
+#helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=wp-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
+-------------------
+Upgrade:The new controller is backwards compatible with the existing ingress objects. However, it will not coexist with the older aws-alb-ingress-controller. The old controller must be uninstalled completely before installing the new version.
+
+Kubectl installation
+If you had installed the previous version via kubectl, uninstall as follows
+
+-------------------
+$ kubectl delete deployment -n kube-system alb-ingress-controller
+$ kubectl delete clusterRole alb-ingress-controller
+$ kubectl delete ClusterRoleBinding alb-ingress-controller
+$ kubectl delete ServiceAccount -n kube-system alb-ingress-controller
+-------------------
+# Alternatively you can find the version of the controller and delete as follows
+-------------------
+$ kubectl describe deployment  -n kube-system  alb-ingress-controller |grep Image
+-------------------
+      Image:      docker.io/amazon/aws-alb-ingress-controller:v1.1.8
+
+
+#### You can delete the deployment now
+-------------------
+$ kubectl delete deployment -n kube-system alb-ingress-controller
+-------------------
+
+#### In this case, the version is v1.1.8, the rbac roles can be removed as follows
+-------------------
+$ kubectl delete -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.8/docs/examples/rbac-role.yaml
+-------------------
+
+Helm installation
+If you had installed the incubator/aws-alb-ingress-controller Helm chart, uninstall as follows
+
+# NOTE: If installed under a different chart name and namespace, please specify as appropriate
+-------------------
+$ helm delete aws-alb-ingress-controller -n kube-system
+-------------------
+
+Verify that the controller is installed.
+
+--------------------
+kubectl get deployment -n kube-system aws-load-balancer-controller
+-------------------

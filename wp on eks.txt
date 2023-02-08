@@ -1,0 +1,331 @@
+To install kubectl on Windows
+
+>curl -o kubectl.exe https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/windows/amd64/kubectl.exe
+>kubectl version --short --client
+
+
+To install or upgrade eksctl on Windows
+
+>choco install -y eksctl 
+>choco upgrade -y eksctl 
+>eksctl version
+
+Install or update the AWS CLI
+
+>msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
+>aws --version
+
+>aws configure
+>aws iam list-users
+>aws sts get-caller-identity
+>aws-iam-authenticator
+>aws-iam-authenticator help
+
+
+To install aws-iam-authenticator on Windows with Chocolatey
+
+>choco install -y aws-iam-authenticator
+
+
+Create your Kubernetes cluster with the following commands:
+
+eksctl create cluster \
+--name eks-wp \
+--region ap-south-1 \
+--zones ap-south-1a,ap-south-1b \
+--managed 
+
+Create an EFS file system with Intelligent-tiering
+
+aws ec2 create-security-group \
+--region ap-south-1 \
+--group-name efs-mount-sg \
+--description "Amazon EFS for EKS, SG for mount target" \
+--vpc-id "vpc-01bc8714414bcc057"
+
+
+aws ec2 authorize-security-group-ingress \
+--group-id (i.e. sg-035d11405621f4b99) \
+--region ap-south-1 \
+--protocol tcp \
+--port 2049 \
+--cidr 192.168.0.0/16
+
+-------------------------------------------
+cat <<EOF >./wordpress-deployment.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: wordpress
+    tier: frontend
+  type: LoadBalancer
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: efs-sc
+provisioner: efs.csi.aws.com
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: wordpress-efs-pv
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: efs-sc
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: "Your EFS file system ID and Access point fsap:
+    (i.e. fs-0fbbfd5b27df27676::fsap-063e575be017ae84e)"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wordpress-efs-pvc
+  labels:
+    app: wordpress
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-sc
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: frontend
+    spec:
+      containers:
+      - image: wordpress:php7.1-apache
+        name: wordpress
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: wordpress-mysql
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        ports:
+        - containerPort: 80
+          name: wordpress
+        volumeMounts:
+        - name: wordpress-persistent-storage
+          mountPath: /var/www/html
+      volumes:
+      - name: wordpress-persistent-storage
+        persistentVolumeClaim:
+          claimName: wordpress-efs-pvc
+EOF
+
+
+kustomization.yaml
+-----------------------------------------------------
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=WordPass
+resources:
+  - mysql-deployment.yaml
+  - wordpress-deployment.yaml
+--------------------------------------------------
+
+mysql-deployment.yaml
+--------------------------------------------------------
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=WordPass
+resources:
+  - mysql-deployment.yaml
+  - wordpress-deployment.yaml
+root@ip-172-31-42-85:/eks-wp# cat mysql-deployment.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-mysql
+  labels:
+    app: wordpress
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: wordpress
+    tier: mysql
+  clusterIP: None
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: wordpress
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress-mysql
+  labels:
+    app: wordpress
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+-------------------------------------------------------------
+
+wordpress-deployment.yaml
+----------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: wordpress
+    tier: frontend
+  type: LoadBalancer
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: efs-sc
+provisioner: efs.csi.aws.com
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: wordpress-efs-pv
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: efs-sc
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: "Your EFS file system ID and Access point fsap:
+    (i.e. fs-0fbbfd5b27df27676::fsap-063e575be017ae84e)"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wordpress-efs-pvc
+  labels:
+    app: wordpress
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-sc
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: frontend
+    spec:
+      containers:
+      - image: wordpress:php7.1-apache
+        name: wordpress
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: wordpress-mysql
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        ports:
+        - containerPort: 80
+          name: wordpress
+        volumeMounts:
+        - name: wordpress-persistent-storage
+          mountPath: /var/www/html
+      volumes:
+      - name: wordpress-persistent-storage
+        persistentVolumeClaim:
+          claimName: wordpress-efs-pvc
+-------------------------------------------------------------------
