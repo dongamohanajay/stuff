@@ -1,0 +1,32 @@
+https://aws.amazon.com/premiumsupport/knowledge-center/start-stop-lambda-eventbridge/
+
+EC2 START AND STOP SCHEDULE
+step1>In IAM consloe create a new policy
+	>Under "visual editor"
+	>select 'ec2'
+		>In Actions select 1.'startinstance' and 2.'stopinstance'
+		>then select 'resources',in the 'resources' select 'all resources'
+	>Select the 'Add additional permissions' which is in the below right corner.
+		>In the service select 'cloudwatch logs'
+		>In the actions select 'all cloudwatch logs actions(logs)'
+		>then select 'resources',in the 'resources' select 'all resources'
+	>then select 'next' and 'review' and give the name for the policy
+steep2>In IAm consloe create a new role
+	>under 'AWS services'select 'Lambda'
+	>And next add the 'permissions' which was created previously(created in the policy)
+	>Finally give the 'role name' and 'discription'
+step3>Go to 'Lambda Service', in that select 'create function'
+	>under 'create function' select 'author from scratch' and give the 'function name'
+	>under 'permissions' select 'use an existing role' and then select the role created 
+	and finally click on the 'create function'
+	>under 'function code' copy & paste the code from the given code from the link
+	>you can also test it whether it is working or not
+step4>repeat the step3 for creating the another function
+step5>Go to cloudwatch and then create the rules(for start and stop)
+	>Select 'create rule'in that select 'schedule'and give cron expression as required
+	>Under the 'targets' select the 'lambda function' under it select 'function'
+	>under 'configure input' select 'Constant(JSON text)' and then paste the code(region and instance id)
+	>and finally click on the configure details
+step6>repeat the step5 for creating the another rule like above.
+
+ 

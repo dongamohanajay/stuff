@@ -1,0 +1,246 @@
+#################################START---PMON-MONITORING-JOB#####################################################
+
+##########PMON: CPU Usage#########################################################
+* * * * * /usr/bin/bash /emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+* * * * * sh /emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+
+* * * * * env > /tmp/env.output
+--------------------------------------------------------------------------------------------------------------------------------------
+###/emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+#---------------------------------------------------------------------------------------#
+#Dated:         Dec, 2021                                                               #
+#Author:        TCS Unix Team                                                           #
+#Purpose :      To monitor system health  for Linux US                                  #
+#---------------------------------------------------------------------------------------#
+#!/bin/bash
+#-- Variables --
+OS=`uname`
+cDate=`date +%d%m%Y`
+cTime=`date +%T`
+
+#To check those server where we did not get ip via "hostname" command
+host=`hostname`
+if [ "$host" == ns1.dgft.gov.in ] || [ "$host" == ns2.dgft.gov.in ] || [ "$host" == bshinaz101 ]
+then
+cHost=`hostname`
+else
+cHost=`hostname`
+fi
+
+outputPath="/emssladashboard/shLog/scripts/output/Dashboard/resources/$cHost/cpumemory"
+
+#Folder creations for data collection
+if [ ! -d $outputPath ]
+ then
+   mkdir -p $outputPath
+fi
+#Folder creations for Live CPU-memory Data collection
+if [ ! -d /emssladashboard/shLog/scripts/output/Dashboard/resources/global/statusHEALTH/PROD ]
+ then
+   mkdir -p /emssladashboard/shLog/scripts/output/Dashboard/resources/global/statusHEALTH/PROD
+fi
+
+cFilename=$outputPath/$cHost.$cDate.cpumemory.log
+
+if [ ! -f $cFilename ]
+ then
+    echo "Time,cpu usage(%),memory usage(%),io_Write_PCT,io_Read_PCT" >>$cFilename
+fi
+
+#-- Functions --
+function linuxHealth()
+ {
+ctime=`date '+%H:%M'`
+cMemoryTotFrame=`free |head -2 |awk '{print $2}' |tail -1`
+cMemoryUsedFrame=`free|awk '{print $3}'|tail -2|head -1`
+cMemoryUsedPct=`echo $cMemoryUsedFrame $cMemoryTotFrame | awk '{ printf("%.2f\n",(($1/$2)*100));}'`
+cCPUusedPCT=`sar -u 1 3 |tail -1 |awk '{print (100-$8)}'`
+echo "$ctime,$cCPUusedPCT,$cMemoryUsedPct,1,1" >>$cFilename
+
+ }
+
+#-- Main Functions ---
+linuxHealth
+
+#-- End of Main --
+-------------------------------------------------------------------------------------------
+
+ cd /
+ 1378  crontab -l
+ 1379  /usr/bin/bash /emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+ 1380  sh /emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+ 1381  nano /emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+ 1382  crontab -e
+ 1383  crontab -l
+ 1384  env > /tmp/env.output
+ 1385  ls
+ 1386  cd tmp/
+ 1387  ls
+ 1388  cd env.output
+ 1389  ls
+ 1390  ll
+ 1391  cat env.output
+ 1392  cd /
+ 1393  crontab -l
+ 1394  ls
+ 1395  cd etc/
+ 1396  ls
+ 1397  cd /
+ 1398  crontab -l
+ 1399  sh syshealth_cpu_mem_linux.sh
+ 1400  sudo sh syshealth_cpu_mem_linux.sh
+ 1401  cd /emssladashboard/shLog/scripts/Prod
+ 1402  ll
+ 1403  sh syshealth_cpu_mem_linux.sh
+ 1404  crontab -e
+ 1405  cd /
+ 1406  crontab -l
+ 1407  cd /emssladashboard/shLog/scripts/Prod
+ 1408  ll
+ 1409  sh syshealth_cpu_mem_linux.sh
+ 1410  cat syshealth_cpu_mem_linux.sh
+ 1411  nano syshealth_cpu_mem_linux.sh
+ 1412  ll
+ 1413  ./syshealth_cpu_mem_linux.sh
+ 1414  sh syshealth_cpu_mem_linux.sh
+ 1415  ./syshealth_cpu_mem_linux.sh
+ 1416  bash syshealth_cpu_mem_linux.sh
+ 1417  crontab -e
+ 1418  cd /
+ 1419  cd /emssladashboard/shLog/scripts/output/Dashboard/resources/$cHost/cpumemory
+ 1420  cd /emssladashboard/shLog/scripts/output/Dashboard/resources
+ 1421  ll
+ 1422  ls
+ 1423  cd /
+ 1424  crontab -l
+ 1425  cd /emssladashboard/shLog/scripts/output/Dashboard/resources/global/statusHEALTH/PROD
+ 1426  ll
+ 1427  crontab -e
+ 1428  cd ..
+ 1429  ll
+ 1430  cd resources/
+ 1431  ll
+ 1432  cd global/
+ 1433  ll
+ 1434  cd statusHEALTH/
+ 1435  ll
+ 1436  cd PROD/
+ 1437  ll
+ 1438  crontab -l
+ 1439  /usr/bin/bash /emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+ 1440  ll
+ 1441  cd ..
+ 1442  ll
+ 1443  cd ..
+ 1444  ll
+ 1445  cd /emssladashboard/shLog/scripts/Prod
+ 1446  ll
+ 1447  chmod +x /emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+ 1448  ls -l
+ 1449  ll
+ 1450  sh syshealth_cpu_mem_linux.sh
+ 1451  crontab -l
+ 1452  cd /
+ 1453  cd /emssladashboard/shLog/scripts/Prod && bash syshealth_cpu_mem_linux.sh
+ 1454  ll
+ 1455  cd /emssladashboard/shLog/scripts/output/Dashboard/resources/global/statusHEALTH/PROD
+ 1456  ll
+ 1457  cd /emssladashboard/shLog/scripts/Prod && ./syshealth_cpu_mem_linux.sh
+ 1458  cd /emssladashboard/shLog/scripts/output/Dashboard/resources/global/statusHEALTH/PROD
+ 1459  ll
+ 1460  bash syshealth_cpu_mem_linux.sh
+ 1461  cd ..
+ 1462  ls
+ 1463  cd Prod/
+ 1464  ll
+ 1465  bash syshealth_cpu_mem_linux.sh
+ 1466  cd /emssladashboard/shLog/scripts/output/Dashboard/resources/global/statusHEALTH/PROD
+ 1467  ll
+ 1468  ./syshealth_cpu_mem_linux.sh
+ 1469  history
+ 1470  ll
+ 1471  cd ..
+ 1472  ll
+ 1473  cd ..
+ 1474  ll
+ 1475  cd scripts/\
+ 1476  cd scripts/
+ 1477  ll
+ 1478  cd Prod/
+ 1479  ll
+ 1480  ./syshealth_cpu_mem_linux.sh
+ 1481  cd /emssladashboard/shLog/scripts/output/Dashboard/resources/global/statusHEALTH/PROD
+ 1482  ll
+ 1483  cd ..
+ 1484  ll
+ 1485  cd Prod/
+ 1486  ll
+ 1487  cat syshealth_cpu_mem_linux.sh
+ 1488  cd /emssladashboard/shLog/scripts/output/Dashboard/resources/global/statusHEALTH/PROD
+ 1489  ll
+ 1490  crontab -l
+ 1491  /usr/bin/bash /emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+ 1492  cd /emssladashboard/shLog/scripts/output/Dashboard/resources/global/statusHEALTH/PROD
+ 1493  ll
+ 1494  cd ..
+ 1495  ll
+ 1496  cd Prod/
+ 1497  ll
+ 1498  sh /emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+ 1499  ./emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+ 1500  ./syshealth_cpu_mem_linux.sh
+ 1501  cd /emssladashboard/shLog/scripts/output/Dashboard/resources/global/statusHEALTH/PROD
+ 1502  ll
+ 1503  crontab -l
+ 1504  /usr/bin/bash /emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+ 1505  sh /emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+ 1506  /usr/bin/bash /emssladashboard/shLog/scripts/Prod/syshealth_cpu_mem_linux.sh
+ 1507  ll
+ 1508  ls
+ 1509  ll
+ 1510  tail -f pmon_cpuLive_PROD.log
+ 1511  cat pmon_cpuLive_PROD.log
+ 1512  ls
+ 1513  cd /
+ 1514  ls
+ 1515  cd home'
+ 1516  ls
+ 1517  cd home
+ 1518  ls
+ 1519  cd ubuntu/
+ 1520  ls
+ 1521  echo "Time,cpu usage(%),memory usage(%),io_Write_PCT,io_Read_PCT" >> test.txt
+ 1522  ls
+ 1523  vi test.txt
+ 1524  echo Time,cpu usage(%),memory usage(%),io_Write_PCT,io_Read_PCT
+ 1525  echo Time,cpu usage(%),memory usage(%)
+ 1526  echo Time,cpu usage(%), memory usage(%)
+ 1527  echo memory usage(%)
+ 1528  echo memory usage
+ 1529  echo memory
+ 1530  mpstat
+ 1531  echo mpstat
+ 1532  echo mpstat()
+ 1533  echo mpstat();
+ 1534  echo mpstat%
+ 1535  echo mpstat(%)
+ 1536  mpstat -P ALL
+ 1537  cd /emssladashboard/shLog/scripts/output/Dashboard/resources/global/statusHEALTH/PROD
+ 1538  du -sh
+ 1539  ll
+ 1540  du -sh
+ 1541  cat pmon_memoryLive_PROD.log
+ 1542  cat pmon_polled_time_livecpumem.log
+ 1543  cat pmon_cpuLive_PROD.log
+ 1544  cat pmon_polled_time_livecpumem.log
+ 1545  cat pmon_memoryLive_PROD.log
+ 1546  cat pmon_cpuLive_PROD.log
+ 1547  ll
+ 1548  cd pmon_memoryLive_PROD.log
+ 1549  cat pmon_memoryLive_PROD.log
+ 1550  cat pmon_polled_time_livecpumem.log
+ 1551  exit
+ 1552  cd /
+ 1553  crontab -l
+ 1554  history
+root@APP:/#

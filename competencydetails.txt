@@ -1,0 +1,55 @@
+We Had deploying workloads in Three tier Architected by providing public, private, (application), DB subnets.  
+
+• Internet facing resources like ALB, will be deployed in public subnets behind WAF.  
+
+• Application workloads will never interact with internet directly.  
+
+• Traffic control among the subnets will Controle using network ACL rules and their priority number.  
+
+• There will be separate security group for each component providing the flexibility 
+
+We provided connections to systems outside of AWS using AWS Client VPN, Site to Siet VPN, and Direct Connect.
+-----------------------------------
+
+Akshita
+
+HR -FInance Head
+
+admin@dataevolve.in
+
++919866605999
+-----------------------------
+Joseph Madanu
+
+Devops Team Lead
+
+awssupport@dataevolve.in
+
++91-9912342501
+
+--------------------------------------------
+Sridhar Sriramula 
+
+Cloud Team Lead
+
+notifications@dataevolve.in
+
++91-9640815816 
+------------------------------------------------
+We Had deploying workloads in Three tier Architected by providing public, private, (application), DB subnets. 
+
+Internet facing resources like ALB, will be deployed in public subnets behind WAF.   
+
+Application workloads will never interact with internet directly.   
+
+Traffic control among the subnets will Controle using network ACL rules and their priority number.   
+
+There will be separate security group for each component providing the flexibility. 
+
+We provided connections to systems outside of AWS using AWS Client VPN, Site to Siet VPN, and Direct Connect.
+
+
+1.Narayana
+2.Arogyashree
+3. E Office
+4. Andhra pradesh mineral 

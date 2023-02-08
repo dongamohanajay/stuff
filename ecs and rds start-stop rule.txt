@@ -1,0 +1,11 @@
+ec2 start and stop
+
+https://aws.amazon.com/premiumsupport/knowledge-center/start-stop-lambda-eventbridge/
+
+
+rds start and stop
+
+https://www.linkedin.com/pulse/schedule-amazon-rds-instance-stop-start-using-aws-lambda-patel/
+
+
+https://aws.amazon.com/blogs/database/schedule-amazon-rds-stop-and-start-using-aws-systems-manager/

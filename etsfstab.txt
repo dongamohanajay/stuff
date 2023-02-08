@@ -1,0 +1,12 @@
+UUID=59aefd67-33cb-4166-8638-f74ee6c071bf       /       xfs     defaults        0       0
+UUID=7B77-95E7  /boot/efi       vfat    defaults,uid=0,gid=0,umask=077,shortname=winnt  0       2
+/swapfile swap swap defaults 0 0
+
+
+
+fs-09a4be08821b01490:/ /Uploads efs iam,tls,_netdev
+
+
+/dev/nvme1n1       /eOffice   xfs    defaults,nofail        0       0
+172.17.3.221:/eoffice-telangana-backup-2022 /applicationLogs nfs    defaults,nofail        0       0
+172.17.3.221:/daily-backup /daily-backup nfs   defaults,nofail        0       0

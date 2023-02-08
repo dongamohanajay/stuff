@@ -1,0 +1,27 @@
+Creation of DNS Records
+
+A Record
+
+>select alias
+>1.alias to application and classic load balancer
+>2.give the region
+>3.9414536ap-south-1.elb
+
+Mx Record
+we have to add 0
+>0
+
+
+
+CNAME Record
+
+
+NS Record
+
+
+
+TXT Record
+
+
+
+fp.narayanagroup.com

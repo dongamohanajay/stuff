@@ -1,0 +1,47 @@
+vi load-balancer-role-trust-policy.json
+--------------------------------------------------
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::953129327946:oidc-provider/oidc.eks.ap-south-1.amazonaws.com/id/D95A1F51A1EB2232DC5DEF0EA092423D"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "oidc.eks.ap-south.amazonaws.com/id/D95A1F51A1EB2232DC5DEF0EA092423D:aud": "sts.amazonaws.com",
+                    "oidc.eks.ap-south-1.amazonaws.com/id/D95A1F51A1EB2232DC5DEF0EA092423D:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
+                }
+            }
+        }
+    ]
+}
+------------------------------------------------------------
+vi aws-load-balancer-controller-service-account.yaml
+----------------------------------------------------------------
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: aws-load-balancer-controller
+  name: aws-load-balancer-controller
+  namespace: kube-system
+  annotations:
+    eks.amazonaws.com/role-arn: 
+arn:aws:iam::953129327946:role/AmazonEKSLoadBalancerControllerRole
+
+--------------------------------------------------------------------------------------------------
+Master username
+admin
+Master password
+y8NXUPp636GMHxSjAb8s
+
+y8NXUPp636GMHxSjAb8s
+----------------------------------------------------
+docker tag wordpressrds:latest public.ecr.aws/y5r4d6u6/rdsdatabase:latest
+
+
+y@aj3!jQFCIb*20#ge

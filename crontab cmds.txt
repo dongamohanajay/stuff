@@ -1,0 +1,129 @@
+cd /home
+ls -l /var/log/
+mkdir /var/log/test/
+cp /var/log/*.log /var/log/test/
+ls -l /var/log/test/ 
+--------------
+change the date for log files
+------------
+touch -a -m -t 202001010909.09 /var/log/test/*.log 
+------------------
+-a=accessed,-m=modified,-t=timestamp,-use[[CC]YY]MMDDhhmm[.ss] timeformat
+-------------------------------------------
+
+find /var/log/test/ -type f -name '*.log'
+
+find /var/log/test/ -type f -name '*.log' -mtime +100
+
+find /var/log/test/ -type f -name '*.log' -mtime +100 -exec rm {} \;
+
+nano clean.sh
+
+copy and paste the below line 
+
+find /var/log/test/ -type f -name '*.log' -mtime +100 -exec rm {} \;
+
+ls -l
+nano clean.sh
+chmod +x clean.sh
+./clean.sh
+cp /var/log/*.log /var/log/test/
+touch -a -m -t 202001010909.09 /var/log/test/*.log
+ls -l /var/log/test
+./clean.sh
+ls -l /var/log/test/
+
+crontab -e
+select:1
+
+0 0 1 * * /home/clean.sh
+
+------------------
+run every 1st of every month
+
+
+-----------------------
+automating backup from local machine to aws s3
+-------------------------------------------------
+aws s3 sync . s3://backup-varlogs
+
+files will upload
+
+pwd
+
+which aws
+
+crontab -e
+
+*/1 * * * * /usr/bin/aws s3 sync /var/log/ s3://backup-varlogs
+
+------------------------------------------------------------
+it syncs for every minute
+--------------------------------
+
+
+systemctl restart cron 
+
+
+
+---------------------------------------------
+Delete X  days old files with linux crotab
+---------------------------------------------
+
+root@ip-10-0-1-190:/var/log# cd /
+root@ip-10-0-1-190:/# /usr/bin/find /var/log/
+root@ip-10-0-1-190:/# /usr/bin/find /var/log/*.log
+root@ip-10-0-1-190:/# /usr/bin/find /var/log/ -type f -name '*.log' -mtime +6 -exec rm -type f {} \;
+
+
+
+0 */6 * * *
+
+sync at every day mid night 12 o clock
+
+0 0 * * *
+
+cron job at every week on monday
+
+0 0 * * MON
+
+
+---------------------------------------------------------------------
+ec2-s3 uploading
+
+*/1 * * * * /usr/bin/aws s3 sync /var/log/apache2/ s3://backup-varlogs
+----------------------------------------------------------------------
+deleting the log files in apache2 
+
+*/5 * * * * /usr/bin/find /var/log/apache2/ -type f -name '*.log' -mtime +1 -exec rm -type f {} \;
+----------------------------------------------------------------------
+
+
+AKIAXEJQD25Q5XJQHVFL
+VlDHdUL6a++/VENSnYUvK416H4OHKItvo0lmwl6z
+
+
+
+#ec2-s3 uploading
+
+0 0 * * * /usr/bin/aws s3 sync /var/log/apache2/ s3://iis-linux-logs/NEW_NRY_WEBSITES2
+
+
+#deleting the log files in apache2
+
+0 0 * * MON /usr/bin/find /var/log/apache2/ -type f -name '*.log' -mtime +7 -exec rm -type f {} \;
+
+
+#deleting the log files in apache2
+
+0 0 * * * MON /usr/bin/find /var/log/apache2 -name "*.log" -type f -mtime +7 -exec rm -f {} \;
+
+0 0 * * * MON /usr/bin/find /var/log/apache2 -name "*.gz" -type f -mtime +7 -exec rm -f {} \;
+
+0 0 * * * MON /usr/bin/find /var/log/apache2 -name "*_log" -type f -mtime +7 -exec rm -f {} \;
+
+0 0 * * * MON /usr/bin/find /var/log/apache2 -name "*.1" -type f -mtime +7 -exec rm -f {} \;
+
+
+
+Deletion_logfiles_15daysolder

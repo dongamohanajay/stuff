@@ -1,0 +1,55 @@
+
+https://computingforgeeks.com/mount-aws-efs-file-system-on-ec2/
+
+
+/dev/nvme1n1       /var/lib/pgsql   xfs    defaults,nofail        0       0
+
+narayanacolleges
+mohan@dataevolve.in
+Dataevolve@1234
+
+Private IP:10.0.2.29
+sg-00bd2b8bec1429eac
+new_dests_key_pair
+90 GB 
+120 GB
+c5a.large
+
+
+
+
+84  cd /
+   85  mkdir /eOffice
+   86  mkdir /eOfficebkp
+   87  mkdir /Uploads
+   88  mount /dev/nvme1n1 /eOffice
+   89  sudo mount -t efs -o tls fs-0f53e14544a3d5401:/ /eOfficebkp/
+   90  sudo mount -t efs -o tls fs-00f3c20c64af33f66:/ /Uploads/
+   91  lsblk
+   92  df -kh
+   93  nano /etc/fstab
+   94  yum install nano -y
+   95  nano /etc/fstab
+   96  lsblk
+   97  df -hT
+   98  cd eOfficebkp/
+   99  ll
+
+
+
+sudo mount -t efs -o tls fs-0ffc456b34c4212ab:/ /Uploads/
+
+172.17.3.150 /Uploads
+
+
+
+
+
+
+sudo mount -t efs -o tls fs-0f53e14544a3d5401:/ /eOfficebkp/
+
+
+
+fs-09a4be08821b01490:/ /Uploads efs iam,tls,_netdev
+
+fs-0b3bc023f1d9ec2e1:/ /moodle-data-efs efs iam,tls,_netdev

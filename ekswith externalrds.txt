@@ -1,0 +1,304 @@
+
+ap-south-1
+
+179447066687
+
+0D0CCFEE06B1ED75F0FF0B6856D0EE87
+
+
+cat >load-balancer-role-trust-policy.json <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::179447066687:oidc-provider/oidc.eks.ap-south-1.amazonaws.com/id/0D0CCFEE06B1ED75F0FF0B6856D0EE87"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "oidc.eks.ap-south-1.amazonaws.com/id/0D0CCFEE06B1ED75F0FF0B6856D0EE87:aud": "sts.amazonaws.com",
+                    "oidc.eks.ap-south-1.amazonaws.com/id/0D0CCFEE06B1ED75F0FF0B6856D0EE87:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
+                }
+            }
+        }
+    ]
+}
+EOF
+--------------
+
+
+aws iam attach-role-policy \
+  --policy-arn arn:aws:iam::179447066687:policy/AWSLoadBalancerControllerIAMPolicy \
+  --role-name AmazonEKSLoadBalancerControllerRole
+----------
+
+cat >aws-load-balancer-controller-service-account.yaml <<EOF
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: aws-load-balancer-controller
+  name: aws-load-balancer-controller
+  namespace: kube-system
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::179447066687:role/AmazonEKSLoadBalancerControllerRole
+EOF
+--------------
+
+wordpressdb.cpmfgl8lr2is.ap-south-1.rds.amazonaws.com
+
+Master username
+admin
+Master password
+DCR6U5oOlwX8bTggovgV
+
+-----------------------------------------------
+ 1  cd /
+    2  apt update -y
+    3  apt upgrade -y
+    4  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    5  unzip awscliv2.zip
+    6  sudo ./aws/install
+    7  aws --version
+    8  aws configure
+    9  aws iam list-users
+   10  [200~curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.24.7/2022-10-31/bin/linux/amd64/kubectl
+   11  cd /
+   12  curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.24.7/2022-10-31/bin/linux/amd64/kubectl
+   13  openssl sha1 -sha256 kubectl
+   14  chmod +x ./kubectl
+   15  mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+   16  echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+   17  kubectl version --short --client
+   18  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+   19  sudo mv /tmp/eksctl /usr/local/bin
+   20  eksctl version
+   21  curl -Lo aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.5.9/aws-iam-authenticator_0.5.9_linux_amd64
+   22  chmod +x ./aws-iam-authenticator
+   23  mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
+   24  echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+   25  aws-iam-authenticator help
+   26  aws eks --region ap-south-1 update-kubeconfig --name testeks
+   27  curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.4/docs/install/iam_policy.json
+   28  aws iam create-policy     --policy-name AWSLoadBalancerControllerIAMPolicy     --policy-document file://iam_policy.json
+   29  aws eks --region ap-south-1 update-kubeconfig --name testeks
+   30  kubectl get svc
+   31  oidc_id=$(aws eks describe-cluster --name testeks --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
+   32  aws iam list-open-id-connect-providers | grep $oidc_id | cut -d "/" -f4
+   33  oidc_id=$(aws eks describe-cluster --name testeks --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
+   34  aws iam list-open-id-connect-providers | grep $oidc_id | cut -d "/" -f4
+   35  eksctl utils associate-iam-oidc-provider --cluster testeks --approve
+   36  aws iam list-open-id-connect-providers | grep $oidc_id | cut -d "/" -f4
+   37  cat >load-balancer-role-trust-policy.json <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::179447066687:oidc-provider/oidc.eks.ap-south-1.amazonaws.com/id/50F35EC88DE2C1E2E9EB3442CCD9A025"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "oidc.eks.ap-south-1.amazonaws.com/id/50F35EC88DE2C1E2E9EB3442CCD9A025:aud": "sts.amazonaws.com",
+                    "oidc.eks.ap-south-1.amazonaws.com/id/50F35EC88DE2C1E2E9EB3442CCD9A025:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
+                }
+            }
+        }
+    ]
+}
+EOF
+
+   38  aws iam create-role   --role-name AmazonEKSLoadBalancerControllerRole   --assume-role-policy-document file://"load-balancer-role-trust-policy.json"
+   39  aws iam attach-role-policy   --policy-arn arn:aws:iam::179447066687:policy/AWSLoadBalancerControllerIAMPolicy   --role-name AmazonEKSLoadBalancerControllerRole
+   40  cat >aws-load-balancer-controller-service-account.yaml <<EOF
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: aws-load-balancer-controller
+  name: aws-load-balancer-controller
+  namespace: kube-system
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::179447066687:role/AmazonEKSLoadBalancerControllerRole
+EOF
+
+   41  kubectl apply -f aws-load-balancer-controller-service-account.yaml
+   42  kubectl apply     --validate=false     -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+   43  curl -Lo cert-manager.yaml https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+   44  kubectl apply     --validate=false     -f ./cert-manager.yaml
+   45  curl -Lo v2_4_4_full.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.4/v2_4_4_full.yaml
+   46  sed -i.bak -e '480,488d' ./v2_4_4_full.yaml
+   47  sed -i.bak -e 's|your-cluster-name|testeks|' ./v2_4_4_full.yaml
+   48  kubectl apply -f v2_4_4_full.yaml
+   49  curl -Lo v2_4_4_ingclass.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.4/v2_4_4_ingclass.yaml
+   50  kubectl apply -f v2_4_4_ingclass.yaml
+   51  kubectl get deployment -n kube-system aws-load-balancer-controller
+   52  sudo apt install docker
+   53  sudo systemctl status docker
+   54  sudo apt install apt-transport-https ca-certificates curl software-properties-common
+   55  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+   56  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+   57  apt-cache policy docker-ce
+   58  sudo apt install docker-ce
+   59  sudo systemctl status docker
+   60  docker search wordpress
+   61  docker pull wordpress
+   62  docker images
+   63  docker container ps
+   64  docker container ps -a
+   65  docker run -d -p 80:80 wordpress
+   66  docker container ps
+   67  ls
+   68  mkdir wordpress
+   69  cd wordpress/
+   70  nano Dockerfile
+   71  apt install mysql
+   72  apt get install mysql-client
+   73  apt install mysql-server
+   74  mysql -h wordpressdb.cpmfgl8lr2is.ap-south-1.rds.amazonaws.com -u admin -p
+   75  nano Dockerfile
+   76  docker build -t wordpress .
+   77  aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 179447066687.dkr.ecr.ap-south-1.amazonaws.com
+   78  docker tag wordpress:latest 179447066687.dkr.ecr.ap-south-1.amazonaws.com/testecr:latest
+   79  docker push 179447066687.dkr.ecr.ap-south-1.amazonaws.com/testecr:latest
+   80  docker images
+   81  git clone  https://github.com/sairam48/eksrdsdocker.git
+   82  ls
+   83  cd eksrdsdocker/
+   84  ls
+   85  nano wp-rds.yml
+   86  kubectl apply -f wp-rds.yml
+   87  kubectl get pods
+   88  cd ..
+   89  ls
+   90  kubectl get pods
+   91  kubectl describe wordpress-65b6df5b44-dql4l
+   92  kubectl describe pod wordpress-65b6df5b44-dql4l
+   93  kubectl get pods
+   94  ls
+   95  nano v2_4_4_full.yaml
+   96  sed -i.bak -e 's|your-cluster-name|testeks|' ./v2_4_4_full.yaml
+   97  kubectl apply -f v2_4_4_full.yaml
+   98  curl -Lo v2_4_4_ingclass.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.4/v2_4_4_ingclass.yaml
+   99  kubectl apply -f v2_4_4_ingclass.yaml
+  100  kubectl get deployment -n kube-system aws-load-balancer-controller
+  101  cd wordpress/
+  102  ls
+  103  cd eksrdsdocker/
+  104  ls
+  105  kubectl apply -f wp-rds.yml
+  106  kubectl get pods
+  107  kubectl describe pod wordpress-65b6df5b44-dql4l
+  108  ls
+  109  nano wp-rds.yml
+  110  kubectl get pods -n kube-system
+  111  kubectl get logs -n aws-load-balancer-controller-f4c578c68-sdr2m kube-system
+  112  kubectl get logs -n aws-load-balancer-controller kube-system
+  113  kubectl get logs aws-load-balancer-controller -n kube-system
+  114  kubectl logs aws-load-balancer-controller-f4c578c68-sdr2m
+  115  kubectl logs aws-load-balancer-controller
+  116  kubectl get logs -n kube-system aws-load-balancer-controller
+  117  kubectl decribe pod aws-load-balancer-controller-f4c578c68-sdr2m
+  118  kubectl describe pod aws-load-balancer-controller-f4c578c68-sdr2m
+  119  kubectl describe pod aws-load-balancer-controller
+  120  kubectl get svc
+  121  kubectl describe pod aws-load-balancer-controller-f4c578c68-sdr2m -n kube-system
+  122  history
+---------------------
+eksctl create iamserviceaccount \
+  --cluster=eks \
+  --namespace=kube-system \
+  --name=aws-load-balancer-controller \
+  --role-name AmazonEKSLoadBalancerControllerRole \
+  --attach-policy-arn=arn:aws:iam::179447066687:policy/AWSLoadBalancerControllerIAMPolicy \
+  --approve
+----------------------
+
+E2B3C68306B5DF69BC6B5488282D670F
+
+ap-south-1
+
+179447066687
+
+----------------------
+working ---delete all created policies and roles
+----------------------
+aws eks --region ap-south-1 update-kubeconfig --name eks
+  183  kubectl get svc
+  184  curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.4/docs/install/iam_policy.json
+  185  aws iam create-policy     --policy-name AWSLoadBalancerControllerIAMPolicy     --policy-document file://iam_policy.json
+  186  eksctl create iamserviceaccount   --cluster=my-cluster   --namespace=kube-system   --name=aws-load-balancer-controller   --role-name AmazonEKSLoadBalancerControllerRole   --attach-policy-arn=arn:aws:iam::179447066687:policy/AWSLoadBalancerControllerIAMPolicy   --approve
+  187  eksctl create iamserviceaccount   --cluster=eks   --namespace=kube-system   --name=aws-load-balancer-controller   --role-name AmazonEKSLoadBalancerControllerRole   --attach-policy-arn=arn:aws:iam::179447066687:policy/AWSLoadBalancerControllerIAMPolicy   --approve
+  188  oidc_id=$(aws eks describe-cluster --name eks --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
+  189  aws iam list-open-id-connect-providers | grep $oidc_id | cut -d "/" -f4
+  190  oidc_id=$(aws eks describe-cluster --name eks --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
+  191  aws iam list-open-id-connect-providers | grep $oidc_id | cut -d "/" -f4
+  192  eksctl utils associate-iam-oidc-provider --cluster eks --approve
+  193  aws iam list-open-id-connect-providers | grep $oidc_id | cut -d "/" -f4
+  194  cat >load-balancer-role-trust-policy.json <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::179447066687:oidc-provider/oidc.eks.ap-south-1.amazonaws.com/id/E2B3C68306B5DF69BC6B5488282D670F"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "oidc.eks.ap-south-1.amazonaws.com/id/E2B3C68306B5DF69BC6B5488282D670F:aud": "sts.amazonaws.com",
+                    "oidc.eks.ap-south-1.amazonaws.com/id/E2B3C68306B5DF69BC6B5488282D670F:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
+                }
+            }
+        }
+    ]
+}
+EOF
+
+  195  aws iam create-role   --role-name AmazonEKSLoadBalancerControllerRole   --assume-role-policy-document file://"load-balancer-role-trust-policy.json"
+  196  aws iam attach-role-policy   --policy-arn arn:aws:iam::179447066687:policy/AWSLoadBalancerControllerIAMPolicy   --role-name AmazonEKSLoadBalancerControllerRole
+  197  cat >aws-load-balancer-controller-service-account.yaml <<EOF
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: aws-load-balancer-controller
+  name: aws-load-balancer-controller
+  namespace: kube-system
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::179447066687:role/AmazonEKSLoadBalancerControllerRole
+EOF
+
+  198  kubectl apply -f aws-load-balancer-controller-service-account.yaml
+  199  kubectl get deployment -n kube-system alb-ingress-controller
+  200  kubectl apply     --validate=false     -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+  201  curl -Lo cert-manager.yaml https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+  202  kubectl apply     --validate=false     -f ./cert-manager.yaml
+  203  curl -Lo v2_4_4_full.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.4/v2_4_4_full.yaml
+  204  sed -i.bak -e '480,488d' ./v2_4_4_full.yaml
+  205  sed -i.bak -e 's|your-cluster-name|eks|' ./v2_4_4_full.yaml
+  206  kubectl apply -f v2_4_4_full.yaml
+  207  curl -Lo v2_4_4_ingclass.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.4/v2_4_4_ingclass.yaml
+  208  kubectl apply -f v2_4_4_ingclass.yaml
+  209  kubectl get deployment -n kube-system aws-load-balancer-controller
+  210  kubectl get pods
+  211  kubectl get ns
+  212  cd wordpress/
+  213  ls
+  214  cd eksrdsdocker/
+  215  ls
+  216  kubectl apply -f wp-rds.yml
+  217  kubectl get pods
+  218  kubectl describe pod aws-load-balancer-controller-f4c578c68-sdr2m -n kube-system
+  219  kubectl describe pod wordpress-65b6df5b44-62jvv
+  220  history
+-------------------------------------
+

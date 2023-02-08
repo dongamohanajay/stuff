@@ -1,0 +1,169 @@
+vim Dockerfile
+-------------------------------------------------------------------------
+###################
+#Wordpress installation
+###################
+
+#Set the base image for this installation
+FROM appcontainers/centos65
+
+#File Author / Maintainer
+MAINTAINER  dockcore rnason@dockcore.com
+
+#Files that need to be added
+ADD mysql_setup.sql /tmp/
+ADD wordpress.conf /etc/httpd/conf.d/ 
+
+#Pre-reqs
+RUN yum clean all && \
+yum -y update && \
+yum -y install httpd mod_rewirte mod_ssl mod_env php php-common php-cli php-mysql mysql-server unzip && \
+rm -fr /var/cache/*
+
+#Application Install
+RUN wget -P /var/www/html/ https://wordpress.org/latest.zip && \
+unzip /var/www/html/latest.zip -d /var/www/html/ && \
+rm -fr /var/www/html/latest.zip
+
+#RUN Mysql install
+RUN service mysqld start && \
+mysql < /tmp/mysql_setup.sql && \
+rm -fr /tmp/mysql_setup.sql* && \
+service mysqld stop
+
+#Copy the WP-config file
+RUN cp /var/www/html/wprdpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+
+#Edit the wp-config file
+RUN sed - ie 's/database_name_here/wordpress/g' /var/www/html/wordpress/wp-config.php && \
+sed - ie 's/username_here/wpuser/g' /var/www/html/wordpress/wp-config.php && \
+sed - ie 's/database_name_here/wordpress/g' /var/www/html/wordpress/wp-config.php
+
+# Set Permissions
+RUN chown -R apache:apache /var/www/html/wordpress && \
+chmod -R 775 /var/www/html/wordpress
+
+#Start mysql and apache on boot
+RUN echo "service mysqld start" >> ~/.bashrc && \
+echo "service httpd start" >> ~/.bashrc 
+
+#Expose Necessary Ports
+EXPOSE 80
+---------------------------------------------------------------
+vim mysql_setup.sql
+-------------------------------------------------------
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('P@ssw0rd');
+
+CREATE A DATABASE wordpress;
+
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'localhost' IDENTIFIED BY 'P@ssw0rd';
+
+DROP DATABASE test;
+---------------------------------------------
+vim Dockerfile(add the below lines under Author/Maintainer)
+------------------------------------------
+
+#Files that need to be added
+ADD mysql_setup.sql /tmp/
+-----------------------------------------------
+vim wordpress.conf
+--------------------------------------------
+<VirtualHost *:80>
+	DocumentRoot "/var/www/html/wordpress/"
+	ServerName wordpress.local
+	ServerAlias www.wordpress.local
+	Errorlog "/var/log/httpd/wordpress_error.log"
+	CustomLog "/var/log/httpd/wordpress_access.log" combined
+</VirtualHost>
+--------------------------------------------
+vim Dockerfile(add the below lines under Author/Maintainer >ADD THE BELOW LINE)
+----------------------------------------------
+ADD wordpress.conf /etc/httpd/conf.d/ 
+------------------------------------------------
+vim Dockerfile (add the below lines under Application Install )
+------------------------------------------------------------------------
+#RUN Mysql install
+RUN service mysqld start && \
+mysql < /tmp/mysql_setup.sql && \
+rm -fr /tmp/mysql_setup.sql* && \
+service mysqld stop
+-------------------------------------------------- 
+vim Dockerfile (add the below lines under Copy the WP-config file)
+----------------------------------------------------
+#Edit the wp-config file
+RUN sed - ie 's/database_name_here/wordpress/g' /var/www/html/wordpress/wp-config.php && \
+sed - ie 's/username_here/wpuser/g' /var/www/html/wordpress/wp-config.php && \
+sed - ie 's/password_here/P@ssword/g' /var/www/html/wordpress/wp-config.php
+----------------------------------------------------
+vim mysql_setup.sql
+-------
+ check the database user and password which has given
+-----
+vim Dockerfile (add the below lines under Copy the WP-config file)
+-----
+sed - ie 's/password_here/P@ssword/g' /var/www/html/wordpress/wp-config.php
+--------
+#docker build -t dockcore/wordpess .
+--------
+#docker images
+#docker images --tree
+----
+#docker images rmi <imageid> (removing unwanted images)
+----
+#boot2docker ip
+---
+#docker run -it --name wordpress -h wordpress -p 80:80 dockcore/wordpress /bin/bash
+
+#docker run -it --name wordpress -h wordpress -p 81:80 dockcore/wordpress /bin/bash
+#service httpd status
+#exit
+#docker ps --all
+#docker rm <imageid>
+#docker ps --all
+#docker images
+----------------------
+vim Dockerfile (Add the below lines under #Edit the wp-config file)
+---
+#Start mysql and apache on boot
+RUN echo "service mysqld start" >> ~/.bashrc && \
+echo "service httpd start" >> ~/.bashrc &&
+----
+#docker build -t dockcore/wordpess .
+#docker images
+#docker rmi <untagged images>
+#docker run -it --name wordpress -h wordpress -p 81:80 dockcore/wordpress /bin/bash
+****now you are entering in to the container****
+#cat ~/.bashrc
+#boot2docker ip
+****check the Ip with the port number****
+#vim /etc/httpd/conf.d/wordpress.conf (just check it)
+#vim /var/www/html/wordpress/
+#ls -lah
+#cat /etc/httpd/conf/httpd.conf | grep User
+#exit
+$docker ps --all
+$docker rm <imageid>
+$vim Dockerfile
+-----
+# Set Permissions
+RUN chown -R apache:apache /var/www/html/wordpress && \
+chmod -R 775 /var/www/html/wordpress
+--------
+#docker build -t dockcore/wordpess .
+#docker images
+#docker rmi <untagged images>
+#docker run -it --name wordpress -h wordpress -p 81:80 dockcore/wordpress /bin/bash
+#exit
+$docker ps --all
+$docker rm <imageid>
+$vim worrdpress.conf
+----
+<VirtualHost *:80>
+	DocumentRoot "/var/www/html/wordpress/"
+	ServerName wordpress.local
+	ServerAlias www.wordpress.local
+	Errorlog "/var/log/httpd/wordpress_error.log"
+	CustomLog "/var/log/httpd/wordpress_access.log" combined
+</VirtualHost>
+--------
+

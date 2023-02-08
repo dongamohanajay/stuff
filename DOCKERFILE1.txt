@@ -1,0 +1,63 @@
+https://registry.hub.docker.com/u/appcontainers/centos65/
+https://www.youtube.com/watch?v=46dbHhypxMk
+codex.wordpress.org/Editing_wp-config.php
+------------------------------------------------------------
+------------------------------------------------
+mkdir /Users/user/Documents/DOCKERDEMO/
+cd  /Users/user/Documents/DOCKERDEMO/
+vim Dockerfile
+ls
+vim mysql_setup.sql
+
+
+-----------------------------------------------------
+###################
+#Wordpress installation
+###################
+
+#Set the base image for this installation
+FROM appcontainers/centos65
+
+#File Author / Maintainer
+MAINTAINER  dockcore rnason@dockcore.com
+
+#Files that need to be added
+ADD mysql_setup.sql /tmp/
+ADD wordpress.conf /etc/httpd/conf.d/ 
+
+#Pre-reqs
+RUN yum clean all && \
+yum -y update && \
+yum -y install httpd mod_rewirte mod_ssl mod_env php php-common php-cli php-mysql mysql-server unzip && \
+rm -fr /var/cache/*
+
+#Application Install
+RUN wget -P /var/www/html/ https://wordpress.org/latest.zip && \
+unzip /var/www/html/latest.zip -d /var/www/html/ && \
+rm -fr /var/www/html/latest.zip
+
+#RUN Mysql install
+RUN service mysqld start && \
+mysql < /tmp/mysql_setup.sql && \
+rm -fr /tmp/mysql_setup.sql* && \
+service mysqld stop
+
+#Copy the WP-config file
+RUN cp /var/www/html/wprdpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+
+#Edit the wp-config file
+RUN sed - ie 's/database_name_here/wordpress/g' /var/www/html/wordpress/wp-config.php && \
+sed - ie 's/username_here/wpuser/g' /var/www/html/wordpress/wp-config.php && \
+sed - ie 's/database_name_here/wordpress/g' /var/www/html/wordpress/wp-config.php
+
+# Set Permissions
+RUN chown -R apache:apache /var/www/html/wordpress && \
+chmod -R 775 /var/www/html/wordpress
+
+#Start mysql and apache on boot
+RUN echo "service mysqld start" >> ~/.bashrc && \
+echo "service httpd start" >> ~/.bashrc 
+
+#Expose Necessary Ports
+EXPOSE 80
+------------------------------------------------------------------------

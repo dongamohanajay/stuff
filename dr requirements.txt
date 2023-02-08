@@ -1,0 +1,17 @@
+> what are the precautions we need to take while doing DR Test.
+
+> what are the challenges commonly we face  while doing DR Test.
+
+> what are the things we have to shutdown before intiating DR Test.
+
+> Can we stop the Database and Application servers before doing DR Test.
+
+>  Can we stop all the services at a time while doing DR Test.
+
+> What are the prior and post steps.
+
+
+
+
+
+

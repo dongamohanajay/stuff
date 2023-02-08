@@ -1,0 +1,8 @@
+rsync -a -v --ignore-existing /moodledata/ /moodle-data-efs/
+
+cp -n /moodledata/ /moodle-data-efs/
+
+\cp -rf /app/moodledata/ /moodle-data-efs/
+
+cp -n /app/moodledata/ /moodle-data-efs/
+

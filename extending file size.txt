@@ -1,0 +1,8 @@
+
+df -h
+lsblk
+df -TPh
+sudo fdisk -l
+sudo xfs_growfs /app
+df -h
+

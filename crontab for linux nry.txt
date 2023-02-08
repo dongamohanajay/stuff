@@ -1,0 +1,15 @@
+#ec2-s3 uploading
+
+0 0 * * * /usr/bin/aws s3 sync /var/log/apache2/ s3://iis-linux-logs/NEW_NRY_WEBSITES2-01
+
+#deleting the log files in apache2
+
+0 0 * * MON /usr/bin/find /var/log/apache2 -name "*.log" -type f -mtime +7 -exec rm -f {} \;
+
+0 0 * * MON /usr/bin/find /var/log/apache2 -name "*.gz" -type f -mtime +7 -exec rm -f {} \;
+
+0 0 * * MON /usr/bin/find /var/log/apache2 -name "*_log" -type f -mtime +7 -exec rm -f {} \;
+
+0 0 * * MON /usr/bin/find /var/log/apache2 -name "*.1" -type f -mtime +7 -exec rm -f {} \;
+
+aws s3 sync /var/log/apache2/ s3://iis-linux-logs/NRY_WEBSITES3

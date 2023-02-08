@@ -1,0 +1,28 @@
+We have the right sizing process of matching instance types and sizes to client workload performance and capacity requirements at the lowest possible cost.
+
+It’s also the process of looked at deployed instances and identifying opportunities to eliminate or downsize without compromising capacity or other requirements, which results in lower costs.
+
+To estimate a bill, used the AWS Pricing Calculator.
+
+As AWS offered client a pay-as-you-go approach for pricing for the vast majority of cloud services.
+
+With AWS client paying only for the individual services needed, for as long as client used them, and without requiring long-term contracts or complex licensing.
+
+------------------------------------------------------------------------------
+***************Mohan*************** 
+
+DB migration is essential because it helps to save money. 
+
+For the cost-optimization approach we had done the following. 
+
+Tagged and tracked the resource utilization. 
+
+Defined the utilization policies for client Amazon RDS resources. 
+
+Educated the owners and implemented the policies. 
+
+Learned and optimized the policies and processes. 
+
+Configured the Amazon RDS backup lifecycle policy and removed manually and automatically created database backup snapshots based on the client organization’s compliance and retention policies. Automatic backups are deleted as per the retention policy. 
+
+We used the Reserved Instances which provided client with a significant discount (up to 72%) compared to On-Demand Instance pricing. 
