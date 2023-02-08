@@ -1,0 +1,328 @@
+
+https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html
+
+
+https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1  cd /
+    2  apt update -y
+    3  apt upgarde -y
+    4  apt upgrade -y
+    5  $ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    6  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    7  unzip awscliv2.zip
+    8  apt install unzip
+    9  unzip awscliv2.zip
+   10  sudo ./aws/install
+   11  curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
+   12  openssl sha1 -sha256 kubectl
+   13  chmod +x ./kubectl
+   14  mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+   15  echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+   16  kubectl version --short --client
+   17  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+   18  sudo mv /tmp/eksctl /usr/local/bin
+   19  eksctl version
+   20  kubectl get svc
+   21  aws eks --region us-east-1 update-kubeconfig --name wp-rds
+   22  aws configure
+   23  aws iam list-users
+   24  kubectl get svc
+   25  aws eks --region us-east-1 update-kubeconfig --name wp-rds
+   26  kubectl get svc
+   27  kubectl get ns
+   28  kubectl get nodes
+   29  kubectl get pods
+   30  cd /
+   31  kubectl
+   32  eksctl
+   33  aws iam list-users
+   34  aws configure
+   35  kubectl get svc
+   36  kubectl get nodes
+   37  kubectl get pods
+   38  kubectl get ns
+   39  curl -o iam_policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.2/docs/install/iam_policy.json
+   40  aws iam create-policy     --policy-name AWSLoadBalancerControllerIAMPolicy     --policy-document file://iam_policy.json
+   41  eksctl create iamserviceaccount   --cluster=wp-rds   --namespace=kube-system   --name=aws-load-balancer-controller   --role-name "AmazonEKSLoadBalancerControllerRole"   --attach-policy-arn=arn:aws:iam::953129327946:policy/AWSLoadBalancerControllerIAMPolicy   --approve
+   42  aws eks describe-cluster --name wp-rds --query "cluster.identity.oidc.issuer" --output text
+   43  aws iam list-open-id-connect-providers | grep 60907C39B7C7802A42E3A5EAFC2178CF
+   44  eksctl utils associate-iam-oidc-provider --cluster wp-rds --approve
+   45  kubectl get deployment -n kube-system alb-ingress-controller
+   46  kubectl apply     --validate=false     -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+   47  curl -Lo v2_4_2_full.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.2/v2_4_2_full.yaml
+   48  sed -i.bak -e 's|your-cluster-name|wp-rds|' ./v2_4_2_full.yaml
+   49  ls
+   50  nano v2_4_2_full.yaml
+   51  kubectl apply -f v2_4_2_full.yaml
+   52  kubectl get deployment -n kube-system aws-load-balancer-controller
+   53  kubectl apply -f v2_4_2_full.yaml
+   54  kubectl apply     --validate=false     -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+   55  curl -Lo v2_4_2_full.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.2/v2_4_2_full.yaml
+   56  sed -i.bak -e 's|your-cluster-name|wp-rds|' ./v2_4_2_full.yaml
+   57  nano v2_4_2_full.yaml
+   58  kubectl apply -f v2_4_2_full.yaml
+   59  curl -Lo cert-manager.yaml https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+   60  kubectl apply     --validate=false     -f ./cert-manager.yaml
+   61  kubectl apply -f v2_4_2_full.yaml
+   62  kubectl delete deployment aws-load-balancer-controller
+   63  kubectl delete deployment aws-load-balancer-controller -n kube-system
+   64  kubectl delete deployment cert-manager-webhook -n kube-system
+   65  kubectl delete deployment cert-manager-webhook -n cert-manager
+   66  kubectl delete deployment cert-manager -n cert-manager
+   67  kubectl delete deployment cert-manager-cainjector -n cert-manager
+   68  kubectl delete service aws-load-balancer-webhook-service
+   69  kubectl delete service aws-load-balancer-webhook-service -n kube-system
+   70  kubectl delete service cert-manager -n cert-manager
+   71  kubectl delete service cert-manager-webhook -n cert-manager
+   72  kubectl delete service alb
+   73  kubectl delete IngressClasses alb
+   74  kubectl delete ns cert-manager
+   75  curl -o iam_policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.2/docs/install/iam_policy.json
+   76  ls
+   77  rm -rf v2_4_2_full.yaml
+   78  rm -rf v2_4_2_full.yaml.bak
+   79  ls
+   80  rm -rf cert-manager.yaml
+   81  ls
+   82  rm -rf iam_policy.json
+   83  ls
+   84  curl -o iam_policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.2/docs/install/iam_policy.json
+   85  ls
+   86  aws iam create-policy     --policy-name AWSLoadBalancerControllerIAMPolicy     --policy-document file://iam_policy.json
+   87  eksctl create iamserviceaccount   --cluster=wp-rds   --namespace=kube-system   --name=aws-load-balancer-controller   --role-name "AmazonEKSLoadBalancerControllerRole"   --attach-policy-arn=arn:aws:iam::953129327946:policy/AWSLoadBalancerControllerIAMPolicy   --approve
+   88  kubectl apply     --validate=false     -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+   89  curl -Lo v2_4_2_full.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.2/v2_4_2_full.yaml
+   90  sed -i.bak -e 's|your-cluster-name|wp-rds|' ./v2_4_2_full.yaml
+   91  nano v2_4_2_full.yaml
+   92  vi v2_4_2_full.yaml
+   93  kubectl apply -f v2_4_2_full.yaml
+   94  clear
+   95  ls
+   96  rm -rf v2_4_2_full.yaml
+   97  rm -rf v2_4_2_full.yaml.bak
+   98  rm -rf iam_policy.json
+   99  ls
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+100  kubectl get svc
+  101  aws eks --region us-east-1 update-kubeconfig --name rds
+  102  kubectl get svc
+  103  kubectl get nodes
+  104  kubectl get ns
+  105  aws eks describe-cluster --name rds --query "cluster.identity.oidc.issuer" --output text
+  106  aws iam list-open-id-connect-providers | grep 6C31427BEFC127A37868A146309C03D5
+  107  eksctl utils associate-iam-oidc-provider --cluster rds --approve
+  108  curl -o iam_policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.2/docs/install/iam_policy.json
+  109  aws iam create-policy     --policy-name AWSLoadBalancerControllerIAMPolicy     --policy-document file://iam_policy.json
+  110  aws iam create-policy     --policy-name AWSLoadBalancerControllerIAMPolicy     --policy-document file://iam_policy.json
+  111  aws eks describe-cluster --name rds --query "cluster.identity.oidc.issuer" --output text
+  112  vi load-balancer-role-trust-policy.json
+  113  aws iam create-role   --role-name AmazonEKSLoadBalancerControllerRole   --assume-role-policy-document file://"load-balancer-role-trust-policy.json"
+  114  aws iam attach-role-policy   --policy-arn arn:aws:iam::953129327946:policy/AWSLoadBalancerControllerIAMPolicy   --role-name AmazonEKSLoadBalancerControllerRole
+  115  vi aws-load-balancer-controller-service-account.yaml
+  116  kubectl apply -f aws-load-balancer-controller-service-account.yaml
+  117  kubectl apply     --validate=false     -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+  118  curl -Lo v2_4_2_full.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.2/v2_4_2_full.yaml
+  119  sed -i.bak -e 's|your-cluster-name|rds|' ./v2_4_2_full.yaml
+  120  vi v2_4_2_full.yaml
+  121  kubectl apply -f v2_4_2_full.yaml
+  122  kubectl get deployment -n kube-system aws-load-balancer-controller
+  123  mkdir wordpress
+  124  vi mysql.yaml
+  125  vi wordpress.yaml
+  126  kubectl apply -f mysql.yaml
+  127  kubectl apply -f wordpress.yaml
+  128  history
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+root@ip-10-0-16-163:/# aws eks --region us-east-1 update-kubeconfig --name rd                                                                                s
+Added new context arn:aws:eks:us-east-1:953129327946:cluster/rds to /root/.ku                                                                                be/config
+root@ip-10-0-16-163:/# kubectl get svc
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   172.20.0.1   <none>        443/TCP   12m
+root@ip-10-0-16-163:/# kubectl get nodes
+NAME                          STATUS   ROLES    AGE     VERSION
+ip-10-0-93-19.ec2.internal    Ready    <none>   4m3s    v1.22.9-eks-810597c
+ip-10-0-99-129.ec2.internal   Ready    <none>   3m44s   v1.22.9-eks-810597c
+root@ip-10-0-16-163:/# kubectl get ns
+NAME              STATUS   AGE
+default           Active   12m
+kube-node-lease   Active   12m
+kube-public       Active   12m
+kube-system       Active   12m
+root@ip-10-0-16-163:/# aws eks describe-cluster --name rds --query "cluster.i                                                                                dentity.oidc.issuer" --output text
+https://oidc.eks.us-east-1.amazonaws.com/id/6C31427BEFC127A37868A146309C03D5
+root@ip-10-0-16-163:/# aws iam list-open-id-connect-providers | grep 6C31427B                                                                                EFC127A37868A146309C03D5
+root@ip-10-0-16-163:/# eksctl utils associate-iam-oidc-provider --cluster rds                                                                                 --approve
+2022-07-21 10:38:16 [ℹ]  will create IAM Open ID Connect provider for cluster                                                                                 "rds" in "us-east-1"
+2022-07-21 10:38:16 [✔]  created IAM Open ID Connect provider for cluster "rd                                                                                s" in "us-east-1"
+root@ip-10-0-16-163:/# curl -o iam_policy.json https://raw.githubusercontent.                                                                                com/kubernetes-sigs/aws-load-balancer-controller/v2.4.2/docs/install/iam_poli                                                                                cy.json
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Curre                                                                                nt
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--                                                                                     100  7617  100  7617    0     0   309k      0 --:--:-- --:--:-- --:--:--  309                                                                                k
+root@ip-10-0-16-163:/# aws iam create-policy \
+>     --policy-name AWSLoadBalancerControllerIAMPolicy \
+>     --policy-document file://iam_policy.json
+
+An error occurred (EntityAlreadyExists) when calling the CreatePolicy operati                                                                                on: A policy called AWSLoadBalancerControllerIAMPolicy already exists. Duplic                                                                                ate names are not allowed.
+root@ip-10-0-16-163:/# aws iam create-policy \
+>     --policy-name AWSLoadBalancerControllerIAMPolicy \
+>     --policy-document file://iam_policy.json
+{
+    "Policy": {
+        "PolicyName": "AWSLoadBalancerControllerIAMPolicy",
+        "PolicyId": "ANPA532XPLVFKO4J7UFD6",
+        "Arn": "arn:aws:iam::953129327946:policy/AWSLoadBalancerControllerIAM                                                                                Policy",
+        "Path": "/",
+        "DefaultVersionId": "v1",
+        "AttachmentCount": 0,
+        "PermissionsBoundaryUsageCount": 0,
+        "IsAttachable": true,
+        "CreateDate": "2022-07-21T10:40:04+00:00",
+        "UpdateDate": "2022-07-21T10:40:04+00:00"
+    }
+}
+root@ip-10-0-16-163:/# aws eks describe-cluster --name rds --query "cluster.i                                                                                dentity.oidc.issuer" --output text
+https://oidc.eks.us-east-1.amazonaws.com/id/6C31427BEFC127A37868A146309C03D5
+root@ip-10-0-16-163:/# vi load-balancer-role-trust-policy.json
+root@ip-10-0-16-163:/# aws iam create-role \
+>   --role-name AmazonEKSLoadBalancerControllerRole \
+>   --assume-role-policy-document file://"load-balancer-role-trust-policy.jso                                                                                n"
+{
+    "Role": {
+        "Path": "/",
+        "RoleName": "AmazonEKSLoadBalancerControllerRole",
+        "RoleId": "AROA532XPLVFJSTX6N7WO",
+        "Arn": "arn:aws:iam::953129327946:role/AmazonEKSLoadBalancerControlle                                                                                rRole",
+        "CreateDate": "2022-07-21T10:44:45+00:00",
+        "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Principal": {
+                        "Federated": "arn:aws:iam::953129327946:oidc-provider                                                                                /oidc.eks.us-east-1.amazonaws.com/id/6C31427BEFC127A37868A146309C03D5"
+                    },
+                    "Action": "sts:AssumeRoleWithWebIdentity",
+                    "Condition": {
+                        "StringEquals": {
+                            "oidc.eks.us-east-1.amazonaws.com/id/6C31427BEFC1                                                                                27A37868A146309C03D5:aud": "sts.amazonaws.com",
+                            "oidc.eks.us-east-1.amazonaws.com/id/6C31427BEFC1                                                                                27A37868A146309C03D5:sub": "system:serviceaccount:kube-system:aws-load-balanc                                                                                er-controller"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
+root@ip-10-0-16-163:/# aws iam attach-role-policy \
+>   --policy-arn arn:aws:iam::953129327946:policy/AWSLoadBalancerControllerIA                                                                                MPolicy \
+>   --role-name AmazonEKSLoadBalancerControllerRole
+root@ip-10-0-16-163:/# vi aws-load-balancer-controller-service-account.yaml
+root@ip-10-0-16-163:/# vi aws-load-balancer-controller-service-account.yaml
+root@ip-10-0-16-163:/# kubectl apply -f aws-load-balancer-controller-service-                                                                                account.yaml
+serviceaccount/aws-load-balancer-controller created
+root@ip-10-0-16-163:/# kubectl apply \
+>     --validate=false \
+>     -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/ce                                                                                rt-manager.yaml
+customresourcedefinition.apiextensions.k8s.io/certificaterequests.cert-manage                                                                                r.io created
+customresourcedefinition.apiextensions.k8s.io/certificates.cert-manager.io cr                                                                                eated
+customresourcedefinition.apiextensions.k8s.io/challenges.acme.cert-manager.io                                                                                 created
+customresourcedefinition.apiextensions.k8s.io/clusterissuers.cert-manager.io                                                                                 created
+customresourcedefinition.apiextensions.k8s.io/issuers.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/orders.acme.cert-manager.io cre                                                                                ated
+namespace/cert-manager created
+serviceaccount/cert-manager-cainjector created
+serviceaccount/cert-manager created
+serviceaccount/cert-manager-webhook created
+clusterrole.rbac.authorization.k8s.io/cert-manager-cainjector created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-issuers created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-clusterissuers                                                                                 created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-certificates cr                                                                                eated
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-orders created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-challenges crea                                                                                ted
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-ingress-shim cr                                                                                eated
+clusterrole.rbac.authorization.k8s.io/cert-manager-view created
+clusterrole.rbac.authorization.k8s.io/cert-manager-edit created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-approve:cert-ma                                                                                nager-io created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-certificatesign                                                                                ingrequests created
+clusterrole.rbac.authorization.k8s.io/cert-manager-webhook:subjectaccessrevie                                                                                ws created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-cainjector created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-issuers                                                                                 created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-clusteri                                                                                ssuers created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-certific                                                                                ates created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-orders c                                                                                reated
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-challeng                                                                                es created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-ingress-                                                                                shim created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-approve:                                                                                cert-manager-io created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-certific                                                                                atesigningrequests created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-webhook:subjectacce                                                                                ssreviews created
+role.rbac.authorization.k8s.io/cert-manager-cainjector:leaderelection created
+role.rbac.authorization.k8s.io/cert-manager:leaderelection created
+role.rbac.authorization.k8s.io/cert-manager-webhook:dynamic-serving created
+rolebinding.rbac.authorization.k8s.io/cert-manager-cainjector:leaderelection                                                                                 created
+rolebinding.rbac.authorization.k8s.io/cert-manager:leaderelection created
+rolebinding.rbac.authorization.k8s.io/cert-manager-webhook:dynamic-serving cr                                                                                eated
+service/cert-manager created
+service/cert-manager-webhook created
+deployment.apps/cert-manager-cainjector created
+deployment.apps/cert-manager created
+deployment.apps/cert-manager-webhook created
+mutatingwebhookconfiguration.admissionregistration.k8s.io/cert-manager-webhoo                                                                                k created
+validatingwebhookconfiguration.admissionregistration.k8s.io/cert-manager-webh                                                                                ook created
+root@ip-10-0-16-163:/# curl -Lo v2_4_2_full.yaml https://github.com/kubernete                                                                                s-sigs/aws-load-balancer-controller/releases/download/v2.4.2/v2_4_2_full.yaml
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Curre                                                                                nt
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--                                                                                       0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--                                                                                       0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--                                                                                     0
+100 34368  100 34368    0     0   144k      0 --:--:-- --:--:-- --:--:--  144                                                                                k
+root@ip-10-0-16-163:/# sed -i.bak -e 's|your-cluster-name|rds|' ./v2_4_2_full                                                                                .yaml
+root@ip-10-0-16-163:/# vi v2_4_2_full.yaml
+root@ip-10-0-16-163:/# kubectl apply -f v2_4_2_full.yaml
+customresourcedefinition.apiextensions.k8s.io/ingressclassparams.elbv2.k8s.aw                                                                                s created
+customresourcedefinition.apiextensions.k8s.io/targetgroupbindings.elbv2.k8s.a                                                                                ws created
+role.rbac.authorization.k8s.io/aws-load-balancer-controller-leader-election-r                                                                                ole created
+clusterrole.rbac.authorization.k8s.io/aws-load-balancer-controller-role creat                                                                                ed
+rolebinding.rbac.authorization.k8s.io/aws-load-balancer-controller-leader-ele                                                                                ction-rolebinding created
+clusterrolebinding.rbac.authorization.k8s.io/aws-load-balancer-controller-rol                                                                                ebinding created
+service/aws-load-balancer-webhook-service created
+deployment.apps/aws-load-balancer-controller created
+certificate.cert-manager.io/aws-load-balancer-serving-cert created
+issuer.cert-manager.io/aws-load-balancer-selfsigned-issuer created
+mutatingwebhookconfiguration.admissionregistration.k8s.io/aws-load-balancer-w                                                                                ebhook created
+validatingwebhookconfiguration.admissionregistration.k8s.io/aws-load-balancer                                                                                -webhook created
+ingressclass.networking.k8s.io/alb created
+error: unable to recognize "v2_4_2_full.yaml": no matches for kind "IngressCl                                                                                assParams" in version "elbv2.k8s.aws/v1beta1"
+root@ip-10-0-16-163:/# kubectl apply -f v2_4_2_full.yaml
+customresourcedefinition.apiextensions.k8s.io/ingressclassparams.elbv2.k8s.aws configured
+customresourcedefinition.apiextensions.k8s.io/targetgroupbindings.elbv2.k8s.aws configured
+role.rbac.authorization.k8s.io/aws-load-balancer-controller-leader-election-role unchanged
+clusterrole.rbac.authorization.k8s.io/aws-load-balancer-controller-role configured
+rolebinding.rbac.authorization.k8s.io/aws-load-balancer-controller-leader-election-rolebinding unchanged
+clusterrolebinding.rbac.authorization.k8s.io/aws-load-balancer-controller-rolebinding unchanged
+service/aws-load-balancer-webhook-service unchanged
+deployment.apps/aws-load-balancer-controller unchanged
+certificate.cert-manager.io/aws-load-balancer-serving-cert unchanged
+issuer.cert-manager.io/aws-load-balancer-selfsigned-issuer unchanged
+mutatingwebhookconfiguration.admissionregistration.k8s.io/aws-load-balancer-webhook configured
+validatingwebhookconfiguration.admissionregistration.k8s.io/aws-load-balancer-webhook configured
+ingressclassparams.elbv2.k8s.aws/alb created
+ingressclass.networking.k8s.io/alb unchanged
+root@ip-10-0-16-163:/# kubectl get deployment -n kube-system aws-load-balancer-controller
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+aws-load-balancer-controller   1/1     1            1           39s
+root@ip-10-0-16-163:/# mkdir wordpress
+root@ip-10-0-16-163:/# vi mysql.yaml
+root@ip-10-0-16-163:/# vi wordpress.yaml
+root@ip-10-0-16-163:/# kubectl apply -f mysql.yaml
+service/wordpress-mysql created
+persistentvolumeclaim/mysql-pv-claim created
+deployment.apps/wordpress-mysql created
+root@ip-10-0-16-163:/# kubectl apply -f wordpress.yaml
+service/wordpress created
+ingress.networking.k8s.io/ingress-wordpress created
+persistentvolumeclaim/wp-pv-claim created
+deployment.apps/wordpress created
+root@ip-10-0-16-163:/#

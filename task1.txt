@@ -1,0 +1,118 @@
+Tasks Delivered on 19/04/2022.
+Ticket/Task/Issue Metrics:
+# Of Tickets Assigned: 6
+# Of Tickets Resolved: 5
+# Of Tickets in progress: 1
+# Of Tickets Re-opened:0
+# Of High Priority Tickets dealt with:5
+
+Issue 1:
+Client name: NRY
+Ticket Status: Closed.
+Channel of Communication: Watsapp.
+Issue/Task Category: Request to modify the sub-domain in the load balancer.
+Issues Description: Request to modify sub-domain mirror.narayanaschools.in to narayanaschools.in in the load balancer.  
+Proposed Solution: As per the client request we had modify sub-domain mirror.narayanaschools.in to narayanaschools.in in the load balancer.
+AWS Division: Client Service.
+
+Issue 2:
+Client name: OBS
+Ticket Status: Closed
+Channel of Communication: On Phone 
+Issue/Task Category: Request to create a ubuntu server from the AMI and an another new server.
+Issues Description: Request to to create two ubuntu servers as mentioned below.
+Name of the server: DLPAuthoringServer_05_jan_2022(created from AMI backup)
+Storage: 400GB 
+Name of the server: DLPAuthoringServer-New.
+Storage: 30 & 470
+Proposed Solution: As per the client request we had created the servers in EC2 management console and shared the details.
+AWS Division: Service Deliivery.
+
+Issue 3:
+Client name: EOFFICE
+Ticket Status: Closed.
+Channel of Communication: Email.
+Issue/Task Category: Request to mount /eOfficebkp to the secretariat web server .
+Issues Description: Request to mount /eOfficebkp to the secretariat web server details mentioned below as they can move the old data in to that folder.
+Server Details:
+Name of the server: eoffice-secretariat-web-server-01
+IP Address: 172.17.3.44
+Instance ID: i-03adbe92ad47e8e5a
+Proposed Solution: As per the client request we had mounted the /eOfficebkp for the above server.
+AWS Division: Client Service.
+
+
+Issue 4:
+Client name: EOFFICE
+Ticket Status: Closed.
+Channel of Communication: Email.
+Issue/Task Category: Request to increase extra 100GB storage for the server.
+Issues Description: Request to increase extra 100GB storage for the server details mentioned below.
+Server Details:
+Name of the server: eoffice-secretariat-db-server-02
+IP Address: 172.17.3.158
+Instance ID: i-03c35a5603b72cf6e 
+Proposed Solution: As per the client request we had allocated extra 100 GB stoarge for the  above server in EC2 management console.
+AWS Division: Client Service.
+
+Issue 5:
+Client name: EOFFICE
+Ticket Status: Closed.
+Channel of Communication: Internal.
+Issue/Task Category: Request to change the Instance type and patch updates.
+Issues Description: Request to change the instance type for the 14 web serversto r5a.large and do the patch updates for  the 28 servers.  
+Proposed Solution: As per the client request changed the instance type by stopping the servers, in the instance settings change the instance type and then start the 14 servers.And do the patch updates for the 28 servers.
+in the Systems Manager and in the patch manager.
+AWS Division: Client Service.
+
+Issue 6:
+Client name: DESTS
+Ticket Status: Pending
+Channel of Communication: Email
+Issue/Task Category: Request to create a new winodws server,configure load balancer,postgres RDS and setup a Client VPN.
+Issues Description: Request to create a new winodws server,configure load balancer,postgres RDS and setup a Client VPN.  
+Proposed Solution: As per the client request we had created a new server,load balancer,RDS(postgres) and client VPN.
+AWS Division: Service Delivery.
+
+
+
+
+Tasks Delivered on 16/04/2022.
+Ticket/Task/Issue Metrics:
+# Of Tickets Assigned: 2
+# Of Tickets Resolved: 0
+# Of Tickets in progress: 1
+# Of Tickets Re-opened:0
+# Of High Priority Tickets dealt with:2
+
+Issue 1:
+Client name: DESTS
+Ticket Status: Pending
+Channel of Communication: Email
+Issue/Task Category: Request to create a new winodws server,configure load balancer,postgres RDS and setup a Client VPN.
+Issues Description: Request to create a new winodws server,configure load balancer,postgres RDS and setup a Client VPN.  
+Proposed Solution: As per the client request we had created a new server,load balancer,RDS(postgres) and client VPN.
+AWS Division: Service Delivery.
+
+Issue 2:
+Client name: NRY
+Ticket Status: Closed.
+Channel of Communication: Watsapp.
+Issue/Task Category: Request to add the sub-domains.
+Issues Description: Request to add the following listed sub-domains in the load balancer and in the DNS records.
+1.nasik.narayanacoachingcenters.in
+2.gwalior.narayanacoachingcenters.in
+3.jabalpur.narayanacoachingcenters.in
+4.indore.narayanacoachingcenters.in
+5.bhopal.narayanacoachingcenters.in
+6.nagpur.narayanacoachingcenters.in
+7.jaipur.narayanacoachingcenters.in
+8.pune.narayanacoachingcenters.in
+9.kolkata.narayanacoachingcenters.in  
+Proposed Solution: As per the client request we had added the sub-domains in the load balancer and created the DNS records for the same. 
+AWS Division: Service Delivery.
+
+
+
+
+

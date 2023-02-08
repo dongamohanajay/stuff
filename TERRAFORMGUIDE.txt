@@ -1,0 +1,34 @@
+INSTALL TERRAFORM IN LINUX
+
+link:https://www.howtoforge.com/how-to-install-terraform-on-ubuntu-1804/
+
+>mkdir ~/bin
+>wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
+>sudo unzip terraform_0.12.24_linux_amd64.zip -d /usr/local/bin/
+>mv terraform ~/bin
+>terraform version
+# Terraform v0.12.24
+
+
+INSTALL TERRAFORM IN WINDOWS
+
+#First install chocolatey
+#Run
+>Get-ExecutionPolicy
+#If it returns "Restricted"
+>Set-ExecutionPolicy AllSigned 
+or
+>Set-ExecutionPolicy Bypass -Scope Process
+
+>Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+#Install Terraform
+>choco install terraform
+>terraform -help
+>terraform -help plan
+
+#Enable tab completion
+#Bash
+>touch ~/.bashrc
+>terraform -install-autocomplete
+

@@ -1,0 +1,102 @@
+https://www.youtube.com/watch?v=vk98vorBlMQ&t=1180s
+
+sudo apt update -y
+sudo apt install apache2 -y
+sudo systemctl status apache2
+<check the public IP>
+<change the security group rules
+1.HTTP---TCP---80---CUSTOM---0.0.0.0/0
+2.HHTP---TCP---80---CUSTOM---::/0
+3.SSH---TCP-----22---CUSTOM---0.0.0.0/0
+4.HTTPS---TCP--443--ANYWHERE-0.0.0.0/0
+>
+sudo systemctl start apache2
+sudo systemctl enable apache2
+sudo apt install mariadb-server mariadb-client -y
+sudo systemctl start mariadb
+sudo systemctl status mariadb
+sudo mysql_secure_installation
+<enter password>
+set root password? [y/n]: y
+remove anonymous users?[y/n]: y
+diallow root login remotely?[y/n]:y
+remove test database and access to it?[y/n]:y
+reload privilege tables now?[y/n]:y
+sudo systemctl restart mariadb
+sudo apt install php php-mysql php-gd php-cli php-common -y
+<google 
+download wordpress
+select the first one
+download wordpress 5.3>
+sudo apt install wget unzip -y
+sudo wget <copy+paste the wordpress address >
+sudo wget https://wordpress.org/latest.zip
+ls
+sudo unzip latest.zip
+ls
+cd wordpress/
+ls
+cd ..
+sudo cp -r wordpress/* /var/www/html/
+cd /var/www/html/
+ls
+ls -l
+sudo chown www-data:www-data -R /var/www/html/
+ls -l
+<check the public IP in the website>
+pwd
+/var/www/html/
+ls
+sudo rm -rf index.
+sudo rm -rf index.html
+ls -l
+<now refresh the website page
+then you will find the wordpress login page>
+cd ..
+sudo mysql -u root -p
+<Enter password:
+Welcome to the mariaDB monitor.>
+MariaDB[(none)]>create database wordpress;
+MariaDB[(none)]>create user "wpadmin"@"%" identified by "wpadminpass";
+MariaDB[(none)]>grant all privileges on wordpress.* to "wpadmin"@"%";
+MariaDB[(none)]>exit
+Bye
+<In the website wordpress page
+change the username:wpadmin
+password:wpadminpass
+then click on the submit
+run the installation.
+Give the 
+site title:mywebsite
+username:admin
+password:redhat
+your email:
+Install wordpress
+login
+
+Uninstall wordpress
+------------------------------------------
+rm -Rf /var/www/html/*
+mysql -uroot -p
+DROP DATABASE wordpress;
+exit;
+---------------------------------------
+sudo apt-get remove wordpress
+sudo apt-get autoremove wordpress
+sudo apt-get purge wordpress
+sudo apt-get autoremove --purge wordpress
+
+Uninstall apache2
+apt-get remove apache2
+apt-get purge apache2
+----------------------------------
+sudo apt autoremove
+sudo apt remove apache2.*
+--------------------------------
+$ sudo service apache2 stop
+$ sudo apt-get purge apache2 apache2-utils apache2.2-bin apache2-common
+$ sudo apt-get autoremove
+$ whereis apache2
+apache2: /etc/apache2
+$ sudo rm -rf /etc/apache2
+--------------------------------------------------

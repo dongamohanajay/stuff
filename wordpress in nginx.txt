@@ -1,0 +1,103 @@
+
+https://www.youtube.com/watch?v=OQHWB1D7rgo&t=1711s
+
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install nginx -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
+<check the public IP in the website>
+<check the security groups
+it should have both http &
+https>
+sudo apt install mariadb-server -y
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
+sudo mysql_secure_installation
+<enter password>
+set root password? [y/n]: y
+remove anonymous users?[y/n]: y
+diallow root login remotely?[y/n]:y
+remove test database and access to it?[y/n]:y
+reload privilege tables now?[y/n]:y
+sudo apt install php -y
+sudo apt install php-mysql php-gd php-common php-mbstring php-curl php-cli -y
+sudo systemctl restart nginx
+sudo apt install php-fpm -y
+<google 
+download wordpress
+select the first one
+copy the link address download wordpress 5.3>
+sudo wget https://wordpress.org/latest.zip
+ls
+>latest.zip
+sudo apt install unzip -y
+unzip latest.zip
+ls
+sudo mv wordpress/* /var/www/html/
+cd /var/www/html
+ls
+sudo rm -rf index.html index.nginx-debian.html
+ls
+sudo cd /etc/nginx/sites-enabled/
+ls
+sudo cp default wordpress.conf
+ls
+sudo nano wordpress.conf
+<keep the only line
+index index.php
+#server_name www.example.com;
+under location 
+modified the line as follows
+try_files $uri $uri/ /index.php?$args;
+
+uncomment the location lines(two lines)
+uncomment the line 
+fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+and finally uncomment the close bracket.
+uncomment these also below lines
+location ~/\.ht {
+deny all;
+}
+save and exit>
+ls
+ls -l
+sudo rm -rf default
+sudo rm -rf /etc/nginx/sites-avaialble/default
+sudo systemctl restart nginx
+<check the public IP in the website>
+sudo mysql -u root -p
+Enter password:
+MariaDB[(none)]>create database wordpress;
+MariaDB[(none)]>create user 'wordpress_dbuser'@'localhost' identified by 'password';
+MariaDB[(none)]>grant all privileges on wordpress.* to 'wordpress_dbuser'@'localhost';
+MariaDB[(none)]>flush privileges;
+MariaDB[(none)]>exit;
+sudo chown -R www-data:www-data /var/www/html/
+<In the website wordpress page
+change the username:wordpress_dbuser
+password:password
+then click on the submit
+run the installation.
+Give the 
+site title:Andriod and Tech Solutions
+username:admin
+password:password
+your email:
+Install wordpress
+login
+
+sudo vim /etc/php/7.2/fpm/php.ini
+<modify the below lines
+upload_max_filesize = 20M
+post_max_size = 20M
+>
+:wq
+sudo systemctl restart nginx
+sudo systemctl restart php7.2-fpm
+sudo /etc/nginx/sites-enabled/wordpress.conf
+<modify the lines as below
+in the server under listen line
+client_max_body_size 20M;
+>
+sudo systemctl restart nginx

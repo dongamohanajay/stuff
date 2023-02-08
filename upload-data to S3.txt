@@ -1,0 +1,8 @@
+UPLOAD FILES FROM SERVER TO  S3 
+
+aws s3 cp . s3://var-cache-fscache/fscache/ --recursive
+
+
+SYNC COMMAND
+
+aws s3 sync . s3://var-cache-fscache/fscache/ 

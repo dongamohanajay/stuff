@@ -1,0 +1,22 @@
+vpc name:	dev
+subnets: dev-public-1
+             dev-public-2
+             dev-private-1
+             dev-private-2	
+routetables:dev-public-1
+	 dev-private-1
+
+IGW: dev
+NGW:no name
+
+
+vpc name:	test
+subnets: publicsubnet-1a
+             publicsubnet-2b
+             privatesubnet-1a
+             privatesubnet-2b	
+routetables:public-rt
+	 private-rt
+
+IGW: igw
+NGW:ngw

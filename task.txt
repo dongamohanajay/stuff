@@ -1,0 +1,35 @@
+Tasks delivered on 07/04/2022.
+
+Ticket/Task/Issue Metrics:
+# Of Tickets Assigned: 3
+# Of Tickets Resolved: 2
+# Of Tickets in progress: 1
+# Of Tickets Re-opened:0
+# Of High Priority Tickets dealt with:3
+Issue 1:
+Client name: NRY.
+Ticket Status: Closed.
+Channel of Communication: EMAIL.
+Issue/Task Category: Add the domain in the DNS records and create the SSL.
+Issues Description: Client requested to add the domain "nmonitor.nspira.in"  in the DNS records and create the SSL ,finally add the CNAME & CVALUE in the DNS records.
+Proposed Solution: In the route53 add the domain "nmonitor.nspira.in"  in the DNS records and create the SSL in the ACM,finally add the CNAME & CVALUE in the DNS records.
+AWS Division: Service Delivery
+
+Issue 2:
+Client name: EOFFICE
+Ticket Status: In Progress.
+Channel of Communication: Internal.
+Issue/Task Category: Troubleshooting the web-servers for visualizing the second volume.
+Issues Description: As the alerts are not appearing for the second volume. We are troubleshooting the parameter configurations.
+Proposed Solution: In the systems manager as the alerts are not appearing for the second volume. We are troubleshooting the parameter configurations.
+AWS Division: Client Service.
+
+Issue 3:
+Client name: EOFFICE
+Ticket Status: Closed.
+Channel of Communication: On Phone.
+Issue/Task Category: Setup the StorageGateway and mount in the all database servers.
+Issues Description: Client requested to create the StorageGateway and mount in the all database servers.
+Proposed Solution:As per client requested to create the StorageGateway and mount in the all database servers except for the eoffice-secretariat-db-server.
+AWS Division: Service Delivery.
+

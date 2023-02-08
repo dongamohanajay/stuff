@@ -1,0 +1,6 @@
+1.Run cmd · 
+2.Type "diskpart" ...hit Enter · 
+3.Type "list disk"....hit Enter.
+
+
+Fsutil volume diskfree C:

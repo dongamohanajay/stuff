@@ -1,0 +1,11 @@
+
+1.    Managed Kubernetes Cluster with two scalable ten worker nodes [4cpu and 16GB RAM]
+2.    Five VMs for CI/CD Needs
+3.    SaaS Offerings from Mongo Atlas [one M10 dev cluster and above as our product grows] - managed through AWS subscription
+4.    Saas Offerings from Elastic.co, Elasticsearch, Kibana [90 GB storage| 2 GB RAM| Up to 5 vCPU as initial requirement]
+5.    Application and Network Load Balancers - Initially two to begin with
+6.    Artifactory storage for Docker images
+7.    Cloud front CDN, Storage, Route53, etc.
+
+
+
