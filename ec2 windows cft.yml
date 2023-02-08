@@ -1,0 +1,75 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: EC2 Windows instance
+Parameters:
+  KeyNames:
+    Description: Select the key name from the list
+    Type: AWS::EC2::KeyPair::KeyName  
+  SecurityGroups:
+    Type: 'List<AWS::EC2::SecurityGroup::Id>'
+    Description: Select the required SecurityGroupIds for ec2
+  Subnet:
+    Type: 'List<AWS::EC2::Subnet::Id>'
+    Description: Select the required SubnetIds for ec2
+  AvailabilityZone:
+    Type: 'List<AWS::EC2::AvailabilityZone::Name>'
+    Description: Select the required AvailabilityZone for ec2
+  Volume:
+    Type: Number
+    Description: Please provide the size of disk in GB
+  AMIid:
+    Type: 'List<AWS::EC2::Image::Id>'
+    Description: Note that the AWS CloudFormation console doesn't show a drop-down list of values for this parameter type. So Manually enter AMI ID for ec2.
+  InstanceType:
+    Description: Select the ec2 ec2 instance type from list
+    Type: String      
+    Default: t3.micro
+    AllowedValues: 
+      - m5.xlarge
+      - c5.2xlarge
+      - t2.xlarge
+      - t2.large 
+      - t3a.xlarge
+      - t3.micro
+Resources:
+  IMDSv2:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+        LaunchTemplateName: IMDSv2
+        LaunchTemplateData:
+          MetadataOptions:
+            HttpEndpoint: enabled
+            HttpPutResponseHopLimit: 1
+            HttpTokens: required
+  Instance1:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone: 
+        Fn::Join:
+          - ","
+          - Ref: AvailabilityZone
+      KeyName: !Ref KeyNames
+      LaunchTemplate: 
+          LaunchTemplateId: !Ref IMDSv2
+          Version: 1
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: !Ref Volume
+            Encrypted: true
+            DeleteOnTermination: false
+      ImageId:
+        Fn::Join:
+          - ","
+          - Ref: AMIid
+      InstanceType: !Ref InstanceType
+      SecurityGroupIds: !Ref SecurityGroups
+      SubnetId: 
+        Fn::Join:
+          - ","
+          - Ref: Subnet
+      IamInstanceProfile: EC2InstanceProfileforSSM
+      Tags:
+        - Key: Name
+          Value: Instance1
+        - Key: Project
+          Value: Testing

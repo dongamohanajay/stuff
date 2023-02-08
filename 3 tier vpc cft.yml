@@ -1,0 +1,772 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: NETWORK STACK showing how to create a VPC,Private-Subnet,Public-Subnet,Internet-GW,VPCGatewayAttachment,AWS-NAT-GateWay,Public-Route_Table,Private-Route-Table,SubnetRouteTable-Association,RouteTable-Routes,Security-groups.
+  You will be billed for the AWS resources used if you create a stack from this template.
+Parameters:
+  CIDRforVPC:
+    Description: " The IP address range can be used for subnets"
+    Type: String
+    Default: 10.0.0.0/16
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+  CIDRPublicsubnet1a:
+    Description: " The IP address range can be used for subnets"
+    Type: String
+    Default: 10.0.1.0/24
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+  CIDRPublicsubnet1b:
+    Description: " The IP address range can be used for subnets"
+    Type: String
+    Default: 10.0.2.0/24
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+  CIDRPublicsubnet1c:
+    Description: " The IP address range can be used for subnets"
+    Type: String
+    Default: 10.0.3.0/24
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+  CIDRprivatesubnet1a:
+    Description: " The IP address range can be used for subnets"
+    Type: String
+    Default: 10.0.4.0/24
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+  CIDRprivatesubnet1b:
+    Description: " The IP address range can be used for subnets"
+    Type: String
+    Default: 10.0.5.0/24
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+  CIDRprivatesubnet1c:
+    Description: " The IP address range can be used for subnets"
+    Type: String
+    Default: 10.0.6.0/24
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+  CIDRDBsubnet1a:
+    Description: " The IP address range can be used for subnets"
+    Type: String
+    Default: 10.0.7.0/24
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+  CIDRDBsubnet1b:
+    Description: " The IP address range can be used for subnets"
+    Type: String
+    Default: 10.0.8.0/24
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+  CIDRDBsubnet1c:
+    Description: " The IP address range can be used for subnets"
+    Type: String
+    Default: 10.0.9.0/24
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+  AZsubnet1a:
+    Description: The availability zones for subnet1
+    Type: String
+    AllowedValues:
+    - ap-south-2a
+    - ap-south-2b
+    - ap-south-2c
+    Default: ap-south-2a
+    ConstraintDescription: must select a valid AvailabilityZone.
+  AZsubnet1b:
+    Description: The availability zones for subnet2
+    Type: String
+    AllowedValues:
+    - ap-south-2a
+    - ap-south-2b
+    - ap-south-2c
+    Default: ap-south-2b
+    ConstraintDescription: must select a valid AvailabilityZone.
+  AZsubnet1c:
+    Description: The availability zones for subnet3
+    Type: String
+    AllowedValues:
+    - ap-south-2a
+    - ap-south-2b
+    - ap-south-2c
+    Default: ap-south-2c
+    ConstraintDescription: must select a valid AvailabilityZone.
+  VPCNameTag:
+    Type: String
+  EnvironmentTag:
+    Type: String
+  IsFlowLogsRequired:
+    Type: String
+    Description: Please type yes if you need flowlogs.
+  BucketName:
+    Description: 'Optional The name of an S3 bucket where you want to store flow logs. If you leave this empty, the Amazon S3 bucket is created for you.'
+    Type: String
+    Default: ''
+  LogFilePrefix:
+    Description: 'Optional The log file prefix.'
+    Type: String
+    Default: '' 
+Conditions:
+#  InternalBucket: !Equals [!Ref ExternalLogBucket, '']
+#  ExternalBucket: !Not [!Equals [!Ref ExternalLogBucket, '']]
+  HasLogFilePrefix: !Not [!Equals [!Ref LogFilePrefix, '']]    
+  VPCFlowlogNeed: !Equals [!Ref IsFlowLogsRequired, 'yes']
+Resources:
+
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock:
+        Ref: CIDRforVPC
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-VPC"
+          
+      - Key: Env
+        Value: 
+          Ref: EnvironmentTag
+  PublicSubnet1a:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: VPC
+      AvailabilityZone:
+        Ref: AZsubnet1a
+      CidrBlock:
+        Ref: CIDRPublicsubnet1a
+      MapPublicIpOnLaunch: true
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-Public-Subnet-1a"
+      - Key: Env
+        Value: 
+          Ref: EnvironmentTag
+  PublicSubnet1b:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: VPC
+      AvailabilityZone:
+        Ref: AZsubnet1b
+      CidrBlock:
+        Ref: CIDRPublicsubnet1b
+      MapPublicIpOnLaunch: true
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-Public-Subnet-1b"
+      - Key: Env
+        Value: 
+          Ref: EnvironmentTag
+  PublicSubnet1c:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: VPC
+      AvailabilityZone:
+        Ref: AZsubnet1c
+      CidrBlock:
+        Ref: CIDRPublicsubnet1c
+      MapPublicIpOnLaunch: true
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-Public-Subnet-1c"
+      - Key: Env
+        Value: 
+          Ref: EnvironmentTag
+  privatesubnet1a:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: VPC
+      AvailabilityZone:
+        Ref: AZsubnet1a
+      CidrBlock:
+        Ref: CIDRprivatesubnet1a
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-Private-Subnet-1a"
+      - Key: Env
+        Value: 
+          Ref: EnvironmentTag     
+  privatesubnet1b:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: VPC
+      AvailabilityZone:
+        Ref: AZsubnet1b
+      CidrBlock:
+        Ref: CIDRprivatesubnet1b
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-Private-Subnet-1b"
+      - Key: Env
+        Value: 
+          Ref: EnvironmentTag
+  privatesubnet1c:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: VPC
+      AvailabilityZone:
+        Ref: AZsubnet1c
+      CidrBlock:
+        Ref: CIDRprivatesubnet1c
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-Private-Subnet-1c"
+      - Key: Env
+        Value: 
+          Ref: EnvironmentTag
+  DBSubnet1a:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: VPC
+      AvailabilityZone:
+        Ref: AZsubnet1a
+      CidrBlock:
+        Ref: CIDRDBsubnet1a
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-DB-Subnet-1a"
+      - Key: Env
+        Value: 
+          Ref: EnvironmentTag
+  DBSubnet1b:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: VPC
+      AvailabilityZone:
+        Ref: AZsubnet1b
+      CidrBlock:
+        Ref: CIDRDBsubnet1b
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-DB-Subnet-1b"
+      - Key: Env
+        Value: 
+          Ref: EnvironmentTag
+  DBSubnet1c:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: VPC
+      AvailabilityZone:
+        Ref: AZsubnet1c
+      CidrBlock:
+        Ref: CIDRDBsubnet1c
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-DB-Subnet-1c"
+      - Key: Env
+        Value: 
+          Ref: EnvironmentTag
+  IGW:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-Internet Gateway"
+      - Key: Env
+        Value: 
+          Ref: EnvironmentTag
+  NAT:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+        - EIP
+        - AllocationId
+      SubnetId:
+        Ref: PublicSubnet1a
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-NAT-Gateway"
+  EIP:
+    DependsOn: AttachGateway
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Ref: VPC
+      InternetGatewayId:
+        Ref: IGW
+  PublicRT:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: VPC
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-Public-RT"
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: AttachGateway
+    Properties:
+      RouteTableId:
+        Ref: PublicRT
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: IGW
+  PBSubnetRouteTableAssociation1a:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: PublicSubnet1a
+      RouteTableId:
+        Ref: PublicRT
+  PBSubnetRouteTableAssociation1b:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: PublicSubnet1b
+      RouteTableId:
+        Ref: PublicRT
+  PBSubnetRouteTableAssociation1c:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: PublicSubnet1c
+      RouteTableId:
+        Ref: PublicRT
+  PrivateRT:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: VPC
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-Private-RT"
+  PrivateRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: PrivateRT
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: NAT
+  PvtSubnetRouteTableAssociation1a:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: privatesubnet1a
+      RouteTableId:
+        Ref: PrivateRT
+  PvtSubnetRouteTableAssociation1b:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: privatesubnet1b
+      RouteTableId:
+        Ref: PrivateRT
+  PvtSubnetRouteTableAssociation1c:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: privatesubnet1c
+      RouteTableId:
+        Ref: PrivateRT
+  DBRT:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: VPC
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-DB-RT"
+  DBRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: DBRT
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: NAT
+  DBSubnetRouteTableAssociation1a:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: DBSubnet1a
+      RouteTableId:
+        Ref: DBRT
+  DBSubnetRouteTableAssociation1b:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: DBSubnet1b
+      RouteTableId:
+        Ref: DBRT
+  DBSubnetRouteTableAssociation1c:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: DBSubnet1c
+      RouteTableId:
+        Ref: DBRT
+  NetworkAclPublic:
+    Type: 'AWS::EC2::NetworkAcl'
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-Public-Nacl"
+  NetworkAclPrivate:
+    Type: 'AWS::EC2::NetworkAcl'
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-Private-Nacl"
+  NetworkAclDB:
+    Type: 'AWS::EC2::NetworkAcl'
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-DB-Nacl"
+  SubnetNetworkAclAssociationPublic1a:
+    Type: 'AWS::EC2::SubnetNetworkAclAssociation'
+    Properties:
+      SubnetId: !Ref PublicSubnet1b
+      NetworkAclId: !Ref NetworkAclPublic
+  SubnetNetworkAclAssociationPublic1b:
+    Type: 'AWS::EC2::SubnetNetworkAclAssociation'
+    Properties:
+      SubnetId: !Ref PublicSubnet1a
+      NetworkAclId: !Ref NetworkAclPublic
+  SubnetNetworkAclAssociationPublic1c:
+    Type: 'AWS::EC2::SubnetNetworkAclAssociation'
+    Properties:
+      SubnetId: !Ref PublicSubnet1c
+      NetworkAclId: !Ref NetworkAclPublic
+  SubnetNetworkAclAssociationPrivate1a:
+    Type: 'AWS::EC2::SubnetNetworkAclAssociation'
+    Properties:
+      SubnetId: !Ref privatesubnet1a
+      NetworkAclId: !Ref NetworkAclPrivate
+  SubnetNetworkAclAssociationPrivate1b:
+    Type: 'AWS::EC2::SubnetNetworkAclAssociation'
+    Properties:
+      SubnetId: !Ref privatesubnet1b
+      NetworkAclId: !Ref NetworkAclPrivate
+  SubnetNetworkAclAssociationPrivate1c:
+    Type: 'AWS::EC2::SubnetNetworkAclAssociation'
+    Properties:
+      SubnetId: !Ref privatesubnet1c
+      NetworkAclId: !Ref NetworkAclPrivate
+  SubnetNetworkAclAssociationDB1a:
+    Type: 'AWS::EC2::SubnetNetworkAclAssociation'
+    Properties:
+      SubnetId: !Ref DBSubnet1a
+      NetworkAclId: !Ref NetworkAclDB
+  SubnetNetworkAclAssociationDB1b:
+    Type: 'AWS::EC2::SubnetNetworkAclAssociation'
+    Properties:
+      SubnetId: !Ref DBSubnet1b
+      NetworkAclId: !Ref NetworkAclDB
+  SubnetNetworkAclAssociationDB1c:
+    Type: 'AWS::EC2::SubnetNetworkAclAssociation'
+    Properties:
+      SubnetId: !Ref DBSubnet1c
+      NetworkAclId: !Ref NetworkAclDB
+  NetworkAclEntryInPublicAllowAll:
+    Type: 'AWS::EC2::NetworkAclEntry'
+    Properties:
+      NetworkAclId: !Ref NetworkAclPublic
+      RuleNumber: 99
+      Protocol: -1
+      RuleAction: allow
+      Egress: false
+      CidrBlock: '0.0.0.0/0'
+#  NetworkAclEntryInPublicAllowAllIPv6:
+#    Type: 'AWS::EC2::NetworkAclEntry'
+#    Properties:
+#      NetworkAclId: !Ref NetworkAclPublic
+#      RuleNumber: 98
+#      Protocol: -1
+#      RuleAction: allow
+#      Egress: false
+#      Ipv6CidrBlock: '::/0'
+  NetworkAclEntryOutPublicAllowAll:
+    Type: 'AWS::EC2::NetworkAclEntry'
+    Properties:
+      NetworkAclId: !Ref NetworkAclPublic
+      RuleNumber: 99
+      Protocol: -1
+      RuleAction: allow
+      Egress: true
+      CidrBlock: '0.0.0.0/0'
+#  NetworkAclEntryOutPublicAllowAllIPv6:
+#    Type: 'AWS::EC2::NetworkAclEntry'
+#    Properties:
+#      NetworkAclId: !Ref NetworkAclPublic
+#      RuleNumber: 98
+#      Protocol: -1
+#      RuleAction: allow
+#      Egress: true
+#      Ipv6CidrBlock: '::/0'
+  NetworkAclEntryInPrivateAllowAll:
+    Type: 'AWS::EC2::NetworkAclEntry'
+    Properties:
+      NetworkAclId: !Ref NetworkAclPrivate
+      RuleNumber: 99
+      Protocol: -1
+      RuleAction: allow
+      Egress: false
+      CidrBlock: '0.0.0.0/0'
+# NetworkAclEntryInPrivateAllowAllIPv6:
+#   Type: 'AWS::EC2::NetworkAclEntry'
+#   Properties:
+#     NetworkAclId: !Ref NetworkAclPrivate
+#     RuleNumber: 98
+#     Protocol: -1
+#     RuleAction: allow
+#     Egress: false
+#     Ipv6CidrBlock: '::/0'
+  NetworkAclEntryOutPrivateAllowAll:
+    Type: 'AWS::EC2::NetworkAclEntry'
+    Properties:
+      NetworkAclId: !Ref NetworkAclPrivate
+      RuleNumber: 99
+      Protocol: -1
+      RuleAction: allow
+      Egress: true
+      CidrBlock: '0.0.0.0/0'
+# NetworkAclEntryOutPrivateAllowAllIPv6:
+#   Type: 'AWS::EC2::NetworkAclEntry'
+#   Properties:
+#     NetworkAclId: !Ref NetworkAclPrivate
+#     RuleNumber: 98
+#     Protocol: -1
+#     RuleAction: allow
+#     Egress: true
+#     Ipv6CidrBlock: '::/0'
+  NetworkAclEntryInDBAllowAll:
+    Type: 'AWS::EC2::NetworkAclEntry'
+    Properties:
+      NetworkAclId: !Ref NetworkAclDB
+      RuleNumber: 99
+      Protocol: -1
+      RuleAction: allow
+      Egress: false
+      CidrBlock: '0.0.0.0/0'
+# NetworkAclEntryInDBAllowAllIPv6:
+#   Type: 'AWS::EC2::NetworkAclEntry'
+#   Properties:
+#     NetworkAclId: !Ref NetworkAclDB
+#     RuleNumber: 98
+#     Protocol: -1
+#     RuleAction: allow
+#     Egress: false
+#     Ipv6CidrBlock: '::/0'
+  NetworkAclEntryOutDBAllowAll:
+    Type: 'AWS::EC2::NetworkAclEntry'
+    Properties:
+      NetworkAclId: !Ref NetworkAclDB
+      RuleNumber: 99
+      Protocol: -1
+      RuleAction: allow
+      Egress: true
+      CidrBlock: '0.0.0.0/0'
+# NetworkAclEntryOutDBAllowAllIPv6:
+#   Type: 'AWS::EC2::NetworkAclEntry'
+#   Properties:
+#     NetworkAclId: !Ref NetworkAclDB
+#     RuleNumber: 98
+#     Protocol: -1
+#     RuleAction: allow
+#     Egress: true
+#     Ipv6CidrBlock: '::/0'
+  SecurityGroupNew:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: !Ref VPC
+      GroupDescription: Security group for EC2 instances
+      GroupName: SecurityGroupNew
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 10.0.0.0/16
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        FromPort: -1
+        ToPort: -1
+        CidrIp: 0.0.0.0/0
+  SSMRole2:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: SSMRole2
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: 'ec2.amazonaws.com'
+          Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore 
+  EC2InstanceProfileforSSM2:
+    Type: AWS::IAM::InstanceProfile
+    Properties: 
+      InstanceProfileName: EC2InstanceProfileforSSM2
+      Roles: 
+        - !Ref SSMRole2
+  Role:
+    Type: 'AWS::IAM::Role'
+    Condition: VPCFlowlogNeed
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: 'vpc-flow-logs.amazonaws.com'
+          Action: 'sts:AssumeRole'
+      Policies:
+      - PolicyName: 'flowlogs-policy'
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - 'logs:CreateLogStream'
+            - 'logs:PutLogEvents'
+            - 'logs:DescribeLogGroups'
+            - 'logs:DescribeLogStreams'
+            Resource: !GetAtt 'LogGroup.Arn'
+  
+  LogGroup:
+    Type: 'AWS::Logs::LogGroup'
+    Condition: VPCFlowlogNeed
+    Properties:
+      RetentionInDays: 14
+  FlowLog:
+    Type: 'AWS::EC2::FlowLog'
+    Condition: VPCFlowlogNeed
+    Properties:
+      DeliverLogsPermissionArn: !GetAtt 'Role.Arn'
+      LogGroupName: !Ref LogGroup
+      ResourceId: !Ref VPC
+      ResourceType: 'VPC'
+      TrafficType: ALL
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-VPC-flowlog-cw"
+  
+  LogBucket:
+    Type: 'AWS::S3::Bucket'
+    Condition: VPCFlowlogNeed
+    Properties:
+      BucketName: !Ref BucketName
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+         - ServerSideEncryptionByDefault:
+             SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration: # AWS Foundational Security Best Practices v1.0.0 S3.8
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+  LogBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Condition: VPCFlowlogNeed
+    Properties:
+      Bucket: !Ref LogBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement: # https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-s3.html#flow-logs-s3-permissions
+        - Sid: AWSLogDeliveryWrite
+          Effect: Allow
+          Principal:
+            Service: 'delivery.logs.amazonaws.com'
+          Action: 's3:PutObject'
+          Resource: !If [HasLogFilePrefix, !Sub '${LogBucket.Arn}/${LogFilePrefix}/AWSLogs/${AWS::AccountId}/*', !Sub '${LogBucket.Arn}/AWSLogs/${AWS::AccountId}/*']
+          Condition:
+            StringEquals:
+              's3:x-amz-acl': 'bucket-owner-full-control'
+        - Sid: AWSLogDeliveryAclCheck
+          Effect: Allow
+          Principal:
+            Service: 'delivery.logs.amazonaws.com'
+          Action: 's3:GetBucketAcl'
+          Resource: !GetAtt 'LogBucket.Arn'
+        - Sid: AllowSSLRequestsOnly
+          Effect: Deny
+          Principal: '*'
+          Action: 's3:*'
+          Resource:
+          - !GetAtt 'LogBucket.Arn'
+          - !Sub '${LogBucket.Arn}/*'
+          Condition:
+            Bool:
+              'aws:SecureTransport': false
+  FlowLogInternalBucket:
+    DependsOn: LogBucketPolicy
+    Type: 'AWS::EC2::FlowLog'
+    Condition: VPCFlowlogNeed
+    Properties:
+      LogDestination: !If [HasLogFilePrefix, !Sub '${LogBucket.Arn}/${LogFilePrefix}/', !GetAtt 'LogBucket.Arn']
+      LogDestinationType: s3
+      ResourceId: !Ref VPC
+      ResourceType: 'VPC'
+      TrafficType: ALL
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-VPC-flowlog-s3"
+        
+  S3GatewayEndpoint:
+    Type: 'AWS::EC2::VPCEndpoint'
+    Properties:
+      VpcId: !Ref VPC
+      ServiceName: 'com.amazonaws.ap-south-2.s3'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Action: 
+            - 's3:*'
+          Effect: 'Allow'
+          Principal: '*'
+          Resource: '*'
+      RouteTableIds:
+        - !Ref DBRT
+        - !Ref PrivateRT
+        - !Ref PublicRT
+      VpcEndpointType: Gateway

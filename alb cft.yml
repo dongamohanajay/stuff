@@ -1,0 +1,58 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation Template for creating an internet-facing ALB with target groups and security groups
+### Please uncomment the commented lines when using HTTPS with ACM certificate
+Parameters:
+  Subnets:
+    Type: 'List<AWS::EC2::Subnet::Id>'
+    Description: Select the required SubnetIds for ALB
+  VPC:
+    Type: String
+    Description: Please add the required VPC for SG
+#  CertificateArn:
+#    Type: String
+#    Description: ARN of the certificate for HTTPS listener
+    
+Resources:
+  ALB:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: ALB
+      Scheme: internet-facing
+      Subnets: !Ref Subnets
+      SecurityGroups:
+        - !Ref ALBSecurityGroup
+  ALBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for ALB
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: TargetGroup
+      Port: 8080
+      Protocol: HTTP
+      VpcId: !Ref VPC
+  Listener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+      LoadBalancerArn: !Ref ALB
+      Port: 80
+      Protocol: HTTP
+#      Port: 443
+#      Protocol: HTTPS
+#      Certificates:
+#        - CertificateArn: !Ref CertificateArn
