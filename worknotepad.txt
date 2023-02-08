@@ -1,0 +1,27 @@
+
+
+Monthly-PricingAlerts
+
+
+Daily-PricingAlerts
+
+
+notifications@dataevolve.in
+------------------------------------------------------------
+
+
+
+Event Source	:	AWS services
+
+AWS service	: 	EC2
+
+Event type		: 	EBS Snapshot Notification.[Create,Share and Copy]
+		:	EBS Volume Notification.[Attach,Create,Reattach,Modify,Delete]
+		:	EC2 Instance State-change Notificaition.[pending,running,shutting-down,terminated,stopping,stopped]
+
+
+--------------------------------------------------------------
+CloudWatch metrics.
+----------------------------------------------------------------
+Create Alerts for the POC accounts for the Credits usage.
+
