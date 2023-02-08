@@ -1,0 +1,22 @@
+https://medium.com/tensult/to-send-linux-logs-to-aws-cloudwatch-17b3ea5f4863
+
+
+https://devopscube.com/how-to-setup-and-push-serverapplication-logs-to-aws-cloudwatch/
+
+
+
+Name: prod-vendor-portal-server-1a
+Instance ID: i-089a157cb63ddb929
+Private IPv4 addresses: 10.0.16.175
+
+
+
+
+/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.d/ssm_prod-vendor-portal-server-new-linux
+
+
+"timestamp_format": "%Y-%m-%d %H:%M:%S.%f",
+"multi_line_start_pattern": "{timestamp_format}",
+
+
+step -1. What ever the changes we have made in the script those have to reflect in the parameter store then only we can have that changes in the output.

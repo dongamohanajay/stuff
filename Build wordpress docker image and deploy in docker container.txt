@@ -1,0 +1,15 @@
+[root@ip-172-31-46-214 /]# history
+    1  cd /
+    2  yum upadte && yum upgrade -y
+    3  yum upadte -y
+    4  yum update && yum upgrade -y
+    5  yum update -y
+    6  yum upgrade -y
+    7  yum install docker -y
+    8  systemctl enable docker
+    9  systemctl start docker
+   10  systemctl status docker
+   11  sudo usermod -a -G docker ec2-user
+   12  docker pull tutum/wordpress
+   13  docker run -d -p 80:80 -p 443:443 tutum/wordpress
+   14  history

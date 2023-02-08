@@ -1,0 +1,141 @@
+AWS-OIL INDIA
+oil-india-noida-dr
+Tunnel 1	UP
+Tunnel 2	DOWN
+
+oil-india-duliajan-vpn
+Tunnel 1	UP
+Tunnel 2	UP
+
+aws-oilindia
+mohan
+Dataevolve@1234
+
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:ListBucket"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::<bucket-name>"
+    },
+    {
+      "Action": [
+        "s3:DeleteObject",
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:PutObjectAcl"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::<bucket-name>/*"
+    }
+  ]
+}
+--------------------------------------------
+
+{
+"Version": "2012-10-17",
+"Statement": [
+{
+"Action": [
+"s3:ListBucket"
+],
+"Effect": "Allow",
+"Resource": "arn:aws:s3:::<bucket>"
+},
+{
+"Action": [
+"s3:DeleteObject",
+"s3:GetObject",
+"s3:PutObject",
+"s3:PutObjectAcl"
+],
+"Effect": "Allow",
+"Resource": "arn:aws:s3:::<bucket>/*"
+}
+]
+}
+
+
+----------
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ReadWrite",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:DeleteObject",
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:PutObjectAcl"
+            ],
+            "Resource": [
+                "arn:aws:s3:::releasebucket-vendorportal/*"
+            ]
+        }
+    ]
+}
+
+------
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::releasebucket-vendorportal"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:DeleteObject",
+                "s3:GetObject",
+                "s3:PutObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::releasebucket-vendorportal/*"
+            ]
+        }
+    ]
+}
+
+--------------
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": "s3:ListBucket",
+            "Resource": [
+                "arn:aws:s3:::arn:aws:s3:::"
+            ],
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::arn:aws:s3:::"
+            ],
+            "Effect": "Allow"
+        }
+    ]
+}
+
+
+joseph@dataevolve.in
+sairamu@dataevolve.in
+
+
+ndigital.narayanagroup.com	CNAME	Simple	-	
+devcrashcourse.netlify.com.narayanagroup.com

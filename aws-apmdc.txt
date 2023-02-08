@@ -1,0 +1,21 @@
+AndhraSand-dev: c5a.4xlarge
+AndhraSand-prod: m5a.8xlarge
+
+
+RDS
+Prod: db.r5.2xlarge
+
+UAT: db.r5.xlarge
+
+
+
+email:mohan@dataevolve.in
+password:9848646472@Mad
+
+SIGN IN USING 
+
+APN Partners
+via APN Partner Central
+
+50% Discount on your next Exam 	"Q4P5XBH5"
+

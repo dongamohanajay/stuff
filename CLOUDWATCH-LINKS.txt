@@ -1,0 +1,7 @@
+CLOUD WATCH LINKS
+
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Agent-Configuration-File-Details.html
+
+
+
+https://4sysops.com/archives/install-and-configure-amazon-cloudwatch-agent-on-ec2-instances/

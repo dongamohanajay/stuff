@@ -1,0 +1,4 @@
+Client VPN setup using AD
+
+https://infra.engineer/aws/34-setup-an-aws-client-vpn-using-aws-managed-microsoft-ad
+

@@ -1,0 +1,55 @@
+https://chime.aws/7130471605
+
+ADUSER
+AKIAW7ACE2R5Q444GNNU
+
+WtqCEXLBWZkmZDQo0fwjPpf3ikFl0cwPvjSnEgTk
+
+
+curl -o ./aws-discovery-agent.tar.gz https://s3-us-west-2.amazonaws.com/aws-discovery-agent.us-west-2/linux/latest/aws-discovery-agent.tar.gz
+tar -xzf aws-discovery-agent.tar.gz
+sudo bash install -r "us-west-2" -k "AKIAW7ACE2R5Q444GNNU" -s "WtqCEXLBWZkmZDQo0fwjPpf3ikFl0cwPvjSnEgTk"
+
+
+
+https://dashboard.eventengine.run/login?hash=5f78-0196cf2be4-3c
+
+
+
+https://catalog.us-east-1.prod.workshops.aws/v2/workshops/a033522c-f256-40f9-9ecb-5b76a71589bc/en-US/rehost/gettingstarted/connect-to-bastion
+
+
+MGN USER
+
+AKIAW7ACE2R5XKZ3ITW2
+
+
+Vs4V+xV8X817IVsCSAQyxXZfURU86pM0DpLw3TIa
+
+
+
+
+
+
+
+wget -O ./aws-replication-installer-init.py https://aws-application-migration-service-us-east-1.s3.amazonaws.com/latest/linux/aws-replication-installer-init.py 
+
+
+workshop
+
+https://catalog.us-east-1.prod.workshops.aws/v2/workshops/a033522c-f256-40f9-9ecb-5b76a71589bc/en-US/rehost/migrate/mgn/installing-agent
+
+
+mailto:awspankj@amazon.com
+
+
+
+
+mysql -u admin -h mid-wordpress.cluster-ciqq7gaqcrm6.us-west-2.rds.amazonaws.com -p
+
+
+sudo psql postgres --username=ofbiz -h  mid-ofbiz-instance-1.ciqq7gaqcrm6.us-west-2.rds.amazonaws.com
+
+
+APN PORTAL LOGIN RE PORTFOLIOS
+https://mpa-proserve.amazonaws.com/#/portfolios

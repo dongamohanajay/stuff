@@ -1,0 +1,17 @@
+question : With using ppk key user must be login without password.
+
+centos@123
+
+exit
+
+sudo passwd centos
+
+top
+
+13.232.131.132
+
+centos
+
+https://www.cyberciti.biz/faq/how-to-disable-ssh-password-login-on-linux/
+
+https://www.cyberciti.biz/faq/linux-delete-user-password/

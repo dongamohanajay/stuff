@@ -1,0 +1,10 @@
+In the AWS-APMDC A/C please change the EC2 & RDS Instance type 
+   
+EC2
+AndhraSand-dev: c5a.4xlarge to t3.small
+AndhraSand-prod: m5a.8xlarge to t3.small
+
+RDS
+Prod: db.r5.2xlarge to db.t3.small
+
+UAT: db.r5.xlarge to db.t3.small
