@@ -1,0 +1,9 @@
+NAGIOSXI
+192.168.1.228
+USERNAME:root
+PASSWORD:nagiosxi
+
+USERNAME:nagiosadmin
+password:0,nCu7EcVRXUqXNZnBu3
+
+eU7eG9rdvNtCpWoZ
