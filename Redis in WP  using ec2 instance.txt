@@ -1,0 +1,43 @@
+CONFIGURING REDIS TO WORDPRESS WHICH ARE IN DIFFERENT SERVERS:
+
+Step 1 — Installing and Configuring Redis
+
+sudo apt update
+sudo apt install redis-server
+sudo systemctl status redis
+
+Step 2 — Testing Redis
+
+redis-cli
+In the prompt that follows, test connectivity with the ping command:
+ping
+Output must be like below
+PONG
+exit
+
+Step 3 — open redis-config file and make chance given below
+
+By default, Redis is only accessible from localhost.you need to update the configuration file to allow connections from anywhere.
+To correct this, open the Redis configuration file for editing:
+sudo nano /etc/redis/redis.conf
+Locate this line and make sure it is uncommented (remove the # if it exists):
+(bind 127.0.0.1 ::1) => (bind 0.0.0.0 ::1)
+Scroll to the SECURITY section and look for a commented directive that reads:
+# requirepass foobared (replace foobared with your password)
+protected-mode no (by default it will be yes)
+sudo systemctl restart redis.service
+
+Step 4 install redis client in WP-server and add below lines in wp-config file
+
+define('WP_REDIS_HOST', 'private IP');
+define('WP_REDIS_PORT', '6379'); (allow custom port 6379 in security groups as well)
+define('WP_REDIS_PASSWORD', 'MyPassword'); (optional)
+
+
+Link : https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04
+
+
+
+
+
+

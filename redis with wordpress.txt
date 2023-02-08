@@ -1,0 +1,40 @@
+what is Redis?
+--------------
+Redis,which stands for remote dictionary server,is a fast,open source,in-memory,
+key-value data store.
+
+Benfits
+-------
+All redis data resides in memory,which enables low latency and high throught data access.
+
+
+ZBZKf8)WBJAyD)XHXT
+W/b?e#70<)9y(mysql passward)
+
+
+on redis server
+---------------
+vi redis.conf
+ redis-cli -h 10.0.2.134 -p 6379
+              -----------
+             wordpress private ip
+on wpserver
+----------
+config file 
+nano wp-config.php
+edit host ip with redis server private ip
+
+
+add this configuration file under packages
+wp-config.php
+define( 'WP_REDIS_HOST', '127.0.0.1' );
+define( 'WP_REDIS_PORT', 6379 );
+// define( 'WP_REDIS_PASSWORD', 'secret' );
+define( 'WP_REDIS_TIMEOUT', 1 );
+define( 'WP_REDIS_READ_TIMEOUT', 1 );
+
+
+
+https://sysadminxpert.com/how-to-install-redis-on-amazon-linux-or-centos/
+
+

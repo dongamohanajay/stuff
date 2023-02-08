@@ -1,0 +1,110 @@
+ 1  apt update -y
+    2  apt install awscli -y
+    3  curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
+    4  openssl sha1 -sha256 kubectl
+    5  chmod +x ./kubectl
+    6  mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+    7  echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+    8  kubectl version --short --client
+    9  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+   10  sudo mv /tmp/eksctl /usr/local/bin
+   11  eksctl version
+   12  curl -o iam_policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.2/docs/install/iam_policy.json
+   13  aws configure
+   14  aws iam create-policy     --policy-name AWSLoadBalancerControllerIAMPolicy     --policy-document file://iam_policy.json
+   15  aws eks describe-cluster --name achalla --query "cluster.identity.oidc.issuer" --output text
+   16  aws iam list-open-id-connect-providers | grep D95A1F51A1EB2232DC5DEF0EA092423D
+   17  eksctl utils associate-iam-oidc-provider --cluster test --approve
+   18  eksctl create iamserviceaccount   --cluster=test   --namespace=kube-system   --name=aws-load-balancer-controller   --role-name "AmazonEKSLoadBalancerControllerRole"   --attach-policy-arn=arn:aws:iam::953129327946:policy/AWSLoadBalancerControllerIAMPolicy   --approve
+   19  aws iam create-policy     --policy-name AWSLoadBalancerControllerIAMPolicy     --policy-document file://iam_policy.json
+   20  vi load-balancer-role-trust-policy.json
+   21  aws iam create-role   --role-name AmazonEKSLoadBalancerControllerRole   --assume-role-policy-document file://"load-balancer-role-trust-policy.json"
+   22  aws iam attach-role-policy   --policy-arn arn:aws:iam::953129327946:policy/AWSLoadBalancerControllerIAMPolicy   --role-name AmazonEKSLoadBalancerControllerRole
+   23  vi aws-load-balancer-controller-service-account.yaml
+   24  kubectl apply -f aws-load-balancer-controller-service-account.yaml
+   25  aws eks --region us-west-2 update-kubeconfig --name achalla
+   26  kubectl apply -f aws-load-balancer-controller-service-account.yaml
+   27  kubectl apply     --validate=false     -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+   28  curl -Lo v2_4_2_full.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.2/v2_4_2_full.yaml
+   29  sed -i.bak -e 's|your-cluster-name|test|' ./v2_4_2_full.yaml
+   30  nano v2_4_2_full.yaml
+   31  kubectl apply -f v2_4_2_full.yaml
+   32  kubectl get deployment -n kube-system aws-load-balancer-controller
+   33  git clone https://github.com/sairam48/mysql.git
+   34  cd mysql/
+   35  kubectl apply -f mysql\ \(3\).yaml
+   36  kubectl apply -f wordpress.yaml
+   37  kubectl get pods
+   38  cd
+   39  apt install docker
+   40  docker pull wordpress
+   41  apt install docker.io
+   42  docker pull wordpress
+   43  docker run -d -p 80:80 wordpress
+   44  docker ps
+   45  mysql version
+   46  apt install mysql-client
+   47  show databases;
+   48  mysql -h database-1.c09zfvfvtxld.us-west-2.rds.amazonaws.com -u admin -p Arisuni12345
+   49  mysql -h database-1.c09zfvfvtxld.us-west-2.rds.amazonaws.com -u admin -p
+   50  docker images
+   51  docker build -t WP-RDS .
+   52  docker build -t achalla .
+   53  vi Dockerfile
+   54  docker build -t achalla .
+   55  history
+   56  docker images
+   57  vi Dockerfile
+   58  docker build -t achalla .
+   59  docker build -t -p 80:80 achalla .
+   60  ls
+   61  docker build -t achalla .
+   62  vi Dockerfile
+   63  docker build -t achalla .
+   64  docker images
+   65  kubectl get pods -o wide
+   66  vi Dockerfile
+   67  aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/m1u6g2y9
+   68  aws configure
+   69  aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/m1u6g2y9
+   70  awscli version
+   71  aws --version
+   72  aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/m1u6g2y9
+   73  aws configure
+   74  which aws
+   75  ls -l /usr/bin/aws
+   76  sudo rm /usr/bin/aws
+   77  sudo rm -rf /usr/aws-cli
+   78  sudo rm -rf /usr/local/aws-cli
+   79  sudo rm -rf ~/.aws/
+   80  aws --version
+   82  curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip
+   83  unzip awscliv2.zip
+   84  apt install unzip
+   85  unzip awscliv2.zip
+   86  aws --version
+   87  cd aws
+   88  ./install
+   89  aws --version
+   90  cd
+   91  aws --version
+   92  aws configure
+   93  docker images
+   94  kubectl get pods
+   95  aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/m1u6g2y9
+   96  docker images
+   97  aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 698596591774.dkr.ecr.us-west-2.amazonaws.com
+   98  docker tag achalla:latest 698596591774.dkr.ecr.us-west-2.amazonaws.com/achalla:latest
+   99  docker push 698596591774.dkr.ecr.us-west-2.amazonaws.com/achalla:latest
+  100  vi wp.yaml
+  101  kubectl apply -f wp.yaml
+  102  kubectl get pods
+  103  kubectl get ns
+  104  ls
+  105  vi wp.yaml
+  106  kubectl apply -f wp.yaml
+  107  vi wp.yaml
+  108  kubectl delete deployment wordpress-mysql
+  109  kubectl delete -f wp.yaml
+  110  kubectl apply -f wp.yaml
+  111  kubectl get ingress

@@ -1,0 +1,117 @@
+Install lemp stack:
+
+Step 1: Install Nginx:
+
+$ sudo apt update
+$ sudo apt install nginx
+$ sudo systemctl status nginx 
+$ sudo systemctl is-enabled nginx
+http://SERVER_IP
+
+Step 2: Installing MariaDB Database:
+
+sudo apt install mariadb-server mariadb-client
+$ sudo systemctl status mariadb
+$ sudo systemctl is-enabled mariadb
+$ sudo mysql_secure_installation
+
+Then choose the option to set the database root (or administrator) user’s password and follow the prompts and carefully read the questions. To secure your database server, answer the questions as shown in the screenshot.
+
+Enter current password for root (enter for none): Enter
+Set a root password? [Y/n] y
+Remove anonymous users? [Y/n] y
+Disallow root login remotely? [Y/n] y
+Remove test database and access to it? [Y/n] y
+Reload privilege tables now? [Y/n] y
+
+check weather server is connecting to mysql through the below command
+
+$ sudo mysql
+
+Step 3: Install PHP
+
+$ sudo apt install php php-mysql php-fpm
+$ sudo systemctl status php7.4-fpm
+$ sudo systemctl is-enabled php7.4-fpm
+
+Step 4: Configuring Nginx to work with PHP-FPM
+
+$ sudo vi /etc/nginx/sites-available/default
+$ sudo nginx -t
+$ sudo systemctl restart nginx
+
+Now test if NGINX can work in conjunction with PHP-FPM to process PHP requests. Create a simple info.php page under the document root directory.
+
+$ echo "<?php phpinfo(); ?>" | sudo tee /var/www/html/info.php
+http://SERVER_IP/info.php
+
+Step 5: Install WordPress
+
+$ wget -c http://wordpress.org/latest.tar.gz
+$ tar -xzvf latest.tar.gz
+
+Now copy the content of the wordpress folder into your website’s folder (e.g mysite.com) which should be stored under the webserver’s web
+document root (/var/www/html/), as shown.
+
+Note that when using the cp command, the mysite.com directory doesn’t have to exist before, it will be automatically created.
+
+
+$ sudo cp -R wordpress/ /var/www/html/mysite.com
+$ sudo ls -l /var/www/html/mysite.com/
+
+Next, set correct permissions on the website directory /var/www/html/mysite.com. The webserver user and group www-data should own it with read, write, 
+and execute permissions.
+
+$ sudo chown -R www-data:www-data /var/www/html/mysite.com
+$ sudo chmod -R 775 /var/www/html/mysite.com
+
+Creating a WordPress Database for Website:
+sudo mysql
+MariaDB [(none)]> CREATE DATABASE mysite;
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON mysite.* TO 'mysiteadmin'@'localhost' IDENTIFIED BY  'SecureP@ssHere!';
+MariaDB [(none)]> FLUSH PRIVILEGES;
+MariaDB [(none)]> EXIT;
+
+At this point, you need to create a wp-config.php file for your new WordPress installation, where you will define the database connection and some other 
+parameters as well. Move into the website’s document root /var/www/html/mysite.com and create a wp-config.php file from the sample file provided by default.
+
+$ cd /var/www/html/mysite.com
+$ sudo mv wp-config-sample.php wp-config.php
+
+After creating a wp-config.php file, open it for editing.
+
+$ sudo vim wp-config.php
+
+Now modify the database connection settings (the name of the database for WordPress, MariaDB database username, and the user’s password) as highlighted in the 
+following screenshot, so that your new WordPress site will connect to the database you created for it.
+
+Creating an NGINX Virtual Server Block (VirtualHost) for WordPress Website:
+
+For NGINX to serve your website to clients using your domain name (e.g mysite.com), you need to configure a virtual server block (analogous to virtual 
+host under Apache) for your site in the NGINX configuration.
+
+sudo vim /etc/nginx/conf.d/mysite.com.conf
+
+Importantly, NGINX normally routes all requests to the default server. Therefore, remove the default server block file to enable your new site and 
+other sites you intend to set up on the same server to load well.
+
+$ sudo rm /etc/nginx/sites-enabled/default
+$ sudo rm /etc/nginx/sites-available/default
+
+$ sudo nginx -t
+$ sudo systemctl restart nginx
+
+Completing the WordPress Installation via the Web Installer:
+
+http://SERVER_IP/
+
+Goto amazon systems manager and create package with amazonefs and select the instances which we are going to mount.
+create elasticfilesystem and mount thorugh ip address
+
+https://snapcraft.io/install/amazon-ssm-agent/ubuntu (ssm agent)
+
+
+
+
+
+ 

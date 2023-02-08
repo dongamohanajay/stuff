@@ -1,0 +1,54 @@
+ 1  apt install awscli -y
+    2  curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
+    3  openssl sha1 -sha256 kubectl
+    4  chmod +x ./kubectl
+    5  mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+    6  echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+    7  kubectl version --short --client
+    8  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+    9  sudo mv /tmp/eksctl /usr/local/bin
+   10  eksctl version
+   11  curl -o iam_policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.2/docs/install/iam_policy.json
+   12  aws configure
+   13  aws iam create-policy     --policy-name AWSLoadBalancerControllerIAMPolicy     --policy-document file://iam_policy.json
+   14  aws eks describe-cluster --name rds --query "cluster.identity.oidc.issuer" --output text
+   15  aws iam list-open-id-connect-providers | grep C3644EC3CBA5EECDAFBE0209E270982C
+   16  eksctl utils associate-iam-oidc-provider --cluster rds --approve
+   17  eksctl create iamserviceaccount   --cluster=rds   --namespace=kube-system   --name=aws-load-balancer-controller   --role-name "AmazonEKSLoadBalancerControllerRole"   --attach-policy-arn=arn:aws:iam::953129327946:policy/AWSLoadBalancerControllerIAMPolicy   --approve
+   18  aws iam create-policy     --policy-name AWSLoadBalancerControllerIAMPolicy     --policy-document file://iam_policy.json
+   19  vi load-balancer-role-trust-policy.json
+   20  aws iam create-role   --role-name AmazonEKSLoadBalancerControllerRole   --assume-role-policy-document file://"load-balancer-role-trust-policy.json"
+   21  aws iam attach-role-policy   --policy-arn arn:aws:iam::698596591774:policy/AWSLoadBalancerControllerIAMPolicy   --role-name AmazonEKSLoadBalancerControllerRole
+   22  vi aws-load-balancer-controller-service-account.yaml
+   23  kubectl apply -f aws-load-balancer-controller-service-account.yaml
+   24  aws eks --region us-west-2 update-kubeconfig --name achalla
+   25  kubectl apply -f aws-load-balancer-controller-service-account.yaml
+   26  kubectl apply     --validate=false     -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+   27  curl -Lo v2_4_2_full.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.2/v2_4_2_full.yaml
+   28  sed -i.bak -e 's|your-cluster-name|rds|' ./v2_4_2_full.yaml
+   29  nano v2_4_2_full.yaml
+   30  kubectl apply -f v2_4_2_full.yaml
+   31  kubectl get deployment -n kube-system aws-load-balancer-controller
+   32  git clone https://github.com/sairam48/mysql.git
+   33  cd mysql/
+   34  kubectl apply -f mysql\ \(3\).yaml
+   35  kubectl apply -f wordpress.yaml
+   36  kubectl get pods
+   37  cd
+   38  apt install docker
+   39  docker pull wordpress
+   40  apt install docker.io
+   41  docker pull wordpress
+   42  docker run -d -p 80:80 wordpress
+   43  docker ps
+   44  mysql version
+   45  apt install mysql-client
+   46  show databases;
+   47  mysql -h database-1.c09zfvfvtxld.us-west-2.rds.amazonaws.com -u admin -p Arisuni12345
+   48  mysql -h database-1.c09zfvfvtxld.us-west-2.rds.amazonaws.com -u admin -p
+   49  docker images
+   50  docker build -t WP-RDS .
+   51  docker build -t achalla .
+   52  vi Dockerfile
+   53  docker build -t achalla .
+   54  history

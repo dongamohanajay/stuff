@@ -1,0 +1,35 @@
+
+Installing Mysql on linux
+------------------------
+
+sudo yum update
+sudo yum upgrade
+yum repolist enabled | grep "mysql.*-community.*"
+
+sudo yum install mysql-community-serveryum repolist all | grep mysql
+
+if community server is not working go through this link
+
+(https://techviewleo.com/how-to-install-mysql-8-on-amazon-linux-2 )
+
+cat /etc/os-release
+
+sudo yum install https://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
+
+ls /etc/yum.repos.d
+
+sudo yum repolist
+
+sudo amazon-linux-extras install epel -y
+
+sudo yum -y install mysql-community-server
+
+sudo systemctl enable --now mysqld
+
+systemctl status mysqld
+
+sudo grep 'temporary password' /var/log/mysqld.log 
+
+sudo mysql_secure_installation -p(change the password )
+
+mysql -uroot -p
