@@ -1,0 +1,73 @@
+https://www.digitalocean.com/community/tutorials/how-to-set-up-vsftpd-for-a-user-s-directory-on-ubuntu-20-04
+
+SFTP (ubuntu version 20)
+----
+create a server connected to putty.
+
+commands 
+........
+sudo su (root user)
+apt update 
+apt upgrade -y
+apt install firewalld
+ufw enable
+ufw allow 20/tcp
+ufw allow 21/tcp
+ufw allow 22/tcp
+ufw status
+systemctl start vsftpd
+systemctl status vsftpd
+systemctl enable vsftpd
+nano /etc/vsftpd.conf
+https://www.tecmint.com/install-ftp-server-in-centos-7/(refer this)
+
+change the file system configurations
+
+anonymous_enable=NO             
+local_enable=YES		
+write_enable=YES		 
+local_umask=022		        
+dirmessage_enable=YES	        
+xferlog_enable=YES		
+connect_from_port_20=YES        
+xferlog_std_format=YES          
+listen=NO   			
+listen_ipv6=YES		        
+pam_service_name=vsftpd         
+userlist_enable=YES  	        
+tcp_wrappers=YES  
+userlist_enable=YES                   
+userlist_file=/etc/vsftpd.userlist    
+userlist_deny=NO   
+chroot_local_user=YES
+allow_writeable_chroot=YES
+ 
+ systemctl restart vsftpd.service(have to restart after modifying the file)
+ apt install ssh
+sudo systemctl start ssh 
+sudo systemctl status ssh
+sudo nano /etc/ssh/sshd_config
+https://phoenixnap.com/kb/ssh-permission-denied-publickey (follow this)
+(Change File System configurations)
+PasswordAuthentication  yes
+
+sudo systemctl restart sshd.service
+sudo groupadd  (groupname)
+sudo useradd -g (groupname) -d /upload -s /sbin/nologin (user name)
+sudo mkdir -p /var/www/html/(directoy name)
+sudo chmod 701 /var/www/html/(directoy name)
+sudo mkdir -p /var/www/html/(directoy name)/(user name)/(file name)
+sudo chown -R root:(group name) /var/www/html/(directoy name)/(username)
+sudo chown -R (user name):(group name) /var/www/html/(directory name)/(user name)/(folder name)
+sudo nano /etc/ssh/sshd_config 
+
+https://www.techrepublic.com/article/how-to-set-up-an-sftp-server-on-linux/
+
+At the bottom of that file, add the following
+
+Match Group sftp_users(group name)
+ChrootDirectory /data/%u(path and directory name then add %u)
+ForceCommand internal-sftp
+
+systemctl restart sshd.service
+

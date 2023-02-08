@@ -1,0 +1,216 @@
+High Availability on wordpress
+-------------------------------
+Mainly it is uesd for secure access to the servers.
+
+for database we can create RDS or MYSQL server.
+
+step:1 (Database Replication)
+
+Through jumpbox we connected to database servers i.e master and slave
+
+On master server first install mydsql database.
+
+Installing Mysql
+-----------------
+
+sudo yum update
+sudo yum upgrade
+yum repolist enabled | grep "mysql.*-community.*"
+yum repolist all | grep mysql
+sudo yum install mysql-community-server
+
+if community server is not working go through this link
+
+(https://techviewleo.com/how-to-install-mysql-8-on-amazon-linux-2 )
+
+cat /etc/os-release
+
+sudo yum install https://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
+
+ls /etc/yum.repos.d
+
+sudo yum repolist
+
+sudo amazon-linux-extras install epel -y
+
+sudo yum -y install mysql-community-server
+
+sudo systemctl enable --now mysqld
+
+systemctl status mysqld
+
+sudo grep 'temporary password' /var/log/mysqld.log 
+
+ sudo mysql_secure_installation -p(change the password )
+
+mysql -uroot -p
+
+DO SAME PROCESS ON BOTH MASTER AND SLAVE FOR MYSQL INSTALLATION
+
+FOR REPLICATION FOLLOW THIS LINK
+
+https://unixcop.com/how-to-setup-mysql-replication-in-rhel-centos/
+-------------------------------------------------------------------
+
+Do this process under MASTER
+
+ sudo vim /etc/my.cnf.d/mysql-server.cnf
+
+or 
+
+sudo vim /etc/my.cnf
+
+
+Add the following lines under the [mysqld] section.
+
+bind-address	 = 192.168.56.1(Master ip)
+server-id 	 = 1
+log_bin		 = mysql-bin
+
+sudo sysemctl restart mysqld
+
+ sudo mysql -u root -p
+
+mysql> CREATE USER 'replica'@'192.168.56.2' IDENTIFIED BY 'Password';
+
+mysql> GRANT REPLICATION SLAVE ON *.*TO 'replica'@'192.168.56.2';(slave ip)
+
+mysql> FLUSH PRIVILEGES;
+
+mysql> EXIT;
+
+mysql> SHOW MASTER STATUS\G
+
+Now come to slave follow this process after installing mysql node
+
+sudo vim /etc/my.cnf.d/mysql-server.cnf
+
+or 
+
+sudo vim /etc/my.cnf
+
+paste the lines under [mysqld]section
+
+bind-address	 = 192.168.56.2 (slave ip)
+server-id	 = 2
+log_bin 	 = mysql-bin
+
+ sudo systemctl restart mysqld
+
+ sudo mysql -u root -p
+
+mysql> STOP SLAVE;
+
+configuration file for master
+
+master credentials we need to give here
+
+mysql>CHANGE MASTER TO MASTER_HOST='10.0.3.214',
+ MASTER_USER='replica' ,MASTER_PASSWORD='Dataevolve@123#' ,
+ MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=698;
+
+mysql> START SLAVE;
+
+$ sudo mysql -u root -p
+
+come to master node and create database
+
+$ sudo mysql -u root -p
+
+mysql> CREATE DATABASE replication_db;
+
+mysql> SHOW DATABASES;
+
+ON slave node also the same database should be replicate.
+
+--------------------------------------------------------------------------------
+[run the command in mysql master][error]
+create user for the specified authentication plugin sha256_ password;
+CREATE USER 'slaveuser'@'%' IDENTIFIED WITH sha256_password BY '0000';
+GRANT REPLICATION SLAVE ON *.* TO 'slaveuser'@'%';
+
+check the status in slave , if you observer both yes's,
+
+create database and then you can check in the slave you are observing or not. 
+-------------------------------------------------------------------------------------------
+now install wordpress on another private server
+
+INSTALLING WORDPRESS
+--------------------
+
+for database we can use master database or create another server and install mysql on that
+
+Installing apache server 
+-------------------------
+ yum install httpd
+ systemctl start httpd
+ systemctl status httpd
+ systemctl enable httpd
+ which amazon-linux-extras
+   10  sudo yum install -y amazon-linux-extras
+   11  sudo  amazon-linux-extras | grep php
+   13  sudo amazon-linux-extras enable php7.4
+   15  yum clean metadata
+   16  yum install php-cli php-pdo php-fpm php-json php-mysqlnd
+   17  php --version
+   18  sudo amazon-linux-extras disable php7.4
+   19  sudo amazon-linux-extras disable php7.3
+   20  sudo amazon-linux-extras enable php7.2
+   21  yum clean metadata
+   22  sudo yum install php php-{pear,cgi,common,curl,mbstring,gd,mysqlnd,gettext,bcmath,json,xml,fpm,intl,zip,imap}
+   23  php -v
+   24  sudo vi /var/www/html/info.php
+   25  systemctl restart httpd
+   26  sudo apt install wget unzip -y
+   27  sudo yum install wget unzip -y
+   28  sudo wget https://wordpress.org/latest.zip
+   29  ls
+   30  sudo unzip latest.zip
+   31  ls
+       sudo cp -r wordpress/* /var/www/html
+   33  cd /var/www/html
+   34  ls -l
+   35  sudo chown -R apache:apache /var/www/html
+   36  
+   82  sudo systemctl restart httpd
+   83  cd /wp-admin
+   84  cd wp-admin/
+   85  ls
+
+--------------------------------------------------------------
+
+51  mysql -h 10.0.134.64 -u slaveuser -p
+   52  sudo yum install mysql-community-client
+   53  sudo yum install mysql-community-server
+   54  yum repolist enabled | grep "mysql.*-community.*"
+   55  yum repolist all | grep mysql
+   56  sudo yum install mysql-community-server
+   57  yum repolist enabled | grep "mysql.*-community.*"
+   58  sudo yum install https://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
+   59  ls /etc/yum.repos.d
+   60  sudo yum repolist
+   61  sudo amazon-linux-extras install epel -y
+   62  sudo yum -y install mysql-community-client
+   63  ls
+   64  cd wp-content/
+   65  ls
+-------------------------------------------------------------------------
+efs mounting and ASG
+-----------------------------------------------------------------------
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

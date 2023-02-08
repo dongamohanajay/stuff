@@ -1,0 +1,38 @@
+CODE PIPELINE
+-------------
+aws codepipeline is a continuous delevery service.
+By using codepipeline can build,test,deploy our application
+ 
+can do more :
+Automate your release processes
+Establish a consistent release process
+Speed up delivery while improving quality
+Use your favorite tools
+View progress at a glance
+View pipeline history details
+
+before starting the codepipeline we need to upload the code into EBS (elastic bean stalk)
+ 
+1.create ebs on console
+ upload the code what we required (like node js,java,python...) 
+ Default vpc is required.
+2.clone our code into github
+ login into github 
+ create a repository 
+ add file into the repository (unzip file only)
+ health check ok
+3.create a codepipeline on console 
+  for that we need to specify the things
+  
+a.github version1
+b.ebs
+c.repositoryname
+d.main
+
+after this process we will get success.
+finally one instance and load balancer will be created defaultly at the time of this process.
+At last checkout the output with dns or public ip.
+Then it should be shows a page.
+ 
+
+ https://www.youtube.com/watch?v=h0p4dxuwv1s

@@ -1,0 +1,77 @@
+SAMBA SERVER INSTALLATION ON UBUNTU
+------------------------------------
+{inuxize.com/post/how-to-install-and-configure-samba-on-ubuntu-18-04/}
+
+create a server and attached to remote machine.
+
+use following commands
+----------------------
+sudo apt update
+sudo apt install samba
+sudo systemctl status smbd
+sudo ufw allow 'Samba'
+sudo cp /etc/samba/smb.conf{,.backup}(we can change backup name)
+sudo nano /etc/samba/smb.conf (edit the configuration file)
+
+server role = standalone server
+interfaces = 127.0.0.0/8 eth0
+bind interfaces only = yes
+
+sudo systemctl restart smbd
+                               }after any modification must restart the server
+sudo systemctl restart nmbd
+
+sudo mkdir /samba( create a directory)
+sudo chgrp sambashare /samba(change group to the directory)
+sudo useradd -M -d /samba/josh -s /usr/sbin/nologin -G sambashare josh(create a new user)
+sudo mkdir /samba/josh(create a directory)
+sudo chown josh:sambashare /samba/josh(change owner)
+sudo chmod 2770 /samba/josh(change mod)
+sudo smbpasswd -a josh(set passward to the user)
+sudo smbpasswd -e josh(enable passward)
+sudo useradd -M -d /samba/users -s /usr/sbin/nologin -G sambashare sadmin (creating adminstrative user)
+sudo smbpasswd -a sadmin(passward set)
+sudo smbpasswd -e sadmin(enable pw)
+sudo mkdir /samba/users (create users)
+sudo chown sadmin:sambashare /samba/users
+sudo chmod 2770 /samba/users
+
+sudo nano /etc/samba/smb.conf(add configuration at the end)
+[users]
+    path = /samba/users
+    browseable = yes
+    read only = no
+    force create mode = 0660
+    force directory mode = 2770
+    valid users = @sambashare @sadmin
+
+[josh]
+    path = /samba/josh
+    browseable = no
+    read only = no
+    force create mode = 0660
+    force directory mode = 2770
+    valid users = josh @sadmin
+
+sudo systemctl restart smbd
+sudo systemctl restart nmbd
+
+sudo apt install smbclient(install client)
+
+mbclient //samba_hostname_or_server_ip(PrivateIP)/share_name -U username(syntax to access samba)
+ 
+smbclient //192.168.121.118/ josh -U josh(Example like this)
+
+then we connected to smb 
+smb>
+
+exit
+sudo apt install cifs-utils (for mounting)
+sudo mkdir /mnt/smbmount( create mount pont)
+sudo mount -t cifs -o username=username //samba_hostname_or_server_ip/sharename /mnt/smbmount (mount sharing)
+ex:sudo mount -t cifs -o username=josh //192.168.121.118/josh /mnt/smbmount
+
+for testing goto run 
+\\publicip\username  and give credentials of user
+now able to share the file form one to another server
+
