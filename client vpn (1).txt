@@ -1,0 +1,94 @@
+Client vpn:
+
+create vpc 
+create 2 subnets (public and private)
+create internetgateway and then attached to vpc 
+create route table for igw edit routes and associate with public subnet
+
+create ec2 (server)
+
+then connect to remote machine by using (putty or ssh) with public subnet
+
+After connected to the putty 
+
+#sudo su (for root)
+
+ launch a public instance in that instance we need to create certificate by using below commands
+
+now install git packages and some rsa keys and files for that follow below commands
+
+1.install git package
+yum install git-all
+
+2.Clone Easy RSA Git Repo
+git clone https://github.com/OpenVPN/easy-rsa.git
+
+cd easy-rsa/easyrsa3
+
+3.Initialize Public Key Infrastructure (PKI)
+./easyrsa init-pki
+
+4. Build Certificate Authority
+./easyrsa build-ca nopass
+
+5. Build Server Certificate
+./easyrsa build-server-full clientvpndemo.com nopass
+
+6. Build Client Certificate
+./easyrsa build-client-full pdomala.clientvpndemo.com nopass
+
+mkdir acm 
+
+cp pki/ca.crt acm
+cp pki/issued/clientvpndemo.com.crt acm
+cp pki/issued/pdomala.clientvpndemo.com.crt acm
+cp pki/private/clientvpndemo.com.key acm
+cp pki/private/pdomala.clientvpndemo.com.key acm
+cd acm
+
+aws configure ( Provide access key and secret key)
+
+7. Mention the correct Region code in below command:
+
+aws acm import-certificate --certificate fileb://clientvpndemo.com.crt --private-key fileb://clientvpndemo.com.key --certificate-chain fileb://ca.crt --region  ap-south-1
+aws acm import-certificate --certificate fileb://pdomala.clientvpndemo.com.crt --private-key fileb://pdomala.clientvpndemo.com.key --certificate-chain fileb://ca.crt --region ap-south-1
+
+Now goto vpc console under that 
+
+goto vpn client vpn endponts
+
+create client vpn endpoint . Here need to specify the ipaddress & then client and server demo
+
+After created client vpn endpont edit here (authorized and associations) associated with subnet.
+
+now clentvpn endpoint available.
+ 
+
+now download the clientvpnconfiguration which is already highlighted at vpc endpoint.
+
+Download the Aws client vpn from google.
+
+install it
+
+goto addfiles specify the name here. for next option open clentvpnconfiguration file which is already downloaded. 
+
+here copy the crt & key files
+
+<cert> copy  file</cert>
+
+<key> copy file  </key>
+
+save it
+select this saved file for vpn connection
+
+click on connect
+
+now we are connected to vpn 
+
+for checking open cmd 
+
+ping privateip -t
+
+connected
+
+ctr+c for stopping the files.

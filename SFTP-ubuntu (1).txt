@@ -1,0 +1,66 @@
+---- create sftp in ubuntu 20.04 and restrict users to their directories ----
+
+Login to instance 
+  # apt update
+
+Install vsftpd 
+  # apt install vsftpd
+  # systemctl start vsftpd
+  # systemctl enable vsftpd
+
+Edit vsftpd configuration file 
+  # vi /etc/vsftpd.conf
+ ---paste the following lines---
+        anonymous_enable=NO             
+        local_enable=YES		
+        write_enable=YES		
+	local_umask=022		        
+ 	dirmessage_enable=YES	        
+	xferlog_enable=YES		
+	connect_from_port_20=YES        
+	xferlog_std_format=YES          
+	listen=NO   			
+	listen_ipv6=YES		        
+	pam_service_name=vsftpd         
+	userlist_enable=YES  	        
+	tcp_wrappers=YES 
+  # systemctl reload vsftpd.service
+
+create the directory you want to share to sftp users
+  # mkdir -p /var/www/html/wordpress
+  # chmod 701 /var/www/html/wordpress
+
+Create the SFTP group and users (i am creating sftpusers group and users robert, chris)
+  # groupadd sftpusers
+  # useradd -g sftpusers -d /upload -s /sbin/nologin robert
+  # passwd robert (enter password for account robert)
+  # useradd -g sftpusers -d /upload -s /sbin/nologin chris
+  # passwd chris
+
+Now Create the users SFTP directories
+  # mkdir -p /var/www/html/wordpress/robert/wordpress data
+  # mkdir -p /var/www/html/wordpress/chris/wordpress data
+
+Then give the directory the proper permissions
+  # chown -R root:sftpusers /var/www/html/wordpress/robert
+  # chown -R root:sftpusers /var/www/html/wordpress/chris
+  # chown -R robert:sftpusers /var/www/html/wordpress/robert/wordpress data
+  # chown -R chris:sftpusers /var/www/html/wordpress/chris/wordpress data
+
+Configure sshd
+  # vi /etc/ssh/sshd_config
+
+---paste the following lines---
+     Match Group sftpusers
+     ChrootDirectory /var/www/html/wordpress/%u
+     ForceCommand internal-sftp
+  -> dont forget to change PasswordAuthentication to 'yes'
+save and close the config file.restart sshd.service
+  # systemctl restart sshd
+
+  		
+ 		
+
+
+
+
