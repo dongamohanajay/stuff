@@ -1,12 +1,83 @@
-codepipelinE
+How to Backup Your SAP HANA Database with AWS Backint,
 
-AWS APP MESH
+ AWS Backint will take backup of SAP HANA Database in S3 Bucket.
+How to Take SAP HANA Backup on S3 Bucket, AWS Backint SAP HANA Backup, aws backint agent for sap hana
 
-What is difference between proxy and VPN?
-Proxy and VPN defined. A VPN and a proxy are online services that hide your IP address by rerouting your internet traffic through a remote server. 
-But a proxy works only with a single app or service, while a VPN secures all your internet traffic and encrypts it for extra security and privacy.
 
-https://aws.amazon.com/blogs/containers/getting-started-with-app-mesh-and-eks/
+BY LOGIN IN TO  THE SA-HANA USER AND RUN THE BELOW COMMANDS
+-----------------------
+Agent Download:
+sudo wget https://s3.amazonaws.com/awssap-backi... -O /tmp/install-aws-backint-agent
 
-https://blog.knoldus.com/how-to-setup-aws-app-mesh-with-eks/
+ls -llarth install-aws-backint-agent
+
+>installation directory[/hana/shared/]........:{enter for default}
+>12 digit account ID of the amazonaws s3 bucket owner :(accountID)
+>s3 bucket region:ap-south-1
+>s3 bucketname:sap-hanadatabase-bkp
+>folder in the s3 bucket name:h16
+>Amazon s3 sse kms[optional]:
+>Are you sure do you encrypt:y
+>Sap system ID:H16
+>HANA opt directory:
+>modify global initfile :modify
+>HANA system DB globla iini file:
+>Verify signature of the agent :n
+>Save response for future usage:y 
+>Confirm that you have disabled the existing SAP HANA data and log backups:y 
+
+
+
+Installation Command:
+python3 install-aws-backint-agent
+---------------------------------------
+IAM Permissions and one policy ATTACH TO THE EC2
+1.AMAZONEC2ROLE FOR SSM
+2.AMAZONSSMMANAGEDINSTANCECORE
+
+Policy:
+---------------------------------
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetBucketPolicyStatus",
+                "s3:GetBucketLocation",
+                "s3:ListBucket",
+                "s3:GetBucketAcl",
+                "s3:GetBucketPolicy"
+            ],
+            "Resource": [
+                "arn:aws:s3:::backups/*",
+                "arn:aws:s3:::backups"
+            ]
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": [
+                "kms:Decrypt",
+                "kms:GenerateDataKey"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObjectTagging",
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:DeleteObject"
+            ],
+            "Resource": "arn:aws:s3:::backups/*"
+        }
+    ]
+}
+---------------------------------------------
+
+CREATE A S3 BBUCKET AND CREATE A FOLDER IN THAT 
 

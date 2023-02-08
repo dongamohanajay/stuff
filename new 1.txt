@@ -1,0 +1,67 @@
+Instance ID: i-070a505e146d79c6b
+---------------------------------
+sudo sudo
+cd ~
+cd install/scripts/
+ls
+vi main.py
+cd /media/
+ls
+cd LaunchWizard-GPPRODSAPSP05/
+ls
+cd extracted/
+ls
+cd database/
+ls
+cd DATA_UNITS/
+ls
+HBD_CLIENT_LINUX_X86_64 HBD_CLIENT_LINUX_X86_64
+cd HBD_CLIENT_LINUX_X86_64/
+ls
+ls -lrt
+./hdblcm --ignore=check_signature_file
+Do you want to specify additional components location? (y/n) [n]:"enter for default"
+Enter selected action index [3]:1
+Enter comma-separated list of the selected indices [3]:1
+Enter Installation Path[/hana/shared]:
+Enter Local Host Name [awsgphdbprd]:
+Do you want to add hosts to the system?(y/n) [n]:
+Enter SAP HANA System ID:GPP 
+# GOT ERROR
+# Running again the command "./hdblcm --ignore=check_signature_file"
+su -gpadmin
+cd /media/LaunchWizard-GPPRODSAPSP05/extracted/database/DATA_UNITS/HBD_CLIENT_LINUX_X86_64/
+. /hdblcm --ignore=check_signature_file
+#-sh: ./hdblcm:Permission denied
+ls -lrt
+chmod -R 777 /media/
+su -gpadmin
+cd /media/LaunchWizard-GPPRODSAPSP05/extracted/database/DATA_UNITS/HBD_CLIENT_LINUX_X86_64/
+./hdblcm --ignore=check_signature_file
+Do you want to specify additional components location? (y/n) [n]:"enter for default"
+Enter selected action index [3]:1
+Enter comma-separated list of the selected indices [3]:1
+Enter Installation Path[/hana/shared]:
+Enter Local Host Name [awsgphdbprd]:
+Do you want to add hosts to the system?(y/n) [n]:
+Enter SAP HANA System ID:GPP
+#The defined user "gppadmin" already exists on the system.
+Enter Instance Number [00]:10
+Enter Local Host Worker Group [default]:
+Select System Usage / Enter Index [4]:1
+Do you want to enable data and log volume encryption? [n]:
+Enter Location of Data Volumes [/hana/data/GPP]:
+Enter Location of Log Volumes [/hana/log/GPP]:
+Restrict maximum memory allocation? [n]:
+Enter Certificate Host Name for the Host 'awsgphdbprd' [awsgphdbprd]:
+Enter SAP Host Agent User(sapadm) Password:#Enter password#
+Confirm SAP Host Agent User(sapadm) Password:
+Enter System Administrator (gppadm) Password:
+Enter System Database User (SYSTEM) Password:
+Confirm System Database User (SYSTEM) Password:
+Restart system after machine reboot?[n]:
+Do you want to continue? (y/n) :y
+
+
+
+1
