@@ -1,0 +1,355 @@
+AmazonCloudWatchAgent
+
+What does Amazon CloudWatch do?
+Amazon CloudWatch allows you to collect, access, and correlate this data on a single platform from across all your AWS resources, applications, and services running on AWS and on-premises, helping you break down data silos to gain system-wide visibility and quickly resolve issues.
+
+
+What is CloudWatch and how it works?
+Amazon Cloudwatch is an AWS monitoring service you can use to monitor your applications, services, and resources. It enables you to collect performance and operational data and compiles that data into interpretable metrics. From the Cloudwatch homepage, you can visualize your metrics data in pre-built charts
+
+
+
+
+create iam user role and attach policies
+amazonssm full access
+CloudWatchAgentAdminPolicy
+AmazonEC2RoleforSSM
+CloudWatchAgentServerPolicy
+AmazonSSMManagedInstanceCore
+AmazonSSMDirectoryServiceAccess
+AmazonSSMFullAccess
+
+
+----Using username "ec2-user".
+Authenticating with public key "imported-openssh-key"
+.
+.
+.
+Run "sudo yum update" to apply all updates.
+---[ec2-user@ip-172-31-28-200 ~]$  sudo yum install amazon-cloudwatch-agent
+.
+.
+.
+.
+Complete!
+[ec2-user@ip-172-31-28-200 ~]$  sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
+
+
+
+if you are in ubuntu server
+go to console search ssm
+run command 
+mention amazoncloudwatch cofigure
+ 
+
+mention amazoncloudwatchagent
+
+select instance
+disable s3 bucket
+run command
+ 
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
+
+=============================================================
+= Welcome to the AWS CloudWatch Agent Configuration Manager =
+=============================================================
+On which OS are you planning to use the agent?
+1. linux
+2. windows
+3. darwin
+default choice: [1]:
+
+Trying to fetch the default region based on ec2 metadata...
+Are you using EC2 or On-Premises hosts?
+1. EC2
+2. On-Premises
+default choice: [1]:
+
+Which user are you planning to run the agent?
+1. root
+2. cwagent
+3. others
+default choice: [1]:
+2
+Do you want to turn on StatsD daemon?
+1. yes
+2. no
+default choice: [1]:
+2
+Do you want to monitor metrics from CollectD?
+1. yes
+2. no
+default choice: [1]:
+
+Do you want to monitor any host metrics? e.g. CPU, memory, etc.
+1. yes
+2. no
+default choice: [1]:
+
+Do you want to monitor cpu metrics per core? Additional CloudWatch charges may apply.
+1. yes
+2. no
+default choice: [1]:
+
+Do you want to add ec2 dimensions (ImageId, InstanceId, InstanceType, AutoScalingGroupName) into all of your metrics if the info is available?
+1. yes
+2. no
+default choice: [1]:
+
+Would you like to collect your metrics at high resolution (sub-minute resolution)? This enables sub-minute resolution for all metrics, but you can customize for specific metrics in the output json file.
+1. 1s
+2. 10s
+3. 30s
+4. 60s
+default choice: [4]:
+
+Which default metrics config do you want?
+1. Basic
+2. Standard
+3. Advanced
+4. None
+default choice: [1]:
+3
+Current config as follows:
+{
+        "agent": {
+                "metrics_collection_interval": 60,
+                "run_as_user": "cwagent"
+        },
+        "metrics": {
+                "append_dimensions": {
+                        "AutoScalingGroupName": "${aws:AutoScalingGroupName}",
+                        "ImageId": "${aws:ImageId}",
+                        "InstanceId": "${aws:InstanceId}",
+                        "InstanceType": "${aws:InstanceType}"
+                },
+                "metrics_collected": {
+                        "collectd": {
+                                "metrics_aggregation_interval": 60
+                        },
+                        "cpu": {
+                                "measurement": [
+                                        "cpu_usage_idle",
+                                        "cpu_usage_iowait",
+                                        "cpu_usage_user",
+                                        "cpu_usage_system"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ],
+                                "totalcpu": false
+                        },
+                        "disk": {
+                                "measurement": [
+                                        "used_percent",
+                                        "inodes_free"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ]
+                        },
+                        "diskio": {
+                                "measurement": [
+                                        "io_time",
+                                        "write_bytes",
+                                        "read_bytes",
+                                        "writes",
+                                        "reads"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ]
+                        },
+                        "mem": {
+                                "measurement": [
+                                        "mem_used_percent"
+                                ],
+                                "metrics_collection_interval": 60
+                        },
+                        "netstat": {
+                                "measurement": [
+                                        "tcp_established",
+                                        "tcp_time_wait"
+                                ],
+                                "metrics_collection_interval": 60
+                        },
+                        "swap": {
+                                "measurement": [
+                                        "swap_used_percent"
+                                ],
+                                "metrics_collection_interval": 60
+                        }
+                }
+        }
+}
+Are you satisfied with the above config? Note: it can be manually customized after the wizard completes to add additional items.
+1. yes
+2. no
+default choice: [1]:
+
+Do you have any existing CloudWatch Log Agent (http://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AgentReference.html) configuration file to import for migration?
+1. yes
+2. no
+default choice: [2]:
+
+Do you want to monitor any log files?
+1. yes
+2. no
+default choice: [1]:
+
+Log file path:
+
+Log group name:
+default choice: [.]
+
+Log stream name:
+default choice: [{instance_id}]
+
+Do you want to specify any additional log files to monitor?
+1. yes
+2. no
+default choice: [1]:
+2
+Saved config file to /opt/aws/amazon-cloudwatch-agent/bin/config.json successfully.
+Current config as follows:
+{
+        "agent": {
+                "metrics_collection_interval": 60,
+                "run_as_user": "cwagent"
+        },
+        "logs": {
+                "logs_collected": {
+                        "files": {
+                                "collect_list": [
+                                        {
+                                                "file_path": "",
+                                                "log_group_name": ".",
+                                                "log_stream_name": "{instance_id}"
+                                        }
+                                ]
+                        }
+                }
+        },
+        "metrics": {
+                "append_dimensions": {
+                        "AutoScalingGroupName": "${aws:AutoScalingGroupName}",
+                        "ImageId": "${aws:ImageId}",
+                        "InstanceId": "${aws:InstanceId}",
+                        "InstanceType": "${aws:InstanceType}"
+                },
+                "metrics_collected": {
+                        "collectd": {
+                                "metrics_aggregation_interval": 60
+                        },
+                        "cpu": {
+                                "measurement": [
+                                        "cpu_usage_idle",
+                                        "cpu_usage_iowait",
+                                        "cpu_usage_user",
+                                        "cpu_usage_system"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ],
+                                "totalcpu": false
+                        },
+                        "disk": {
+                                "measurement": [
+                                        "used_percent",
+                                        "inodes_free"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ]
+                        },
+                        "diskio": {
+                                "measurement": [
+                                        "io_time",
+                                        "write_bytes",
+                                        "read_bytes",
+                                        "writes",
+                                        "reads"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ]
+                        },
+                        "mem": {
+                                "measurement": [
+                                        "mem_used_percent"
+                                ],
+                                "metrics_collection_interval": 60
+                        },
+                        "netstat": {
+                                "measurement": [
+                                        "tcp_established",
+                                        "tcp_time_wait"
+                                ],
+                                "metrics_collection_interval": 60
+                        },
+                        "swap": {
+                                "measurement": [
+                                        "swap_used_percent"
+                                ],
+                                "metrics_collection_interval": 60
+                        }
+                }
+        }
+}
+Please check the above content of the config.
+The config file is also located at /opt/aws/amazon-cloudwatch-agent/bin/config.json.
+Edit it manually if needed.
+Do you want to store the config in the SSM parameter store?
+1. yes
+2. no
+default choice: [1]:
+
+What parameter store name do you want to use to store your config? (Use 'AmazonCloudWatch-' prefix if you use our managed AWS policy)
+default choice: [AmazonCloudWatch-linux]
+linux-priyanka
+Trying to fetch the default region based on ec2 metadata...
+Which region do you want to store the config in the parameter store?
+default choice: [ap-southeast-1]
+
+Which AWS credential should be used to send json config to parameter store?
+1. ASIA5DMBBZQTRDF7G5UO(From SDK)
+2. Other
+default choice: [1]:
+2
+Please provide credentials to upload the json config file to parameter store.
+AWS Access Key:
+AKIA5DMBBZQTQO6RUFMT
+AWS Secret Key:
+iq6miiZ0l3c9cuZi4sZ+/GwVLFpmc21RHdVLtETD
+Successfully put config to parameter store linux-priyanka.
+Program exits now.
+[ec2-user@ip-172-31-28-200 ~]$
+
+
+
+
+go to ssm and open Parameter Store
+edit Parameter Store by copy and paste. (https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Agent-Configuration-File-Details.html) This example includes both ways of specifying metrics in the measurement section, go to down and copy and paste
+
+run command 
+search AmazonCloudWatch-ManageAgent
+give location Parameter Store name
+select Choose instances manually
+select instance
+and 
+run command
+
+go to console
+search cloudwatch >>>> all metrics >>>>>  paste the instance id
+
+
+
+
+
+

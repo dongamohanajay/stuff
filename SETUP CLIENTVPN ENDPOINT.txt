@@ -1,0 +1,77 @@
+create vpc
+create private subnet
+create nat gateway (public, public)
+create igw (attach vpc)
+create route table
+create security groups allowing (ssh,http,https, ipv4) permissions
+launch instance taking private instance, dont enable public ip
+
+open https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/cvpn-getting-started.html link
+click on manual authentication
+select windows
+click on easy rsa files
+download easy rsa
+ 
+open command promt
+go to drive (easyrsa path)
+give path to bat shell
+download certificates *(ca server client certificates) with server and client keys by using below links
+.\EasyRSA-Start.bat
+./easyrsa init-pki
+./easyrsa build-ca nopass
+./easyrsa build-server-full server nopass
+./easyrsa build-client-full client1.domain.tld nopass
+exit
+
+
+ if you want to take all files in single folder
+
+mkdir C:\custom_folder
+copy pki\ca.crt C:\custom_folder
+copy pki\issued\server.crt C:\custom_folder
+copy pki\private\server.key C:\custom_folder
+copy pki\issued\client1.domain.tld.crt C:\custom_folder
+copy pki\private\client1.domain.tld.key C:\custom_folder
+cd C:\custom_folder
+
+first look at the before and after time on dowmloaded keys, look at ur system time formats
+
+if you not take in single folder open pki>issued>server, client certificates open with notepad, for key open pki>private and for ca open easyrsa
+
+
+open console
+open ACM
+import first server, server key, ca certificates
+again import  client, client key, ca certificates
+
+create vpn end point
+give appropriate arn
+give client ip
+give enable shutle
+give subnet vpc 
+after creating vpn endpoint
+associate target subnets
+authoroization rule with vpc cider value
+download client configuration
+open document in notepad and edit
+
+open downloaded document and insert down
+after </ca>
+
+<cert>copy client certificate</cert>
+<key>copy client key</key>
+and save in your local machine
+
+download open vpn
+open and click down system sysmbol 
+import document in openvpn and connect (check document wheather in ovpn file format)
+
+
+open with private ip address in putty
+and connect to the server
+ exit
+
+
+
+download open vpn
+

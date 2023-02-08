@@ -1,0 +1,53 @@
+create vpc
+create subnets
+create route tables
+create internet gateways
+create security groups
+launch ec2 instance
+download keypair
+open puttygen to convert pem file to pbk file
+connect to putty with pbk file
+enter user
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install apache2 -y
+sudo systemctl status apache2
+copy ip adress and browse
+sudo systemctl start apache2
+sudo systemctl enable apache2
+sudo apt install mariadb-server mariadb-client
+sudo systemctl start mariadb
+sudo systemctl status mariadb
+sudo mysql_secure installation
+y,y
+y,y
+sudo systemctl restart mariadb
+sudo apt install php php-mysql php-gd php-cli php common
+open tab type download wordpress copy link
+sudo apt install wget unzip -y
+sudo wget paste link
+ls
+sudo unzip latest.zip
+sudo cp -r wordpress/* /var/www/html/
+cd /var/www/html/
+sudo chown www-data:www-data -R /var/www/html/
+ls -l
+ls
+sudo rm -rf index.html
+ls -l
+
+root
+sudo mysql -u root -p
+enter password
+create database wordpress;
+create user "admin"@"%" identified by "wpadminpass";
+grant all privileges on wordpress.* to "admin"@"%";
+exit
+open wordpress with ip adress
+run installation
+give site title
+give user name
+give password
+give email adress
+install wordpress
+  

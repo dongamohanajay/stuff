@@ -1,0 +1,47 @@
+CODE PIPELINE
+AWS CodePipeline is a continuous delivery service you can use to model, visualize, and automate the steps required to release your software. You can quickly model and configure the different stages of a software release process. CodePipeline automates the steps required to release your software changes continuously.
+
+CodePipeline automates the build, test, and deploy phases of your release process every time there is a code change, based on the release model you define. This enables you to rapidly and reliably deliver features and updates.
+
+
+
+1. Craete Git account and add one repository. (ADD FILES OF APPLICATION)
+
+2. and upload the code into that repository.
+
+3. open the beanstlack and click on create application.
+
+4. give the details of that application.
+
+5. after the click on create application.
+
+6.now it is creating application env.it will take some time.
+
+7. after complete it shows the health OK.
+
+8. then go to codepipeline service.
+
+9. create codepipeline.
+
+10.and give the name and other details. after click on next
+
+11. then it shows the source provider, in thet select GitHub.
+
+12. then click on connect.
+
+13. once it is done give the repository name and branch name.
+
+14. after that it shows the add build stage then you click on skip build stage.
+
+15. after that it shows the add deploy, and give the proper details, and click next.
+
+16. after that click on Create pipeline.
+
+17. then it shows Source to Deploy both are succeeded.
+
+18. now go to the application env and copy the URL and browse it.
+
+19. now it shows application page.
+
+20. Referance URL:
+https://towardsaws.com/step-by-step-guide-to-set-up-ci-cd-pipeline-using-aws-code-pipeline-and-elastic-beanstalk-for-50ca275b0a37

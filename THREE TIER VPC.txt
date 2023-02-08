@@ -1,0 +1,26 @@
+create vpc
+create 9 subnets naming public private and db
+create three routes naming public and private
+create internet gateway
+create nat gateway >> public > public
+assoctiate subets to routes
+give routes
+create security groups.  edits by adding rules of http, https ssh
+launch ec2 instance by selecting public subnets
+
+
+10.0.1.0/24
+
+10.0.2.0/24
+
+10.0.3.0/24
+
+10.0.4.0/24
+
+10.0.5.0/24
+
+10.0.6.0/24
+
+10.0.7.0/24
+
+10.0.8.0/24

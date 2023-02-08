@@ -1,0 +1,71 @@
+fEFS(Elastic file system)
+------------------------
+create vpc
+create subnets
+creat igw
+create route tables
+create ec2 server
+
+At security groups select nfs port no 2049
+
+attach IAM role to the server and select this policy (AmazonElasticFileSystemClientFullAccess)
+ 
+Navigate to EFS console 
+
+Create a file system(efs) and attach (here we can see mount comms)
+
+We can mount via DNS or IP address
+
+go to system manager
+go distributer
+search efs
+select efs utils
+select one time install
+click on existing instance
+select instance 
+and run
+
+
+connect to remote machine (putty)
+
+sudo apt install -y amazon-efs-utils (install ubuntu efs)
+
+sudo su
+
+cd / 
+
+mkdir efs (create efs file name)
+
+lsblk
+
+ls
+
+ll
+
+sudo mount -t efs -o tls fs-0b432b412b503aa9a:/ efs   or (via directory or ip address)
+
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport 10.0.2.103:/ efs(efs means directory name)
+
+lsblk
+
+df -kh  (to check the file system mounted or not) (look at the down line ip adress) if it is mounted or not
+
+sudo apt install nano -y
+sudo apt install nfs-kernal -y
+sudo apt-get -y install nfs-common
+
+nano etc/fstab  (should modify this step)
+
+fs-0f432599674919d0f:/ / efs efs iam,tls,_netdev(our filesystem id and mount dir name)
+
+(fs-05dc97cad82a15542:/ /efs iam,tls,_netdev)
+
+df -kh
+
+mount -fav
+
+reboot once (here also should get mount dir name )
+
+check with putty by connecting
+df -kh
+

@@ -1,0 +1,84 @@
+Dual tier app load balancer
+
+first create vpc
+2:subnets
+public
+private          public and private in different az and database in another az
+database
+
+create igw attach to vpc
+create natgateway and attach to priavte subnets
+  
+create route tables for public subnet and edit routes then associate with public subnet and priavte with priavte
+
+
+
+
+(publiic ki nat create chesi private subnet tho attach cheyaali)
+
+
+then create 3(2 private ip + 1 jumbox) ec2 instances (application load balancer allows only http and https traffic)
+private and public servers
+
+
+then create target groups, register both instances
+by selecting the inbound rules port 80
+create load balancer with application and attach vpc
+then chck healthy checkups in rigister instances
+
+
+
+
+connect  putty with public subnet now we are in public need change into root for that :sudo su
+now we r in root 
+
+install apache2 in two servers
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install apache2 -y
+sudo systemctl status apache2
+copy ip adress and browse
+sudo systemctl start apache2
+sudo systemctl enable apache2
+
+install in both servers
+
+go to security groups edit inbound rules add ALL TCP port
+
+then install node js
+sudo apt install nodejs -y
+sudo apt install npm -y
+
+then install express.js
+npm install -g express
+mkdir myproject
+cd myproject
+npm init -y
+npm install express
+sudo nano app.js
+paste below code in nano
+
+const express = require('express')
+const app = express()
+const port = 80
+
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
+
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+})
+
+save by using below commands
+ctl+x
+Y
+enter then
+
+node app.js
+
+http://your public ip address:80
+
+
+
+

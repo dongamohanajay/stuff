@@ -1,0 +1,93 @@
+SFTP (SECURE FILE TRANSFER PROTOCOL) OR SSH FTP
+
+Discription:
+>>Secure File Transfer Protocol (SFTP) is a file protocol for transferring large files over the web
+>> SFTP transfers files security using SSH and encrypted FTP commands to avoid password sniffing and exposing sensitive information in plain text.
+>>SFTP can also be seen as an improvement over the FTPS, which is just an FTP protocol run over Transport Layer Security (TLS), or Secure Sockets Layer (SSL)
+
+The major differences between FTP and SFTP are as follows −
+ 
+FTP	                                                                                           SFTP
+FTP stands for Secure File Transfer Protocol Secure.	                                 SFTP represents Secure File Transfer Protocol.
+FTP establishes a connection via SSL/TLS.	                                         SFTPS establishes a connection via the SSH channel.
+FTP will allow you to create custom commands.	                                         SFTP has better control of file permissions, ownership, and properties.
+FTP supports EBCDIC transfers.	                                                         SFTP allows the creation of symbolic links
+FTP allows the use of Trusted x.509 certificates.	                                 SFTP server only needed an individual port to be accessible on the firewall.
+
+
+CREATE PUBLIC OR PRIVATE SERVER
+CONNECT TO PUTTY
+
+Enter
+sudo apt update -y
+sudo apt upgrade -y
+
+
+create new user in putty
+Enter
+adduser sai(any name)
+usermod -aG sudo sai
+
+
+Setting Up a Basic Firewall (the UFW firewall to make sure only connections to certain services are allowed)
+Enter
+ufw app list
+(Output
+Available applications:
+  OpenSSH)
+ufw allow OpenSSH
+ufw enable
+ufw status
+(Output
+Status: active
+
+To                         Action      From
+--                         ------      ----
+OpenSSH                    ALLOW       Anywhere
+OpenSSH (v6)               ALLOW       Anywhere (v6))
+
+
+rsync --archive --chown=sammy:sammy ~/.ssh /home/sai
+
+
+Creating a Directory for File Transfers
+
+sudo mkdir -p /var/sftp/uploads
+sudo chown root:root /var/sftp
+sudo chmod 755 /var/sftp
+sudo chown sai:sai /var/sftp/uploads
+
+
+
+Restricting Access to One Directory
+
+
+sudo nano /etc/ssh/sshd_config
+
+(Scroll to the very bottom of the file and add the following configuration snippet) copy and paste (check user name)
+
+Match User sai
+ForceCommand internal-sftp
+PasswordAuthentication yes
+ChrootDirectory /var/sftp
+PermitTunnel no
+AllowAgentForwarding no
+AllowTcpForwarding no
+X11Forwarding no
+
+sudo systemctl restart sshd
+
+
+
+Verifying the Configuration
+connecting through cmd prompt or winscp(download)
+
+ssh or sftp sai@your_server_ip
+
+
+reffered documents:
+
+https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04
+
+https://www.digitalocean.com/community/tutorials/how-to-enable-sftp-without-shell-access-on-ubuntu-20-04
+

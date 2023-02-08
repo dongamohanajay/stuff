@@ -1,0 +1,45 @@
+EBS(elasticblock storage)
+-------------------------
+Create vpc
+create subnets
+create instance
+create volume with 10 gb (for test)
+attach volume to instance
+connect to putty 
+
+
+
+login to remote server by using the putty or ssh
+
+commands
+---------
+lsblk (list the disk u attached to instance)
+
+sudo file -s /dev/xvdf  ( volume has any data or not)
+
+sudo mkfs -t ext4 /dev/xvdf
+      or                      (format the volume to file system)
+sudo mkfs -t xfs /dev/xvdf
+
+sudo mkdir /newvolume (create a directory to mount the volume)
+
+sudo mount /dev/xvdf /newvolume/(Mount the voulume to newvolume)
+
+cd /newvolume (change the directory)
+
+df -h (check the disk space to validate volume mount or not)
+
+sudo apt install nano -y
+nano etc/fstab 
+enter file path and directory name with 0.0 or 0.2 (We specify 0 to prevent the file system from being dumped)(2 to indicate that it is a non-root device.)
+save and exit 
+df -kh
+reboot
+conect putty after five min
+enter df -kh
+lmblk
+ exit
+
+
+
+umount /dev/xvdf(to unmount)S

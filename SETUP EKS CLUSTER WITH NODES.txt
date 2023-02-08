@@ -1,0 +1,214 @@
+EKS SETUP
+
+WHAT IS EKS?
+Amazon Elastic Kubernetes Service (Amazon EKS) is a managed Kubernetes service that makes it easy for you to run Kubernetes on AWS and on-premises. Kubernetes is an open-source system for automating deployment, scaling, and management of containerized applications.
+
+Adavantages
+>>Reducing development and release timeframes. ...
+>>Optimizing IT costs. ...
+>>Increased software scalability and availability. ...
+>>Flexibility in multi-cloud environments. ...
+>>Cloud migration paths.
+>>With Amazon EKS, you can take advantage of all the performance, scale, reliability, and availability of AWS infrastructure, as well as integrations with AWS networking and security services, such as application load balancers (ALBs) for load distribution, AWS Identity and Access Management (IAM) integration with role- ..
+
+-----------------------------
+step by step procedure
+-----------------------------
+Step 1: Create IAM role for EKS Cluster.
+	
+>Go to IAM and create a new role as 
+>select the EKS service 
+>In the "Select your use case" select "EKS-Cluster".
+>"AmazonEKSClusterPolicy" will be defaultly taken and then click next.
+>Finally give the role name:eksclusterrole  and then click on create role.
+-------------------------------------------------------------------
+Step 2: Create a  VPC for the EKS Cluster.
+
+>Create Public and Private Subnet using CloudFormation:https://amazon-eks.s3.us-west-2.amazonaws.com/cloudformation/2020-07-23/amazon-eks-vpc-private-subnets.yaml
+(or)
+>Create a VPC with 2-Public & 2-Private subnets ceate route tables and add the routes.
+>vpc cidr:192.168.0.0/16
+>PublicSubnet01:192.168.0.0/18
+>PublicSubnet02:192.168.64.0/18
+>PrivateSubnet01:192.168.128.0/18
+>PrivateSubnet02:192.168.192.0/18
+>Create route tables and add the routes.
+-----------------------------------------------------------------------
+Step 3: Create EKS Cluster
+
+>In the AWS services go to "EKS" Service and click on the "Create Cluster"
+> In the "Cluster configuration" give the following as 
+>Name:eks-cluster.
+>Cluster Service Role:eksclusterrole and click on the "Next"
+>In "Networking" .
+>VPC:eks-vpc-stack.
+>Subnets: "By default it selects all the subnets"
+>Security group: eks-vpc-stack-security group
+>In Cluster endpoint access
+>select the option: "Public and Private". and go to "Next"
+>In the Control Plane Logging keep them to default and go to "Next"
+>Finally review and create the Cluster.
+--------------------------------------------------------------------------
+Step 4: step 4: Install & Setup IAM Authenticator and Kubectl Utility.
+
+>Now Create a new ubuntu server and login in to that and install "aws cli".
+$Install AWS CLI
+$aws configure
+>> give (if root or iam)  useraccess key and secret key
+$aws iam list-users
+$aws sts get-caller-identity
+$kubectl
+kubectl: command not found
+$aws-iam-authenticator
+aws-iam-authenticator: command not found
+>Now install IAM authenticator using the link "docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html"
+
+$ curl -o aws-iam-authenticator https://s3.us-west-2.amazonaws.com/amazon-eks/1.21.2/2021-07-05/bin/linux/amd64/aws-iam-authenticator
+
+$ chmod +x ./aws-iam-authenticator
+
+$ mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
+
+$ aws-iam-authenticator help
+
+>Now install Kubectl EKS  using the link "docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html"
+
+$ curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.17.12/2020-11-02/bin/linux/amd64/kubectl
+
+$ chmod +x ./kubectl
+
+$ mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+
+$ kubectl version --short --client
+Client Version:v1.16.8-eks-e16311
+
+$ kubectl get  svc
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+
+$ aws eks --region ap-south-1 update-kubeconfig --name ekstest
+Added new context arn:aws:eks:us-east-1:554643864971:cluster/eks-cluster to /home/ubuntu/.kube/config
+
+$ more /home/ubuntu/ .kube/config
+
+$ export KUBECONFIG=~/.kube/config
+
+$ kubectl get svc
+
+$ kubectl get nodes
+No resources found in defualt namespace.
+
+$ kubectl get ns
+NAME                               STATUS                    AGE
+default                                Active                        20m
+kube-node-lease                  Active                        20m
+kube-public                        Active                        20m
+kube-system                       Active                        20m
+
+-----------------------------------------------------------------------------------------------
+Step 5: Create IAM Role for EKS Worker Nodes.
+
+>Now create a new IAM role as follows
+>Go to IAM and select "Roles" and click on "Create role"
+>Now select type of trusted entity: AWS service
+>In "Choose a use case" select "EC2" and go to next
+>Now select the 3 policies "AmazonEKS_CNI_Policy,AmazonEKSWorkerNodePolicy,AmazonEC2ContainerRegistryReadOnly"
+>Rolename: eksworkernoderole then finally click on the "create role".
+
+> Now go to the EKS service and select the created "eks-cluster" and in that select "compute" then click on "Add node group"
+>In the Configure Node Group give the following as 
+>Name: eks-worker-node-group
+>Node IAM Role Name:eksworkernoderole
+>Subnets: subnets are selected default
+>Enable the "Allow remote access to nodes"
+>SSH key pair: Select the pem file.
+>Allow remote access from : "Selected security groups"
+>Security groups: default now go to next
+
+>In the Node compute configuration select the following as 
+> AMI type: Select the instance (linux/ubuntu/rhel/windows)
+>Instance type: t3.medium
+>Disk size"20GB" and go to next
+
+>In the Group size select the following as
+>Minimum size: 2
+>Maximum size: 2
+>Desired size: 2 and go to next
+
+>Finally review and click on the create.
+
+>Now go to the EC2 console check whether the instances created are not
+
+>Now go to the PUTTY and check the status as
+
+
+$ kubectl get nodes --watch
+
+$ kubectl get svc
+
+$ kubectl get pods
+No resources found in default namespace.
+
+$ kubectl get deploy
+No resources found in default namespace.
+---------------------------------------------------------------------------------
+STEP-5  
+
+if you have github, create repositary and  browse line https://github.com/learnitguide/kubernetes-knote >> code>> download zip>>unzip or exract>> create repositary and upload downloaded files
+
+
+$ git clone (paste link from code)
+
+$ cd kubernetes-knote/
+
+$ ls
+knote.yaml  	mongo.yaml 	README.md
+
+
+$ vim knote.yaml
+(Change the replica: 2
+Change the type: LoadBalncer(In the last))
+
+$ vim mongo.yaml
+(Change the replicas: 2)
+
+$ kubectl apply -f mongo.yaml
+
+$ kubectl apply -f knote.yaml
+
+$ kubectl get svc
+
+$ kubectl get pods -o wide
+
+$ kubectl get svc
+
+$ nslookup (Loadbalancer DNS name)
+
+$ kubectl get svc
+
+$ kubectl get pods -o wide
+
+$ nslookup (Loadbalancer DNS name)
+
+$ curl (LoadBalancer DNS name)
+
+>Now check the Load balacner DNS in the browser and you will get the application 
+and try to upload a test file in to that.
+
+-----------------------------------------------------------------------------------------------------------
+Links
+----------------------------------------------------------------------------------------------------------
+https://www.youtube.com/watch?v=aZd0UolVwD4
+https://www.learnitguide.net/2020/08/how-to-create-eks-cluster-on-aws-using.html
+https://github.com/learnitguide/kubernetes-knote
+>Install AWS CLI
+https://www.youtube.com/watch?v=JscvSRcFbuA&t=0s
+
+
+
+
+
+
+   
+
+ 
+
