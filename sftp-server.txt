@@ -1,0 +1,77 @@
+#CREATE A NEW UBUNTU SERVER IN PUBLIC.
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt install firewall
+sudo ufw enable
+sudo ufw allow 20/tcp
+sudo ufw allow 21/tcp
+sudo ufw allow 990/tcp
+sudo ufw allow 5000:10000/tcp
+sudo ufw status
+sudo apt install vsftpd
+sudo systemctl start vsftpd
+sudo systemctl status vsftpd
+sudo systemctl enable vsftpd
+sudo nano /etc/vsftpd.conf
+
+LINK:"https://www.tecmint.com/install-ftp-server-in-centos-7/"
+
+ Change File System Permissions:
+anonymous_enable=NO             
+local_enable=YES		
+write_enable=YES		 
+local_umask=022		        
+dirmessage_enable=YES	        
+xferlog_enable=YES		
+connect_from_port_20=YES        
+xferlog_std_format=YES          
+listen=NO   			
+listen_ipv6=YES		        
+pam_service_name=vsftpd         
+userlist_enable=YES  	        
+tcp_wrappers=YES  
+userlist_enable=YES                   
+userlist_file=/etc/vsftpd.userlist    
+userlist_deny=NO   
+chroot_local_user=YES
+allow_writeable_chroot=YES
+
+sudo systemctl restart vsftpd.service
+sudo apt install ssh
+sudo systemctl start ssh 
+sudo systemctl status ssh
+sudo nano /etc/ssh/sshd_config
+
+LINK:"https://phoenixnap.com/kb/ssh-permission-denied-publickey"
+
+ Change File System Permissions:
+PasswordAuthentication  yes
+ChallengeResponseAuthentication no
+PermitRootLogin no
+PubkeyAuthentication yes
+#GSSAPIAuthentication yes
+#GSSAPICleanupCredentials no
+UsePAM yes
+
+sudo systemctl restart sshd.service
+sudo groupadd  (groupname)
+sudo useradd -g (groupname) -d /upload -s /sbin/nologin (user name)
+sudo mkdir -p /var/www/html/(directoy name)
+sudo chmod 701 /var/www/html/(directoy name)
+sudo mkdir -p /var/www/html/(directoy name)/(user name)/(file name)
+sudo chown -R root:(group name) /var/www/html/(directoy name)/(username)
+sudo chown -R (user name):(group name) /var/www/html/(directory name)/(user name)/(folder name)
+sudo nano /etc/ssh/sshd_config
+
+LINK:"https://www.techrepublic.com/article/how-to-set-up-an-sftp-server-on-linux/"
+
+At the bottom of that file, add the following:
+
+Match Group sftp_users
+ChrootDirectory /data/%u
+ForceCommand internal-sftp
+
+sudo systemctl restart sshd.service
+
+

@@ -1,0 +1,49 @@
+INSTALL AND CREATE CLOUD WATCH AGENT ON EC2 INSTANCE.
+
+create an ec2 instance
+attach an iam roles to the ec2 instance
+AmazonEC2FullAccess
+AmazonEC2RoleforSSM
+AmazonSSMFullAccess
+AmazonSSMManagedInstanceCore
+CloudWatchAgentServerPolicy
+CloudWatchAgentAdminPolicy
+
+step-2
+
+>install the amozon cloudwatch agent. 
+>open the  AWS Systems Manager in the console and click the run command in the lift side in the ssm.
+>select the AWS-ConfigureAWSPackage.
+>then name the AmazonCloudWatchAgent in command parameters.
+>in the target section specify the instance in which you want to install the cloudwatch agent by selecting the choose instance manually.
+>then click on the run command.
+
+step-3
+
+Configure the CloudWatch Agent.
+To configure the CloudWatch agent, you need to create a configuration file. You can create it by running the CloudWatch Agent Configuration Wizard, which you can start by entering the following command in linux command line interface.
+command for linux:
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
+command for windows:
+cd "C:\\Program Files\\Amazon\\AmazonCloudWatchAgent" amazon-cloudwatch-agent-config-wizard.exe
+
+step-4
+
+If you're creating the configuration file manually, you can store it as a parameter in SSM by following these steps
+>Navigate to AWS Systems Manager.
+>Under the Application Management section, choose Parameter Store.
+>On the Parameter Store console, click AmazonCloudWatchAgent-linux.
+>edite the script in the parameter, and copy the content of the configuration file, paste in a Value, and you can keep the rest of the options as defaults.
+
+step-5
+
+>select run command in ssm.
+>select the AmazonCloudWatch-ManageAgent in the command document serch bar.
+>in command parameters 
+Optional Configuration Location: The name of the parameter that stores the CloudWatch agent configuration.
+>in the target section specify the instance in which you want to install the cloudwatch agent by selecting the choose instance manually.
+>then click on the run command.
+
+
+
+

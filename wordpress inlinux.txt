@@ -1,0 +1,87 @@
+Install wordpress in linux2.
+
+
+lanch linux2 instance with private ip and connect private instance in jump-box server.
+
+
+
+sudo yum update -y 
+sudo yum upgrade
+
+step-1
+sudo yum install httpd
+sudo systemctl start httpd
+sudo systemctl status httpd
+sudo systemctl enable httpd
+
+step-2
+commands for installing php
+install amazon-linux-extras packegs
+sudo yum install amazon-linux-extras -y
+serch for php available versions
+sudo amazon-linux-extras | grep php
+Next, enable the desired topic for PHP version.
+The following command will enable PHP 7.4 topic on your Amazon Linux 2 system.
+sudo amazon-linux-extras enable php7.4
+sudo yum clean metadata
+sudo yum install php php-common php-pear
+sudo yum install php-{cgi,curl,mbstring,gd,mysqlnd,gettext,json,xml,fpm,intl,zip}
+php -v
+sudo systemctl restart httpd
+
+step-3
+Download WordPress in Linux2
+
+sudo wget https://wordpress.org/latest.zip 
+sudo yum install wget unzip -y
+sudo unzip latest.zip
+Next, copy the uncompressed wordpress directory to the webroot folde
+sudo cp -r wordpress /var/www/html/
+Next, set the ownership of the wordpress directory to apache user and group.
+sudo chown -R apache:apache /var/www/html
+Then set the directory permissions as follows to allow global users to access the directory’s contents.
+sudo chmod -R 775 /var/www/html/
+sudo systemctl restart httpd
+sudo systemctl status httpd
+
+step-4
+then go to ec2 consol page.
+
+>create target group for the wordpress instance.
+>Then create application load balancer and attach the target group to the ioad balancer.
+>then copy the load balancer DNS and serch in the google web page.
+
+step-5
+Set Up WordPress from a Browser
+in your browser serch the load balance public dns url.
+
+>fill the detais of the database,usernam,password,database host,and tableprefix. then click on the submit button.
+>then you will get this page of showing run the installation. so click on it.
+>Next, provide the site details as you create an Admin user.and create user and password.and click on install wordpress.
+>the installation was successful. To log in, click on the ‘Login’ button.
+>This takes you straight to the Login page. Type in the username and password and click login to
+access your wordpress dashboard.
+
+step-6
+mount the wordpress wp-content to the efs.
+
+1.install the extra packages for efs in Distributor in the system manager and run the command in ssm manager and the command is success.
+2.then mount the file using command in efs.
+3.add the line in the fstab for automatic mount when system reboot.
+sudo mount -t efs -o tls fs-01931bf0ba4c5517b:/ efs
+sudo nano /etc/fstab
+fs-01931bf0ba4c5517b:/ /var/www/html/wordpress/wp-content efs _netdev,noresvport,tls,iam 0 0
+mount -fav
+sudo reboot
+
+step-7
+
+create the AMI for the instance where the application wordpress installed.
+
+step-8
+
+>create launch configurations for the AMI of the wordpress.
+>create the autoscaling group by using launch configurations and give the same security group and vpc and storage and system configurations.
+
+
+

@@ -1,0 +1,111 @@
+Process for setup samba-server in ubuntu instance of version 22.04LST(HVM).
+
+LINK {https://linuxize.com/post/how-to-install-and-configure-samba-on-ubuntu-18-04/}
+CONTENTS
+
+Prerequisites
+Installing Samba on Ubuntu
+Configuring firewall
+Configuring Global Samba Options
+Creating Samba Users and Directory Structure
+Creating Samba Users
+Configuring Samba Shares
+Connecting to a Samba Share from Linux
+Using the smbclient client
+Mounting the Samba share
+Connecting to a Samba Share from Windows
+
+sudo apt update
+sudo apt upgrade
+sudo apt install samba
+sudo systemctl status smbd
+sudo ufw allow samba
+cp /etc/samba/smb.conf
+sudo mkdir /samba
+sudo chgrp sambashare /samba
+sudo useradd -M -d /samba/(folder name) -s /usr/sbin/nologin -G sambashare (username)
+The useradd options have the following meanings:
+
+-M -do not create the user’s home directory. We’ll manually create this directory.
+-d /samba/josh - set the user’s home directory to /samba/josh.
+-s /usr/sbin/nologin - disable shell access for this user.
+-G sambashare - add the user to the sambashare group.
+
+sudo mkdir /samba/(foldername)
+sudo chown (username):sambashare /samba/(foldername)
+sudo chmod 2770 /samba/(foldername)
+sudo smbpasswd -a (username)
+output:
+New SMB password:
+Retype new SMB password:
+sudo smbpasswd -e (username)
+
+To create another user repeat the same process .
+
+Create the administrative user by typing:
+Next, let’s create a user and group sadmin. All members of this group will have administrative permissions. Later if you want to grant administrative permissions to another user simply add that user to the sadmin group .
+sudo useradd -M -d /samba/(foldername) -s /usr/sbin/nologin -G sambashare sadmin
+
+The command above will also create a group sadmin and add the user to both sadmin and sambashare groups.
+
+sudo smbpasswd -a sadmin
+sudo smbpasswd -e sadmin
+sudo mkdir /samba/(foldername)
+sudo chown sadmin(user):sambashare(group) /samba/(foldername)
+sudo chmod 2770 /samba/users
+sudo nano /etc/samba/smb.conf
+
+add the below script and make the required changes as per your users:
+
+[users]
+    path = /samba/users
+    browseable = yes
+    read only = no
+    force create mode = 0660
+    force directory mode = 2770
+    valid users = @sambashare @sadmin
+
+[josh]
+    path = /samba/josh
+    browseable = no
+    read only = no
+    force create mode = 0660
+    force directory mode = 2770
+    valid users = josh @sadmin
+
+sudo systemctl restart smbd
+sudo systemctl restart nmbd
+sudo apt install smbclient
+smbclient //samba_hostname_or_server_ip(private IP)/share_name(foldername) -U username
+output:
+Enter WORKGROUP\josh's password: 
+Try "help" to get a list of possible commands.
+smb: \>
+
+sudo apt install cifs-utils
+sudo mkdir /mnt/smbmount(foldername)
+sudo mount -t cifs -o username=username //samba_hostname_or_server_ip/sharename(foldername) /mnt/smbmount
+
+output:
+Password for josh@//192.168.121.118/josh:  ********
+
+sudo df -Th
+sudo nano /etc/fstab/
+sudo mount -a
+sudo reboot
+
+Connecting to a Samba Share from Windows
+Windows users also have an option to connect to the Samba share from both command line and GUI. The steps below show how to access the share using the Windows File Explorer.
+
+1.Open up File Explorer and in the left pane right-click on “This PC”.
+2.Select “Choose a custom network location” and then click “Next”.
+3.In “Internet or network address”, enter the address of the Samba share in the following format \\samba_hostname_or_server_ip\sharename.
+4.Click “Next” and you will be prompted to enter the login credentials 
+5.In the next window you can type a custom name for the network location. The default one will be picked up by the Samba server.
+6.Click “Next” to move to the last screen of the connection setup wizard.
+7.Click “Finish” and the files on the Samba server will be shown.
+
+
+refered links:
+https://linuxize.com/post/how-to-install-and-configure-samba-on-ubuntu-18-04/
+https://www.configserverfirewall.com/ubuntu-linux/mount-samba-share-ubuntu-cifs/

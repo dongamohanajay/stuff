@@ -1,0 +1,131 @@
+setup the redis server to the wordpress server in amazon linux2.
+
+
+launched two instences in amazon linux2 and one for redis server and another one for wordpress.
+Redis server
+------------
+step1
+ install Redis on Amazon Linux.
+sudo yum update -y 
+sudo yum upgrade
+yum repolist
+yum install redis 
+redis is available in Amazon Linux Extra topic "redis6"
+To use, run
+# sudo amazon-linux-extras install redis6
+Learn more at
+https://aws.amazon.com/amazon-linux-2/faqs/#Amazon_Linux_Extras
+service redis status
+service redis start
+service redis stop
+service redis restart
+service redis start
+redis-cli ping
+vi etc/redis.conf [or] vi /etc/redis/redis.conf
+
+bind 127.0.0.1 -::1 change ip 
+bind 0.0.0.0 -::1
+
+protected-mode yes change yes to no
+
+protected-mode no
+
+systemctl restart redis
+
+check the connection to the wordpress server
+redis-cli -h wordpress ip -p port no(6379)
+
+wordpressserver
+--------------
+
+sudo yum update -y 
+sudo yum upgrade
+
+install wordpress in amazon linux2 
+
+step-1
+sudo yum install httpd
+sudo systemctl start httpd
+sudo systemctl status httpd
+sudo systemctl enable httpd
+
+step-2
+commands for installing php
+install amazon-linux-extras packegs
+sudo yum install amazon-linux-extras -y
+serch for php available versions
+sudo amazon-linux-extras | grep php
+Next, enable the desired topic for PHP version.
+The following command will enable PHP 7.4 topic on your Amazon Linux 2 system.
+sudo amazon-linux-extras enable php7.4
+sudo yum clean metadata
+sudo yum install php php-common php-pear
+sudo yum install php-{cgi,curl,mbstring,gd,mysqlnd,gettext,json,xml,fpm,intl,zip}
+php -v
+sudo systemctl restart httpd
+
+step-3
+Add MySQL Yum Repository to Amazon Linux 
+Install an RPM repository package by running the commands below:
+sudo yum install https://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
+$ ls /etc/yum.repos.d
+$ sudo yum repolist
+
+step-4
+
+Install MySQL 8 on Amazon Linux
+sudo amazon-linux-extras install epel -y
+sudo yum -y install mysql-community-server
+
+step-5
+
+Start and Configure MySQL 8 on Amazon Linux2
+sudo systemctl enable --now mysqld
+ systemctl status mysqld
+ sudo grep 'temporary password' /var/log/mysqld.log
+
+2020-08-12T17:25:34.992227Z 6 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: BEw-U?DV,7eO
+
+ sudo mysql_secure_installation -p
+Enter password: <INPUT-PRINTED-PASSWORD>
+then set the new password and enter new password for  mysql -uroot -p.
+ mysql -uroot -p
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewStrongP@ssw0d!';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost'
+
+step-6
+Download WordPress in Linux2
+
+sudo wget https://wordpress.org/latest.zip 
+sudo yum install wget unzip -y
+sudo unzip latest.zip
+Next, copy the uncompressed wordpress directory to the webroot folde
+sudo cp -r wordpress /var/www/html/
+Next, set the ownership of the wordpress directory to apache user and group.
+sudo chown -R apache:apache /var/www/html
+Then set the directory permissions as follows to allow global users to access the directory’s contents.
+sudo chmod -R 775 /var/www/html/
+sudo systemctl restart httpd
+sudo systemctl status httpd
+then go to the browser and brows the ip of the word press and log in to wordpress web page.
+->then click on plugins and
+->clicl on add new
+->install redis plugins
+in wordpress instance add the details of the redis server by adding these lines in wp-config.php in wordpress server.
+
+nano /wp-config.php
+define( 'WP_REDIS_HOST', '127.0.0.1' );
+define( 'WP_REDIS_PORT', 6379 );
+// define( 'WP_REDIS_PASSWORD', 'secret' );
+define( 'WP_REDIS_TIMEOUT', 1 );
+define( 'WP_REDIS_READ_TIMEOUT', 1 );
+
+sudo systemctl restart httpd
+sudo systemctl status httpd
+
+check the connction b/w two servers.
+redis-cli -h redis ip -p portno (6379)
+
+then check the status in wordpress web page.the details of the redis server ip,port no is visible in plugins.
+the redis server is connected to the redis cachs in the wordpress server.
+

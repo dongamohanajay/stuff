@@ -1,0 +1,122 @@
+Install MySQL 8 on Amazon Linux 2
+How to Setup MySQL Replication in RHEL/Centos - Unix / Linux the admins Tutorials (unixcop.com)
+[01-06-2022 14:07] Chakradharrao Thota
+How to Replicate MySQL Database to Another Server - Ubiq BI
+
+How to Setup MySQL Replication in RHEL/Centos - Unix / Linux the admins Tutorials (unixcop.com)
+
+
+
+------------------------------------------------------------------------------------------Step 1: Add MySQL Yum Repository to Amazon Linux 2-------------------------------------------------------------------------------------------------------------
+
+Install an RPM repository package by running the commands below:
+sudo yum install https://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
+$ ls /etc/yum.repos.d
+$ sudo yum repolist
+
+-----------------------------------------------------------------------------------------Step 2: Install MySQL 8 on Amazon Linux 2-----------------------------------------------------------------------------------------------------------------------------
+
+sudo amazon-linux-extras install epel -y
+sudo yum -y install mysql-community-server
+
+-----------------------------------------------------------------------------------------Step 3: Start and Configure MySQL 8 on Amazon Linux 2------------------------------------------------------------------------------------------------------------
+
+sudo systemctl enable --now mysqld
+
+
+$ systemctl status mysqld
+
+$ sudo grep 'temporary password' /var/log/mysqld.log
+
+
+2020-08-12T17:25:34.992227Z 6 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: BEw-U?DV,7eO
+
+$ sudo mysql_secure_installation -p
+Enter password: <INPUT-PRINTED-PASSWORD>
+$ mysql -uroot -p
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewStrongP@ssw0d!';
+
+
+-----------------------------------------------------------------------------------###How to Setup MySQL Master-Slave Replication on linux.###--------------------------------------------------------------------------------------------------------
+
+Master = 173.82.120.14
+Slave  = 173.82.115.165
+
+Step 1: Install MySQL on Master and Slave Server
+Step 2: Secure MySQL on Master and Slave Server
+follow above process for install mysql server in linux.
+
+-----------------------------------------------------------------------------------Step 3: Configuring the MySQL Master Server---------------------------------------------------------------------------------------------------------------------------------
+
+$ sudo vim /etc/my.cnf
+
+In the mysqld section, append the lines as shown below.
+
+bind-address =173.82.120.14
+server-id = 1
+log_bin =mysql-bin
+
+$ sudo systemctl restart mysqld
+
+$ sudo mysql -u root -p
+
+
+mysql> CREATE USER 'replica'@'173.82.115.165' IDENTIFIED BY 'strong_password';
+mysql> GRANT REPLICATION SLAVE ON *.*TO 'replica'@'173.82.115.165';
+ mysql> CREATE USER 'monty'@'localhost' IDENTIFIED BY 'some_pass';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'monty'@'localhost'
+      ->     WITH GRANT OPTION;
+mysql> CREATE USER 'monty'@'%' IDENTIFIED BY 'some_pass';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'monty'@'%'
+      ->     WITH GRANT OPTION;
+
+mysql> SHOW MASTER STATUS\G
+
+(note the mysql-bin.000002 value and the Position ID 1643)
+
+
+-----------------------------------------------------------------------------------Step 4: Configuring the MySQL Slave Server-----------------------------------------------------------------------------------------------------------------------------------
+
+$ sudo vim  /etc/my.cnf
+
+Append the following lines in the configuration file under mysqld section.
+
+bind-address =173.82.115.165
+server-id = 2
+log_bin =mysql-bin
+
+$ sudo systemctl restart mysqld
+$ sudo mysql -u root -p
+mysql> STOP SLAVE;
+
+mysql> CHANGE MASTER TO
+    -> MASTER_HOST='173.82.120.14' ,
+    -> MASTER_USER='replica' ,
+    -> MASTER_PASSWORD='Jupiter@2030' ,
+    -> MASTER_LOG_FILE='mysql-bin.000002' ,
+    -> MASTER_LOG_POS=939;
+
+mysql> START SLAVE;
+---------------------------------------------------------------------------------Step 5: Testing MySQL Master-Slave Replication------------------------------------------------------------------------------------------------------------------------------
+
+
+To do this, head out to the master server and log in to the MySQL database server.
+
+$ sudo mysql -u root -p
+mysql> CREATE DATABASE replication_database;
+
+Now head out to the Slave server and again, log in to the MySQL database server.
+$ sudo mysql -u root -p
+mysql> SHOW DATABASES;
+
+
+so i has face some errors in the mysql slave 
+Authentication plugin 'caching_sha2_password' reported error: Authentication requires secure connection.
+CHANGE MASTER TO GET_MASTER_PUBLIC_KEY=1;
+[run the command in mysql master]
+create user for the specified authentication plugin sha256_ password;
+CREATE USER 'slaveuser'@'%' IDENTIFIED WITH sha256_password BY '0000';
+GRANT REPLICATION SLAVE ON *.* TO 'slaveuser'@'%';
+
+
+
